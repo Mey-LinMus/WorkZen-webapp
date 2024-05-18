@@ -12,6 +12,7 @@ class ThreeClassSceneManager {
     this.effect = null;
 
     this.init();
+    this.setupEventListeners();
   }
 
   init() {
@@ -30,6 +31,23 @@ class ThreeClassSceneManager {
     container.appendChild(this.renderer.domElement);
     this.effect = new StereoEffect(this.renderer);
     this.effect.setSize(window.innerWidth, window.innerHeight);
+  }
+
+  setupEventListeners() {
+    window.addEventListener("resize", this.onWindowResize.bind(this));
+    document.addEventListener("mousemove", this.onDocumentMouseMove.bind(this));
+  }
+
+  onWindowResize() {
+    this.camera.aspect = window.innerWidth / window.innerHeight;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.effect.setSize(window.innerWidth, window.innerHeight);
+  }
+
+  onDocumentMouseMove(event) {
+    this.mouseX = (event.clientX - window.innerWidth / 2) * 10;
+    this.mouseY = (event.clientY - window.innerHeight / 2) * 10;
   }
 
   getCamera() {
