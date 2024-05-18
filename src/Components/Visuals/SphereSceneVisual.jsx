@@ -8,7 +8,7 @@ const SphereScene = () => {
   const [scene, setScene] = useState(null);
   const [camera, setCamera] = useState(null);
   const [renderer, setRenderer] = useState(null);
-  const [permissionGranted, setPermissionGranted] = useState(false);
+
 
   useEffect(() => {
     let directionalLight;
@@ -56,17 +56,44 @@ const SphereScene = () => {
     setScene(scene);
     setCamera(camera);
     setRenderer(renderer);
-    setPermissionGranted(permissionGranted);
 
-    // Cleanup function
+
+    const onWindowResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      effect.setSize(window.innerWidth, window.innerHeight);
+    };
+
+    const animate = () => {
+      requestAnimationFrame(animate);
+      render();
+    };
+
+    const render = () => {
+      const timer = 0.00001 * Date.now();
+
+      for (let i = 0, il = spheres.current.length; i < il; i++) {
+        const sphere = spheres.current[i];
+        sphere.position.x = 5000 * Math.cos(timer + i);
+        sphere.position.y = 5000 * Math.sin(timer + i * 1.1);
+      }
+      effect.render(scene, camera);
+    };
+
+    init();
+    animate();
+
     return () => {
+      window.removeEventListener("resize", onWindowResize);
       containerRef.current.removeChild(renderer.domElement);
     };
   }, []);
 
-  // Render the component
-  return (
-    <div ref={containerRef} />
+   return (
+    <>
+          <div ref={containerRef} />
+    </>
   );
 };
 
