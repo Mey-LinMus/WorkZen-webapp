@@ -15,7 +15,7 @@ const DeviceOrientationManager = ({
         DeviceOrientationEvent.requestPermission()
           .then((response) => {
             if (response === "granted") {
-              onPermissionGranted(); 
+              onPermissionGranted(); // Notify parent component
               window.addEventListener(
                 "deviceorientation",
                 handleDeviceOrientation
@@ -28,23 +28,22 @@ const DeviceOrientationManager = ({
       }
     };
 
+    const btn = document.getElementById("request");
+    btn.addEventListener("click", requestPermission);
+
+    requestPermission();
+
     const handleDeviceOrientation = (event) => {
       const { alpha, beta, gamma } = event;
 
-      camera.rotation.x = (beta * Math.PI) / 180; 
+      camera.rotation.x = (beta * Math.PI) / 180; // Convert degrees to radians
       camera.rotation.y = (gamma * Math.PI) / 180;
       camera.rotation.z = (alpha * Math.PI) / 180;
 
       renderer.render(scene, camera);
     };
 
-    const btn = document.getElementById("request");
-    btn.addEventListener("click", requestPermission);
-
-    requestPermission();
-
     return () => {
-      btn.removeEventListener("click", requestPermission);
       window.removeEventListener("deviceorientation", handleDeviceOrientation);
     };
   }, [camera, renderer, scene, onPermissionGranted]);

@@ -13,6 +13,7 @@ class ThreeClassSceneManager {
 
     this.init();
     this.setupEventListeners();
+    this.setupDeviceOrientation();
   }
 
   init() {
@@ -38,6 +39,17 @@ class ThreeClassSceneManager {
     document.addEventListener("mousemove", this.onDocumentMouseMove.bind(this));
   }
 
+  setupDeviceOrientation() {
+    if (window.DeviceOrientationEvent) {
+      window.addEventListener(
+        "deviceorientation",
+        this.onDeviceOrientation.bind(this)
+      );
+    } else {
+      console.log("Device orientation not supported");
+    }
+  }
+
   onWindowResize() {
     this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.updateProjectionMatrix();
@@ -48,6 +60,39 @@ class ThreeClassSceneManager {
   onDocumentMouseMove(event) {
     this.mouseX = (event.clientX - window.innerWidth / 2) * 10;
     this.mouseY = (event.clientY - window.innerHeight / 2) * 10;
+  }
+
+  requestPermission() {
+    if (
+      typeof DeviceOrientationEvent !== "undefined" &&
+      typeof DeviceOrientationEvent.requestPermission === "function"
+    ) {
+      DeviceOrientationEvent.requestPermission()
+        .then((response) => {
+          if (response === "granted") {
+            window.addEventListener("devicemotion", (e) => {
+              // Handle 'e' here (e.g., update UI based on motion data)
+            });
+          }
+        })
+        .catch(console.error);
+    } else {
+      console.log("DeviceMotionEvent is not defined");
+    }
+    this.requestPermission();
+  }
+
+  onDeviceOrientation(event) {
+    // Extract device orientation data
+    const alpha = event.alpha;
+    const beta = event.beta;
+    const gamma = event.gamma;
+
+    // Update scene based on device orientation
+    // Example: Rotate the camera based on device orientation
+    this.camera.rotation.x = (beta * Math.PI) / 180; // Convert degrees to radians
+    this.camera.rotation.y = (gamma * Math.PI) / 180;
+    this.camera.rotation.z = (alpha * Math.PI) / 180;
   }
 
   getCamera() {

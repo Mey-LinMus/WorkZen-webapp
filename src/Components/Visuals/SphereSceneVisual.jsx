@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
+import DeviceOrientationControls from "../Utils/DeviceOrientationManager";
 import ThreeClassSceneManager from "../Utils/ThreeClassSceneManager";
 
 const SphereScene = () => {
@@ -8,19 +9,16 @@ const SphereScene = () => {
   const [scene, setScene] = useState(null);
   const [camera, setCamera] = useState(null);
   const [renderer, setRenderer] = useState(null);
-
+  const [permissionGranted, setPermissionGranted] = useState(false);
 
   useEffect(() => {
     let directionalLight;
-
-    // Initialize scene, camera, and renderer
     const sceneManager = new ThreeClassSceneManager(containerRef, THREE);
     const scene = sceneManager.getScene();
     const camera = sceneManager.getCamera();
     const renderer = sceneManager.getRenderer();
     const effect = sceneManager.getEffect();
 
-    // Initialize the scene
     const init = () => {
       scene.background = new THREE.Color(0x011c47);
       directionalLight = new THREE.DirectionalLight(0xffffff, 6);
@@ -51,12 +49,10 @@ const SphereScene = () => {
         spheres.current.push(mesh);
       }
     };
-
-    // Set state variables
     setScene(scene);
     setCamera(camera);
     setRenderer(renderer);
-
+    setPermissionGranted(permissionGranted);
 
     const onWindowResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
@@ -90,9 +86,40 @@ const SphereScene = () => {
     };
   }, []);
 
-   return (
+  const handlePermissionGranted = () => {
+    setPermissionGranted(true); // Update permission state
+  };
+
+  return (
     <>
-          <div ref={containerRef} />
+      <button
+        id="request"
+        style={{
+          position: "absolute",
+          top: "10px",
+          left: "10px",
+          zIndex: "1000",
+          padding: "10px 20px",
+          fontSize: "16px",
+          backgroundColor: "#eb3434",
+          color: "#fff",
+          border: "none",
+          borderRadius: "5px",
+          cursor: "pointer",
+        }}
+      >
+        click
+      </button>
+      <div ref={containerRef} />
+
+      {scene && camera && renderer && (
+        <DeviceOrientationControls
+          camera={camera}
+          renderer={renderer}
+          scene={scene}
+          onPermissionGranted={handlePermissionGranted}
+        />
+      )}
     </>
   );
 };
