@@ -1,11 +1,12 @@
-import React from 'react'
+import React from "react";
+import SphereSceneVisual from "./Components/Visuals/SphereSceneVisual";
 
-const App = () => {
+function App() {
   return (
-    <div>
-      
+    <div className="App">
+      <SphereSceneVisual />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
