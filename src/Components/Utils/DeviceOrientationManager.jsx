@@ -4,13 +4,24 @@ const DeviceOrientationManager = ({
   camera,
   renderer,
   scene,
-  onPermissionGranted,
 }) => {
   useEffect(() => {
-    return () => {
-      // Cleanup logic
+ 
+
+    const handleDeviceOrientation = (event) => {
+      const { alpha, beta, gamma } = event;
+
+      camera.rotation.x = (beta * Math.PI) / 180; // Convert degrees to radians
+      camera.rotation.y = (gamma * Math.PI) / 180;
+      camera.rotation.z = (alpha * Math.PI) / 180;
+
+      renderer.render(scene, camera);
     };
-  }, [camera, renderer, scene, onPermissionGranted]);
+
+    return () => {
+      window.removeEventListener("deviceorientation", handleDeviceOrientation);
+    };
+  }, [camera, renderer, scene]);
 
   return null;
 };
