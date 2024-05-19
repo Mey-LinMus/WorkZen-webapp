@@ -91,7 +91,7 @@ export default function Dashboard({ code }) {
         {searchResults.length === 0 && <div>{lyrics}</div>}
       </div>
       <div>
-        <Player accessToken={accessToken} trackUri={playingTrack?.uri} />
+    
       </div>
     </>
   );
