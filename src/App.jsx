@@ -6,8 +6,8 @@ import MusicSelectPage from "./Pages/MusicSelectPage";
 function App() {
   return (
     <div className="App">
-      <SnowingSceneVisual />
-      {/* <MusicSelectPage /> */}
+      {/* <SnowingSceneVisual /> */}
+      <MusicSelectPage />
     </div>
   );
 }

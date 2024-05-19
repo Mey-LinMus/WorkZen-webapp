@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import SpotifyWebApi from "spotify-web-api-node";
-import TrackResult from "./TrackResults";
-import Player from "./Player";
+import { useState, useEffect } from "react";
 import useAuth from "./UserAuth";
+import Player from "./Player";
+import TrackSearchResult from "./TrackResults";
+import SpotifyWebApi from "spotify-web-api-node";
+import axios from "axios";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: "1f4f7e164fe945998e2b5904bd676792",
@@ -10,62 +11,88 @@ const spotifyApi = new SpotifyWebApi({
 
 export default function Dashboard({ code }) {
   const accessToken = useAuth(code);
-  const [allSongs, setAllSongs] = useState([]);
+  const [search, setSearch] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const [playingTrack, setPlayingTrack] = useState();
+  const [lyrics, setLyrics] = useState("");
 
   function chooseTrack(track) {
     setPlayingTrack(track);
+    setSearch("");
+    setLyrics("");
   }
 
   useEffect(() => {
-    if (!accessToken) return;
+    if (!playingTrack) return;
 
-    spotifyApi.setAccessToken(accessToken);
-
-    // Fetch all songs
-    spotifyApi
-      .getMySavedTracks({ limit: 50 })
-      .then((data) => {
-        setAllSongs(
-          data.body.items.map((item) => {
-            const track = item.track;
-
-            console.log(track);
-            const smallestAlbumImage = track.album.images.reduce(
-              (smallest, image) => {
-                if (image.height < smallest.height) return image;
-                return smallest;
-              },
-              track.album.images[0]
-            );
-            return {
-              artist: track.artists[0].name,
-              title: track.name,
-              uri: track.uri,
-              albumUrl: smallestAlbumImage.url,
-            };
-          })
-        );
+    axios
+      .get("http://localhost:5000/lyrics", {
+        params: {
+          track: playingTrack.title,
+          artist: playingTrack.artist,
+        },
       })
-      .catch((error) => {
-        console.error("Error fetching songs:", error);
+      .then((res) => {
+        setLyrics(res.data.lyrics);
       });
+  }, [playingTrack]);
+
+  useEffect(() => {
+    if (!accessToken) return;
+    spotifyApi.setAccessToken(accessToken);
   }, [accessToken]);
 
+  useEffect(() => {
+    if (!search) return setSearchResults([]);
+    if (!accessToken) return;
+
+    let cancel = false;
+    spotifyApi.searchTracks(search).then((res) => {
+      if (cancel) return;
+      setSearchResults(
+        res.body.tracks.items.map((track) => {
+          const smallestAlbumImage = track.album.images.reduce(
+            (smallest, image) => {
+              if (image.height < smallest.height) return image;
+              return smallest;
+            },
+            track.album.images[0]
+          );
+
+          return {
+            artist: track.artists[0].name,
+            title: track.name,
+            uri: track.uri,
+            albumUrl: smallestAlbumImage.url,
+          };
+        })
+      );
+    });
+
+    return () => (cancel = true);
+  }, [search, accessToken]);
+
   return (
-    <div>
+    <>
+      <input
+        type="search"
+        placeholder="Search Songs/Artists"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
       <div>
-        {allSongs.map((track) => (
-          <TrackResult
+        {searchResults.map((track) => (
+          <TrackSearchResult
             track={track}
             key={track.uri}
             chooseTrack={chooseTrack}
           />
         ))}
+        {searchResults.length === 0 && <div>{lyrics}</div>}
       </div>
       <div>
         <Player accessToken={accessToken} trackUri={playingTrack?.uri} />
       </div>
-    </div>
+    </>
   );
 }
