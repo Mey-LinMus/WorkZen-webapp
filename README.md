@@ -14,3 +14,4 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - npm i axios - https://www.npmjs.com/package/axios
 - npm i cors - https://www.npmjs.com/package/cors
 - npm i body-parser - https://www.npmjs.com/package/body-parser
+- npm i react-spotify-web-playback - https://www.npmjs.com/package/react-spotify-web-playback

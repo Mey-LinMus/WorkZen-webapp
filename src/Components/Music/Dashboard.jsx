@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SpotifyWebApi from "spotify-web-api-node";
-// import TrackSearchResult from "./TrackSearchResult";
-// import Player from "./Player";
+import TrackResult from "../Music/TrackResults";
+import Player from "../Music/Player";
 import useAuth from "../Music/UserAuth";
 
 const spotifyApi = new SpotifyWebApi({
@@ -31,7 +31,6 @@ export default function Dashboard({ code }) {
             const track = item.track;
 
             console.log(track);
-
             const smallestAlbumImage = track.album.images.reduce(
               (smallest, image) => {
                 if (image.height < smallest.height) return image;
@@ -53,5 +52,20 @@ export default function Dashboard({ code }) {
       });
   }, [accessToken]);
 
-  return <div></div>;
+  return (
+    <div>
+      <div>
+        {allSongs.map((track) => (
+          <TrackResult
+            track={track}
+            key={track.uri}
+            chooseTrack={chooseTrack}
+          />
+        ))}
+      </div>
+      <div>
+        <Player accessToken={accessToken} trackUri={playingTrack?.uri} />
+      </div>
+    </div>
+  );
 }
