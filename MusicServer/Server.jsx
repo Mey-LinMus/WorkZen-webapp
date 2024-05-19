@@ -1,8 +1,13 @@
 const express = require("express");
 const SpotifyWebApi = require("spotify-web-api-node");
+const bodyParser = require("body-parser");
 require("dotenv").config();
+const cors = require("cors");
 
 const app = express();
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post("/login", (req, res) => {
   const code = req.body.code;
