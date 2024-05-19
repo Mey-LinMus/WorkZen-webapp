@@ -15,3 +15,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - npm i cors - https://www.npmjs.com/package/cors
 - npm i body-parser - https://www.npmjs.com/package/body-parser
 - npm i react-spotify-web-playback - https://www.npmjs.com/package/react-spotify-web-playback
+
+
+### Styling
+- https://www.tailwindhelper.com/
+- npm install -D tailwindcss - npx tailwindcss init - https://tailwindcss.com/docs/installation
