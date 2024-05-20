@@ -1,0 +1,14 @@
+{
+  "visuals": [
+    {
+      "id": 1,
+      "title": "Snowing",
+      "link": "../Components/Visuals/SnowingSceneVisual.jsx"
+    },
+    {
+      "id": 2,
+      "title": "Sphere",
+      "link": "../Components/Visuals/SphereSceneVisual.jsx"
+    }
+  ]
+}
