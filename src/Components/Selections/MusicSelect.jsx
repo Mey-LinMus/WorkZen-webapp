@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Form, Image, ListGroup } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Form,
+  Image,
+  ListGroup,
+  Card,
+} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const relaxingGenres = [
@@ -31,10 +39,11 @@ const isInstrumental = (trackName) => {
 const MusicSelect = () => {
   const [token, setToken] = useState("");
   const [tracks, setTracks] = useState([]);
+  const [playlists, setPlaylists] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState(relaxingGenres[0]);
 
   useEffect(() => {
-    // Fetch access token from your backend server
+
     const fetchToken = async () => {
       try {
         const response = await fetch("http://localhost:8888/token");
@@ -50,7 +59,7 @@ const MusicSelect = () => {
 
   useEffect(() => {
     if (token && selectedGenre) {
-      // Fetch tracks using the access token
+
       const fetchTracks = async () => {
         try {
           const response = await fetch(
@@ -64,7 +73,6 @@ const MusicSelect = () => {
           const data = await response.json();
           console.log(data);
 
-          // Filter out non-lyrical tracks
           const filteredTracks = data.tracks.filter(
             (track) => !isInstrumental(track.name)
           );
@@ -75,6 +83,27 @@ const MusicSelect = () => {
       };
 
       fetchTracks();
+
+      // Fetch playlists for the selected genre
+      const fetchPlaylists = async () => {
+        try {
+          const response = await fetch(
+            `https://api.spotify.com/v1/browse/categories/${selectedGenre}/playlists?limit=10`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          const data = await response.json();
+          console.log(data);
+          setPlaylists(data.playlists.items || []);
+        } catch (error) {
+          console.error("Error fetching playlists:", error);
+        }
+      };
+
+      fetchPlaylists();
     }
   }, [token, selectedGenre]);
 
@@ -136,6 +165,31 @@ const MusicSelect = () => {
               <ListGroup.Item>No tracks found</ListGroup.Item>
             )}
           </ListGroup>
+        </Col>
+        <Col>
+          <h2 className="mb-3">Playlists for {selectedGenre}</h2>
+          <Row>
+            {playlists.map((playlist, index) => (
+              <Col key={index} md={6} lg={4} className="mb-4">
+                <Card>
+                  <Card.Img variant="top" src={playlist.images[0].url} />
+                  <Card.Body>
+                    <Card.Title>{playlist.name}</Card.Title>
+                    <Card.Text>
+                      {playlist.description || "No description available"}
+                    </Card.Text>
+                    <a
+                      href={playlist.external_urls.spotify}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      View on Spotify
+                    </a>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
         </Col>
       </Row>
     </Container>
