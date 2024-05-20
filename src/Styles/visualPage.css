@@ -1,0 +1,14 @@
+.selectable-box {
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease-in-out;
+}
+
+.selectable-box.active {
+  border-color: #007bff;
+}
+
+.selectable-box:hover {
+  border-color: #007bff;
+}

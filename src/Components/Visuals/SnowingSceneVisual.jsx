@@ -10,7 +10,7 @@ const SnowingScene = () => {
   const [scene, setScene] = useState(null);
   const [camera, setCamera] = useState(null);
   const [renderer, setRenderer] = useState(null);
-  const [permissionGranted, setPermissionGranted] = useState(false);
+  // const [permissionGranted, setPermissionGranted] = useState(false);
 
   useEffect(() => {
     const sceneManager = new ThreeClassSceneManager(containerRef, THREE);
@@ -75,7 +75,7 @@ const SnowingScene = () => {
     setScene(scene);
     setCamera(camera);
     setRenderer(renderer);
-    setPermissionGranted(permissionGranted);
+    // setPermissionGranted(permissionGranted);
 
     const animate = () => {
       requestAnimationFrame(animate);
@@ -121,9 +121,9 @@ const SnowingScene = () => {
     };
   }, []);
 
-  const handlePermissionGranted = () => {
-    setPermissionGranted(true); // Update permission state
-  };
+  // const handlePermissionGranted = () => {
+  //   setPermissionGranted(true); // Update permission state
+  // };
 
   return (
     <>
@@ -152,7 +152,7 @@ const SnowingScene = () => {
           camera={camera}
           renderer={renderer}
           scene={scene}
-          onPermissionGranted={handlePermissionGranted}
+          // onPermissionGranted={handlePermissionGranted}
         />
       )}
     </>

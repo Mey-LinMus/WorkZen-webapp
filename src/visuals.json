@@ -3,12 +3,12 @@
     {
       "id": 1,
       "title": "Snowing",
-      "link": "../Components/Visuals/SnowingSceneVisual.jsx"
+      "component": "SnowingSceneVisual"
     },
     {
       "id": 2,
       "title": "Sphere",
-      "link": "../Components/Visuals/SphereSceneVisual.jsx"
+      "component": "SphereSceneVisual"
     }
   ]
 }
