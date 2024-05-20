@@ -12,6 +12,7 @@ import { SelectionContext } from "../Contexts/SelectionContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import TrackItem from "./TrackItem";
 import PlaylistCard from "./PlaylistCard";
+import { useNavigate } from "react-router-dom";
 
 const relaxingGenres = [
   "ambient",
@@ -23,11 +24,17 @@ const relaxingGenres = [
 ];
 
 const MusicExplorer = () => {
-  const { selectedMusic, setSelectedMusic } = useContext(SelectionContext);
+  const {
+    selectedMusic,
+    setSelectedMusic,
+    selectedPlaylist,
+    setSelectedPlaylist,
+  } = useContext(SelectionContext);
   const [token, setToken] = useState("");
   const [tracks, setTracks] = useState([]);
   const [playlists, setPlaylists] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState(relaxingGenres[0]);
+  const navigate = useNavigate();
 
   // Define keywords that typically indicate instrumental tracks
   const instrumentalKeywords = [
@@ -120,6 +127,8 @@ const MusicExplorer = () => {
   const createPlaylist = () => {
     // Logic to create a playlist with selected tracks
     console.log("Selected tracks:", selectedMusic);
+    navigate("/scene");
+    setSelectedPlaylist(selectedMusic);
   };
 
   return (

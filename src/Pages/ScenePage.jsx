@@ -1,8 +1,10 @@
+// ScenePage.js
 import React, { useContext } from "react";
 import { SelectionContext } from "../Components/Contexts/SelectionContext";
 
 const ScenePage = () => {
-  const { selectedVisual, selectedMusic } = useContext(SelectionContext);
+  const { selectedVisual, selectedMusic, selectedPlaylist } =
+    useContext(SelectionContext);
   const VisualComponent = selectedVisual ? selectedVisual.Component : null;
 
   return (
@@ -17,7 +19,7 @@ const ScenePage = () => {
         {selectedMusic.length > 0 ? (
           <ul>
             {selectedMusic.map((track, index) => (
-              <li key={index}>{track}</li>
+              <li key={index}>{track.name}</li>
             ))}
           </ul>
         ) : (
