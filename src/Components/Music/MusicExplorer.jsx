@@ -34,6 +34,7 @@ const MusicExplorer = () => {
   const [tracks, setTracks] = useState([]);
   const [playlists, setPlaylists] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState(relaxingGenres[0]);
+  const [requestCount, setRequestCount] = useState(0); // Monitor request count
   const navigate = useNavigate();
 
   // Define keywords that typically indicate instrumental tracks
@@ -56,7 +57,7 @@ const MusicExplorer = () => {
   useEffect(() => {
     const fetchToken = async () => {
       try {
-        const response = await fetch("http://localhost:8888/token");
+        const response = await fetch("http://localhost:5000/token");
         const data = await response.json();
         setToken(data.access_token);
       } catch (error) {
@@ -69,8 +70,19 @@ const MusicExplorer = () => {
 
   useEffect(() => {
     if (token && selectedGenre) {
-      const fetchTracks = async () => {
+      const MAX_RETRY_ATTEMPTS = 3;
+      const MAX_REQUESTS_PER_INTERVAL = 5; // Limit requests to 5 per interval
+      const INTERVAL_DURATION = 10000; // 10 seconds
+
+      const fetchTracks = async (retryCount = 0) => {
         try {
+          if (requestCount >= MAX_REQUESTS_PER_INTERVAL) {
+            console.log("Rate limit reached. Throttling requests...");
+            return;
+          }
+
+          setRequestCount((prevCount) => prevCount + 1);
+
           const response = await fetch(
             `https://api.spotify.com/v1/recommendations?limit=100&seed_genres=${selectedGenre}`,
             {
@@ -86,7 +98,22 @@ const MusicExplorer = () => {
           );
           setTracks(filteredTracks || []);
         } catch (error) {
-          console.error("Error fetching tracks:", error);
+          if (
+            error instanceof SyntaxError &&
+            error.message.includes("Unexpected token")
+          ) {
+            if (retryCount < MAX_RETRY_ATTEMPTS) {
+              // Retry with exponential backoff
+              const delay = Math.pow(2, retryCount) * 1000; // Exponential backoff delay
+              setTimeout(() => fetchTracks(retryCount + 1), delay);
+            } else {
+              console.error(
+                "Max retry attempts reached. Unable to fetch tracks."
+              );
+            }
+          } else {
+            console.error("Error fetching tracks:", error);
+          }
         }
       };
 
@@ -110,8 +137,14 @@ const MusicExplorer = () => {
       };
 
       fetchPlaylists();
+
+      const interval = setInterval(() => {
+        setRequestCount(0); // Reset request count after every interval
+      }, INTERVAL_DURATION);
+
+      return () => clearInterval(interval);
     }
-  }, [token, selectedGenre]);
+  }, [token, selectedGenre, requestCount]);
 
   // Function to handle selecting a track
   const handleTrackSelect = (track) => {
@@ -123,7 +156,6 @@ const MusicExplorer = () => {
     setSelectedMusic(selectedMusic.filter((item) => item !== track));
   };
 
-  // Function to create a playlist with selected tracks
   const createPlaylist = () => {
     // Logic to create a playlist with selected tracks
     console.log("Selected tracks:", selectedMusic);
