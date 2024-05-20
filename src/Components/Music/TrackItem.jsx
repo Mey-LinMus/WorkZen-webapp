@@ -1,9 +1,23 @@
 import React from "react";
-import { ListGroup, Image } from "react-bootstrap";
+import { ListGroup, FormCheck, Image } from "react-bootstrap";
 
-const TrackItem = ({ track }) => {
+const TrackItem = ({ track, index, onTrackSelect, onTrackDeselect }) => {
+  const handleCheckboxChange = (e) => {
+    if (e.target.checked) {
+      onTrackSelect(track);
+    } else {
+      onTrackDeselect(track);
+    }
+  };
+
   return (
-    <ListGroup.Item className="d-flex align-items-center">
+    <ListGroup.Item key={index} className="d-flex align-items-center">
+      <FormCheck
+        type="checkbox"
+        id={`track-${index}`}
+        label={track.name}
+        onChange={handleCheckboxChange}
+      />
       <Image
         src={track.album.images[0].url}
         alt={track.album.name}
@@ -12,18 +26,6 @@ const TrackItem = ({ track }) => {
         height={64}
         className="mr-3"
       />
-      <div>
-        <strong>{track.name}</strong>
-        <br />
-        <small>{track.artists.map((artist) => artist.name).join(", ")}</small>
-        <br />
-        {track.preview_url && (
-          <audio controls className="mt-2">
-            <source src={track.preview_url} type="audio/mpeg" />
-            Your browser does not support the audio element.
-          </audio>
-        )}
-      </div>
     </ListGroup.Item>
   );
 };

@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   Container,
   Row,
   Col,
   Form,
   ListGroup,
-  Card,
-  Image,
+  Button,
+  FormCheck,
 } from "react-bootstrap";
+import { SelectionContext } from "../Contexts/SelectionContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import TrackItem from "./TrackItem";
 import PlaylistCard from "./PlaylistCard";
@@ -22,6 +23,7 @@ const relaxingGenres = [
 ];
 
 const MusicExplorer = () => {
+  const { selectedMusic, setSelectedMusic } = useContext(SelectionContext);
   const [token, setToken] = useState("");
   const [tracks, setTracks] = useState([]);
   const [playlists, setPlaylists] = useState([]);
@@ -104,6 +106,22 @@ const MusicExplorer = () => {
     }
   }, [token, selectedGenre]);
 
+  // Function to handle selecting a track
+  const handleTrackSelect = (track) => {
+    setSelectedMusic([...selectedMusic, track]);
+  };
+
+  // Function to handle deselecting a track
+  const handleTrackDeselect = (track) => {
+    setSelectedMusic(selectedMusic.filter((item) => item !== track));
+  };
+
+  // Function to create a playlist with selected tracks
+  const createPlaylist = () => {
+    // Logic to create a playlist with selected tracks
+    console.log("Selected tracks:", selectedMusic);
+  };
+
   return (
     <Container className="mt-5">
       <h1 className="mb-4">Explore Spotify Music</h1>
@@ -130,7 +148,13 @@ const MusicExplorer = () => {
           <ListGroup>
             {tracks.length > 0 ? (
               tracks.map((track, index) => (
-                <TrackItem key={index} track={track} />
+                <TrackItem
+                  key={index}
+                  track={track}
+                  index={index}
+                  onTrackSelect={handleTrackSelect}
+                  onTrackDeselect={handleTrackDeselect}
+                />
               ))
             ) : (
               <ListGroup.Item>No tracks found</ListGroup.Item>
@@ -146,6 +170,12 @@ const MusicExplorer = () => {
               </Col>
             ))}
           </Row>
+          <Button
+            onClick={createPlaylist}
+            disabled={selectedMusic.length === 0}
+          >
+            Create Playlist
+          </Button>
         </Col>
       </Row>
     </Container>
