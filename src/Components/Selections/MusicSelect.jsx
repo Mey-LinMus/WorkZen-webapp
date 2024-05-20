@@ -11,6 +11,23 @@ const relaxingGenres = [
   "sleep",
 ];
 
+// Define keywords that typically indicate instrumental tracks
+const instrumentalKeywords = [
+  "instrumental",
+  "piano",
+  "guitar",
+  "violin",
+  "orchestra",
+];
+
+// Function to check if a track's name contains any instrumental keywords
+const isInstrumental = (trackName) => {
+  const lowerCaseTrackName = trackName.toLowerCase();
+  return instrumentalKeywords.some((keyword) =>
+    lowerCaseTrackName.includes(keyword)
+  );
+};
+
 const MusicSelect = () => {
   const [token, setToken] = useState("");
   const [tracks, setTracks] = useState([]);
@@ -46,7 +63,12 @@ const MusicSelect = () => {
           );
           const data = await response.json();
           console.log(data);
-          setTracks(data.tracks || []);
+
+          // Filter out non-lyrical tracks
+          const filteredTracks = data.tracks.filter(
+            (track) => !isInstrumental(track.name)
+          );
+          setTracks(filteredTracks || []);
         } catch (error) {
           console.error("Error fetching tracks:", error);
         }
