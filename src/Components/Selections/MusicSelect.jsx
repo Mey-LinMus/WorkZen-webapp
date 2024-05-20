@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { Container, Row, Col, Form, Image, ListGroup } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const relaxingGenres = [
   "ambient",
@@ -55,40 +57,66 @@ const MusicSelect = () => {
   }, [token, selectedGenre]);
 
   return (
-    <div className="App">
-      <h1>Spotify Tracks</h1>
-      <label>
-        Select Genre:
-        <select
-          value={selectedGenre}
-          onChange={(e) => setSelectedGenre(e.target.value)}
-        >
-          {relaxingGenres.map((genre) => (
-            <option key={genre} value={genre}>
-              {genre}
-            </option>
-          ))}
-        </select>
-      </label>
-      <ul>
-        {tracks.length > 0 ? (
-          tracks.map((track, index) => (
-            <li key={index}>
-              {track.name} by{" "}
-              {track.artists.map((artist) => artist.name).join(", ")}
-              {track.preview_url && (
-                <audio controls>
-                  <source src={track.preview_url} type="audio/mpeg" />
-                  Your browser does not support the audio element.
-                </audio>
-              )}
-            </li>
-          ))
-        ) : (
-          <li>No tracks found</li>
-        )}
-      </ul>
-    </div>
+    <Container className="mt-5">
+      <h1 className="mb-4">Spotify Tracks</h1>
+      <Row className="mb-4">
+        <Col>
+          <Form.Group>
+            <Form.Label>Select Genre:</Form.Label>
+            <Form.Control
+              as="select"
+              value={selectedGenre}
+              onChange={(e) => setSelectedGenre(e.target.value)}
+            >
+              {relaxingGenres.map((genre) => (
+                <option key={genre} value={genre}>
+                  {genre}
+                </option>
+              ))}
+            </Form.Control>
+          </Form.Group>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <ListGroup>
+            {tracks.length > 0 ? (
+              tracks.map((track, index) => (
+                <ListGroup.Item
+                  key={index}
+                  className="d-flex align-items-center"
+                >
+                  <Image
+                    src={track.album.images[0].url}
+                    alt={track.album.name}
+                    thumbnail
+                    width={64}
+                    height={64}
+                    className="mr-3"
+                  />
+                  <div>
+                    <strong>{track.name}</strong>
+                    <br />
+                    <small>
+                      {track.artists.map((artist) => artist.name).join(", ")}
+                    </small>
+                    <br />
+                    {track.preview_url && (
+                      <audio controls className="mt-2">
+                        <source src={track.preview_url} type="audio/mpeg" />
+                        Your browser does not support the audio element.
+                      </audio>
+                    )}
+                  </div>
+                </ListGroup.Item>
+              ))
+            ) : (
+              <ListGroup.Item>No tracks found</ListGroup.Item>
+            )}
+          </ListGroup>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
