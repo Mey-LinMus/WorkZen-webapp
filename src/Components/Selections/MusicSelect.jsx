@@ -1,78 +1,66 @@
-import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { SelectionContext } from "../Contexts/SelectionContext";
+import React, { useEffect, useState } from "react";
 
-const MusicSelectPage = () => {
-  const { selectedMusic, setSelectedMusic } = useContext(SelectionContext);
-  const navigate = useNavigate();
-  const [localSelection, setLocalSelection] = useState([...selectedMusic]);
+const App = () => {
+  const [token, setToken] = useState("");
+  const [tracks, setTracks] = useState([]);
 
-  // Simple array of music options
-  const musicTracks = ["Track 1", "Track 2", "Track 3", "Track 4", "Track 5"];
-
-  const handleSelect = (track) => {
-    setLocalSelection((prevSelection) => {
-      if (prevSelection.includes(track)) {
-        return prevSelection.filter((item) => item !== track);
-      } else {
-        return [...prevSelection, track];
+  useEffect(() => {
+    // Fetch access token from your backend server
+    const fetchToken = async () => {
+      try {
+        const response = await fetch("http://localhost:8888/token");
+        const data = await response.json();
+        setToken(data.access_token);
+      } catch (error) {
+        console.error("Error fetching the token:", error);
       }
-    });
-  };
+    };
 
-  const handleNext = () => {
-    setSelectedMusic(localSelection);
-    navigate("/scene");
-  };
+    fetchToken();
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      // Fetch tracks using the access token
+      const fetchTracks = async () => {
+        try {
+          const response = await fetch(
+            "https://api.spotify.com/v1/playlists/37i9dQZF1DXcBWIGoYBM5M",
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          const data = await response.json();
+          console.log(data);
+          setTracks(data.tracks.items);
+        } catch (error) {
+          console.error("Error fetching tracks:", error);
+        }
+      };
+
+      fetchTracks();
+    }
+  }, [token]);
 
   return (
-    <div>
-      <h1>Select Music</h1>
-      <div style={styles.container}>
-        {musicTracks.map((track, index) => (
-          <div
-            key={index}
-            style={{
-              ...styles.box,
-              backgroundColor: localSelection.includes(track)
-                ? "#d3d3d3"
-                : "#f0f0f0",
-            }}
-            onClick={() => handleSelect(track)}
-          >
-            {track}
-          </div>
+    <div className="App">
+      <h1>Spotify Tracks</h1>
+      <ul>
+        {tracks.map((track, index) => (
+          <li key={index}>
+            {track.track.name} by{" "}
+            {track.track.artists.map((artist) => artist.name).join(", ")}
+            <audio controls>
+              <source src={track.track.preview_url} type="audio/mpeg" />
+              Your browser does not support the audio element.
+            </audio>
+          </li>
         ))}
-      </div>
-      <button style={styles.nextButton} onClick={handleNext}>
-        Next
-      </button>
+      </ul>
     </div>
   );
 };
 
-const styles = {
-  container: {
-    display: "flex",
-    flexWrap: "wrap",
-    gap: "10px",
-    justifyContent: "center",
-  },
-  box: {
-    width: "100px",
-    height: "100px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    border: "1px solid #ccc",
-    borderRadius: "5px",
-    cursor: "pointer",
-  },
-  nextButton: {
-    marginTop: "20px",
-    padding: "10px 20px",
-    fontSize: "16px",
-  },
-};
-
-export default MusicSelectPage;
+export default App;
