@@ -4,7 +4,7 @@ export const SelectionContext = createContext();
 
 export const SelectionProvider = ({ children }) => {
   const [selectedVisual, setSelectedVisual] = useState(null);
-  const [selectedMusic, setSelectedMusic] = useState([]); // Change to an array for playlist
+  const [selectedMusic, setSelectedMusic] = useState([]);
 
   return (
     <SelectionContext.Provider

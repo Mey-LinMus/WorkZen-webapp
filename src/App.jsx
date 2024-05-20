@@ -1,4 +1,5 @@
 import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 import SphereSceneVisual from "./Components/Visuals/SphereSceneVisual";
 import SnowingSceneVisual from "./Components/Visuals/SnowingSceneVisual";
 import SelectionsPage from "./Pages/SelectionPage";
@@ -8,7 +9,7 @@ function App() {
   return (
     <div className="App">
       {/* <SnowingSceneVisual /> */}
-      <MusicSelect />
+      <SelectionsPage />
     </div>
   );
 }
