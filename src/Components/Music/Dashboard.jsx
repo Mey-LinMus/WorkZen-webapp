@@ -75,21 +75,6 @@ export default function Dashboard({ code }) {
     fetchAllPlaylistTracks();
   }, [accessToken]);
 
-  useEffect(() => {
-    if (!playingTrack) return;
-
-    // Fetch lyrics for the playing track
-    axios
-      .get("http://localhost:8888/lyrics", {
-        params: {
-          track: playingTrack.title,
-          artist: playingTrack.artist,
-        },
-      })
-      .then((res) => {
-        setLyrics(res.data.lyrics);
-      });
-  }, [playingTrack]);
 
   return (
     <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>
