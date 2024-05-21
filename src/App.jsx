@@ -1,17 +1,11 @@
-import React from "react";
+import Login from "../src/Components/Music/Login";
+import Dashboard from "../src/Components/Music/Dashboard";
 import "bootstrap/dist/css/bootstrap.min.css";
-import SphereSceneVisual from "./Components/Visuals/SphereSceneVisual";
-import SnowingSceneVisual from "./Components/Visuals/SnowingSceneVisual";
-import SelectionsPage from "./Pages/SelectionPage";
-import MusicSelect from "./Components/Selections/MusicSelect";
+
+const code = new URLSearchParams(window.location.search).get("code");
 
 function App() {
-  return (
-    <div className="App">
-      {/* <SnowingSceneVisual /> */}
-      <SelectionsPage />
-    </div>
-  );
+  return code ? <Dashboard code={code} /> : <Login />;
 }
 
 export default App;
