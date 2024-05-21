@@ -3,7 +3,7 @@ import SpotifyWebApi from "spotify-web-api-node";
 import TrackSearchResult from "./TrackResults";
 import Player from "./Player";
 import useAuth from "./useAuth";
-import { Container } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import axios from "axios";
 
 const spotifyApi = new SpotifyWebApi({
@@ -25,7 +25,6 @@ export default function Dashboard({ code }) {
     if (!accessToken) return;
     spotifyApi.setAccessToken(accessToken);
 
-    // Array of playlist IDs
     const playlistIds = [
       "37i9dQZF1DX4sWSpwq3LiO",
       "37i9dQZF1DWV7EzJMK2FUI",
@@ -35,7 +34,6 @@ export default function Dashboard({ code }) {
       "37i9dQZF1DWVFeEut75IAL",
     ];
 
-    // Fetch tracks from each playlist
     const fetchPlaylistTracks = async (playlistId) => {
       try {
         const response = await spotifyApi.getPlaylistTracks(playlistId);
@@ -62,7 +60,6 @@ export default function Dashboard({ code }) {
       }
     };
 
-    // Fetch tracks from all playlists
     const fetchAllPlaylistTracks = async () => {
       const promises = playlistIds.map((playlistId) =>
         fetchPlaylistTracks(playlistId)
@@ -78,14 +75,34 @@ export default function Dashboard({ code }) {
 
   return (
     <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>
-      <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}>
-        {playlistTracks.map((track) => (
-          <TrackSearchResult
-            track={track}
-            key={track.uri}
-            chooseTrack={chooseTrack}
-          />
-        ))}
+      <div
+        className="flex-grow-1 my-2"
+        style={{ overflowY: "auto", overflowX: "hidden" }}
+      >
+        <Row>
+          {playlistTracks.map((track) => (
+            <Col key={track.uri} xs={6} sm={4} md={3} lg={2} className="mb-3">
+              <Button
+                variant="outline-dark"
+                className="w-100"
+                onClick={() => chooseTrack(track)}
+                style={{ padding: "0.5rem" }}
+              >
+                <img
+                  src={track.albumUrl}
+                  alt={track.title}
+                  style={{ width: "100%", height: "auto", borderRadius: "4px" }}
+                />
+                <div style={{ fontSize: "0.9rem", fontWeight: "bold" }}>
+                  {track.title}
+                </div>
+                <div className="text-muted" style={{ fontSize: "0.8rem" }}>
+                  {track.artist}
+                </div>
+              </Button>
+            </Col>
+          ))}
+        </Row>
         {playlistTracks.length === 0 && (
           <div className="text-center" style={{ whiteSpace: "pre" }}>
             {lyrics}
