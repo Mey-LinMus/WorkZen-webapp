@@ -1,12 +1,15 @@
 import React from "react";
-import { Container } from "react-bootstrap";
-import Dashboard from "../src/Components/Music/Dashboard"; // Import the Dashboard component directly
+import Dashboard from "../Music/Dashboard";
+import Login from "../Music/Login";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const code = new URLSearchParams(window.location.search).get("code");
+function MusicSelect() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const code = urlParams.get("code");
 
-function App() {
-  return <Dashboard code={code} />; // Render the Dashboard component directly
+  console.log("Extracted code:", code); 
+
+  return code ? <Dashboard code={code} /> : <Login />;
 }
 
-export default App;
+export default MusicSelect;

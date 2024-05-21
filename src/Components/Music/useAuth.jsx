@@ -1,35 +1,22 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-
 export default function useAuth(code) {
   const [accessToken, setAccessToken] = useState();
   const [refreshToken, setRefreshToken] = useState();
   const [expiresIn, setExpiresIn] = useState();
 
   useEffect(() => {
-    // Check if there is an access token in local storage
-    const localAccessToken = localStorage.getItem("accessToken");
-    if (localAccessToken) {
-      setAccessToken(localAccessToken);
-      return;
-    }
-
     axios
       .post("http://localhost:8888/login", {
         code,
       })
       .then((res) => {
-        const { accessToken, refreshToken, expiresIn } = res.data;
-        setAccessToken(accessToken);
-        setRefreshToken(refreshToken);
-        setExpiresIn(expiresIn);
-        // Store the access token in local storage
-        localStorage.setItem("accessToken", accessToken);
+        setAccessToken(res.data.accessToken);
+        setRefreshToken(res.data.refreshToken);
+        setExpiresIn(res.data.expiresIn);
         window.history.pushState({}, null, "/");
       })
-      .catch(() => {
-        // Handle login error
-      });
+      .catch(() => {});
   }, [code]);
 
   useEffect(() => {
@@ -40,19 +27,14 @@ export default function useAuth(code) {
           refreshToken,
         })
         .then((res) => {
-          const { accessToken, expiresIn } = res.data;
-          setAccessToken(accessToken);
-          setExpiresIn(expiresIn);
-          // Update the access token in local storage
-          localStorage.setItem("accessToken", accessToken);
+          setAccessToken(res.data.accessToken);
+          setExpiresIn(res.data.expiresIn);
         })
         .catch(() => {
           window.location = "/";
         });
     }, (expiresIn - 60) * 1000);
-
     return () => clearInterval(interval);
   }, [refreshToken, expiresIn]);
-
   return accessToken;
 }

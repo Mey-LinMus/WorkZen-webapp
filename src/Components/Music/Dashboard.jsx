@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import SpotifyWebApi from "spotify-web-api-node";
-import TrackSearchResult from "./TrackResults";
 import Player from "./Player";
 import useAuth from "./useAuth";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import axios from "axios";
 
 const spotifyApi = new SpotifyWebApi({
-  clientId: "1f4f7e164fe945998e2b5904bd676792",
+  clientId: process.env.REACT_APP_SPOTIFY_CLIENT_ID,
 });
 
 export default function Dashboard({ code }) {
+  console.log("Dashboard code:", code); // Debug logging
+
   const accessToken = useAuth(code);
   const [playlistTracks, setPlaylistTracks] = useState([]);
   const [playingTrack, setPlayingTrack] = useState();
@@ -22,6 +22,7 @@ export default function Dashboard({ code }) {
   }
 
   useEffect(() => {
+    console.log("AccessToken:", accessToken); // Debug logging
     if (!accessToken) return;
     spotifyApi.setAccessToken(accessToken);
 
@@ -71,7 +72,6 @@ export default function Dashboard({ code }) {
 
     fetchAllPlaylistTracks();
   }, [accessToken]);
-
 
   return (
     <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>
