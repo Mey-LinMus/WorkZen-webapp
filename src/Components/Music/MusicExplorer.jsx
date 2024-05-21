@@ -34,8 +34,9 @@ const App = () => {
 
   const fetchTracks = async () => {
     try {
+      // Fetch tracks from a curated playlist that includes a variety of genres
       const response = await fetch(
-        "https://api.spotify.com/v1/playlists/37i9dQZF1DXcBWIGoYBM5M",
+        "https://api.spotify.com/v1/playlists/37i9dQZF1DX4WYpdgoIcn6", // Example playlist URL
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -56,16 +57,19 @@ const App = () => {
       <h1>Spotify Tracks</h1>
       <p>Total Requests: {requestCount}</p> {/* Display total request count */}
       <ul>
-        {tracks.map((track, index) => (
-          <li key={index}>
-            {track.track.name} by{" "}
-            {track.track.artists.map((artist) => artist.name).join(", ")}
-            <audio controls>
-              <source src={track.track.preview_url} type="audio/mpeg" />
-              Your browser does not support the audio element.
-            </audio>
-          </li>
-        ))}
+        {tracks.map((track, index) => {
+          console.log("Track item:", track); // Log the track item
+          return (
+            <li key={index}>
+              {track.track.name} by{" "}
+              {track.track.artists.map((artist) => artist.name).join(", ")}
+              <audio controls>
+                <source src={track.track.preview_url} type="audio/mpeg" />
+                Your browser does not support the audio element.
+              </audio>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
