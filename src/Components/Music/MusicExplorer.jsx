@@ -34,19 +34,30 @@ const App = () => {
 
   const fetchTracks = async () => {
     try {
-      // Fetch tracks from a curated playlist that includes a variety of genres
-      const response = await fetch(
-        "https://api.spotify.com/v1/playlists/37i9dQZF1DX4WYpdgoIcn6", // Example playlist URL
-        {
+      const playlistIds = [
+        "37i9dQZF1DX4sWSpwq3LiO",
+        "37i9dQZF1DWV7EzJMK2FUI",
+        "37i9dQZF1DWZqd5JICZI0u",
+        "37i9dQZF1DXebxttQCq0zA",
+        "37i9dQZF1DWWQRwui0ExPn",
+        " 37i9dQZF1DWVFeEut75IAL",
+      ];
+      const playlistRequests = playlistIds.map((playlistId) =>
+        fetch(`https://api.spotify.com/v1/playlists/${playlistId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        })
       );
-      const data = await response.json();
-      console.log(data);
-      setTracks(data.tracks.items);
-      setRequestCount((prevCount) => prevCount + 1); // Increment request count
+
+      const responses = await Promise.all(playlistRequests);
+      const playlistData = await Promise.all(
+        responses.map((response) => response.json())
+      );
+
+      console.log("Playlist data:", playlistData); // Log the playlist data
+
+      // Continue with processing the playlist data and updating state...
     } catch (error) {
       console.error("Error fetching tracks:", error);
     }
