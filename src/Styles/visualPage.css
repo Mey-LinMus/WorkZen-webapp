@@ -1,14 +1,9 @@
-.selectable-box {
-  border: 1px solid #dee2e6;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  transition: border-color 0.15s ease-in-out;
+.video-preview {
+  width: 320px;
+  height: 240px;
+  border-radius: 20px;
 }
 
-.selectable-box.active {
-  border-color: #007bff;
-}
-
-.selectable-box:hover {
-  border-color: #007bff;
+.video-button {
+  margin: 10px;
 }

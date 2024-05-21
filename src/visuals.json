@@ -3,12 +3,14 @@
     {
       "id": 1,
       "title": "Snowing",
-      "component": "SnowingSceneVisual"
+      "component": "SnowingSceneVisual",
+      "video": "Videos/SnowingVisual.mp4"
     },
     {
       "id": 2,
       "title": "Sphere",
-      "component": "SphereSceneVisual"
+      "component": "SphereSceneVisual",
+      "video": "Videos/SphereVisual.mp4"
     }
   ]
 }
