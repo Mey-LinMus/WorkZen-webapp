@@ -1,11 +1,10 @@
 import React from "react";
-import { Container } from "react-bootstrap";
-import MusicSelect from "./Components/Selections/MusicSelect";
+import SelectionPage from "./Pages/SelectionPages/SelectionPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-
 function App() {
-  return <MusicSelect />;
+  return <SelectionPage />;
+  
 }
 
 export default App;

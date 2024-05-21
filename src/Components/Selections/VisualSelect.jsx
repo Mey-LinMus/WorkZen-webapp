@@ -1,21 +1,11 @@
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { SelectionContext } from "../Contexts/SelectionContext";
 import { Button } from "react-bootstrap";
 import visualsData from "../../visuals.json";
 import "../../Styles/visualPage.css";
 
 const VisualSelectPage = () => {
-  const { setSelectedVisual } = useContext(SelectionContext);
-  const navigate = useNavigate();
-  const [visuals, setVisuals] = useState(visualsData.visuals); // Use the imported JSON data
 
-  const handleSelect = async (visual) => {
-    // Dynamically import the component
-    const component = await import(`../Visuals/${visual.component}.jsx`);
-    setSelectedVisual({ title: visual.title, Component: component.default });
-    navigate("/music-select");
-  };
+  const [visuals, setVisuals] = useState(visualsData.visuals); // Use the imported JSON data
 
   return (
     <div>
@@ -24,7 +14,6 @@ const VisualSelectPage = () => {
         <Button
           key={visual.id}
           className="video-button"
-          onClick={() => handleSelect(visual)}
           variant="outline-primary"
         >
           <video
