@@ -1,13 +1,16 @@
 import React, { useEffect, useState, useRef } from "react";
+import { Container, Card, Row, Col } from "react-bootstrap";
+import { FaPlayCircle } from "react-icons/fa";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../../Styles/musicExplorer.css"; // Ensure you create and import this CSS file
 
-const App = () => {
+const MusicExplorer = () => {
   const [token, setToken] = useState("");
   const [tracks, setTracks] = useState([]);
-  const [requestCount, setRequestCount] = useState(0); // State variable to track request count
-  const isMounted = useRef(false); // Create a ref to track component mount state
+  const [requestCount, setRequestCount] = useState(0);
+  const isMounted = useRef(false);
 
   useEffect(() => {
-    // Fetch access token from your backend server only on component mount
     if (!isMounted.current) {
       fetchToken();
       isMounted.current = true;
@@ -16,7 +19,6 @@ const App = () => {
 
   useEffect(() => {
     if (token) {
-      // Fetch tracks using the access token
       fetchTracks();
     }
   }, [token]);
@@ -26,7 +28,7 @@ const App = () => {
       const response = await fetch("http://localhost:8888/token");
       const data = await response.json();
       setToken(data.access_token);
-      setRequestCount((prevCount) => prevCount + 1); // Increment request count
+      setRequestCount((prevCount) => prevCount + 1);
     } catch (error) {
       console.error("Error fetching the token:", error);
     }
@@ -43,7 +45,6 @@ const App = () => {
         "37i9dQZF1DWVFeEut75IAL",
       ];
 
-      // Fetch all tracks from multiple playlists in a single request
       const playlistTracksRequests = playlistIds.map((playlistId) =>
         fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
           headers: {
@@ -57,16 +58,14 @@ const App = () => {
         responses.map((response) => response.json())
       );
 
-      // Flatten the array of tracks from multiple playlists into a single array
       const allTracks = playlistTracksData.reduce(
         (accumulator, playlistTracks) =>
           accumulator.concat(playlistTracks.items),
         []
       );
 
-      console.log("All tracks:", allTracks); // Log all tracks
+      console.log("All tracks:", allTracks);
 
-      // Update the state with all tracks
       setTracks(allTracks);
     } catch (error) {
       console.error("Error fetching tracks:", error);
@@ -74,26 +73,45 @@ const App = () => {
   };
 
   return (
-    <div className="App">
+    <Container className="App">
       <h1>Spotify Tracks</h1>
-      <p>Total Requests: {requestCount}</p> {/* Display total request count */}
-      <ul>
-        {tracks.map((track, index) => {
-          console.log("Track item:", track); // Log the track item
-          return (
-            <li key={index}>
-              {track.track.name} by{" "}
-              {track.track.artists.map((artist) => artist.name).join(", ")}
-              <audio controls>
-                <source src={track.track.preview_url} type="audio/mpeg" />
-                Your browser does not support the audio element.
-              </audio>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+      <p>Total Requests: {requestCount}</p>
+      <Row xs={1} sm={2} md={3} lg={4} className="g-4">
+        {tracks.map((track, index) => (
+          <Col key={index}>
+            <Card className="track-item">
+              <div className="card-img-container">
+                <Card.Img
+                  variant="top"
+                  src={track.track.album.images[0].url}
+                  alt={track.track.name}
+                  className="card-img"
+                />
+                <div className="play-button-container">
+                  <FaPlayCircle
+                    className="play-button"
+                    size={50}
+                    onClick={() => {
+                      const audio = new Audio(track.track.preview_url);
+                      audio.play();
+                    }}
+                  />
+                </div>
+              </div>
+              <Card.Body>
+                <Card.Title className="track-title">
+                  {track.track.name}
+                </Card.Title>
+                <Card.Text className="track-artists">
+                  {track.track.artists.map((artist) => artist.name).join(", ")}
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    </Container>
   );
 };
 
-export default App;
+export default MusicExplorer;
