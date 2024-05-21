@@ -40,24 +40,34 @@ const App = () => {
         "37i9dQZF1DWZqd5JICZI0u",
         "37i9dQZF1DXebxttQCq0zA",
         "37i9dQZF1DWWQRwui0ExPn",
-        " 37i9dQZF1DWVFeEut75IAL",
+        "37i9dQZF1DWVFeEut75IAL",
       ];
-      const playlistRequests = playlistIds.map((playlistId) =>
-        fetch(`https://api.spotify.com/v1/playlists/${playlistId}`, {
+
+      // Fetch all tracks from multiple playlists in a single request
+      const playlistTracksRequests = playlistIds.map((playlistId) =>
+        fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
       );
 
-      const responses = await Promise.all(playlistRequests);
-      const playlistData = await Promise.all(
+      const responses = await Promise.all(playlistTracksRequests);
+      const playlistTracksData = await Promise.all(
         responses.map((response) => response.json())
       );
 
-      console.log("Playlist data:", playlistData); // Log the playlist data
+      // Flatten the array of tracks from multiple playlists into a single array
+      const allTracks = playlistTracksData.reduce(
+        (accumulator, playlistTracks) =>
+          accumulator.concat(playlistTracks.items),
+        []
+      );
 
-      // Continue with processing the playlist data and updating state...
+      console.log("All tracks:", allTracks); // Log all tracks
+
+      // Update the state with all tracks
+      setTracks(allTracks);
     } catch (error) {
       console.error("Error fetching tracks:", error);
     }
