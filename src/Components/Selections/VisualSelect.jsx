@@ -1,10 +1,16 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import { Button } from "react-bootstrap";
 import visualsData from "../../visuals.json";
 import "../../Styles/visualPage.css";
 
-const VisualSelectPage = () => {
-  const [visuals, setVisuals] = useState(visualsData.visuals); // Use the imported JSON data
+const VisualSelect = ({ onSelect }) => {
+  const visuals = visualsData.visuals; // Use the imported JSON data
+
+  // Function to handle the selection of a visual
+  const handleVisualClick = () => {
+    // Call the onSelect function passed from the parent component
+    onSelect();
+  };
 
   return (
     <div>
@@ -14,6 +20,7 @@ const VisualSelectPage = () => {
           key={visual.id}
           className="video-button"
           variant="outline-primary"
+          onClick={handleVisualClick} // Call handleVisualClick when the button is clicked
         >
           <video
             className="video-preview"
@@ -32,4 +39,4 @@ const VisualSelectPage = () => {
   );
 };
 
-export default VisualSelectPage;
+export default VisualSelect;
