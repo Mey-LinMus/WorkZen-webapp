@@ -4,7 +4,6 @@ import visualsData from "../../visuals.json";
 import "../../Styles/visualPage.css";
 
 const VisualSelectPage = () => {
-
   const [visuals, setVisuals] = useState(visualsData.visuals); // Use the imported JSON data
 
   return (

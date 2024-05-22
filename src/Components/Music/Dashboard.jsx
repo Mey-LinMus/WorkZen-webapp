@@ -5,7 +5,7 @@ import useAuth from "./useAuth";
 import { Container, Row, Col, Button } from "react-bootstrap";
 
 const spotifyApi = new SpotifyWebApi({
-  clientId: process.env.REACT_APP_SPOTIFY_CLIENT_ID,
+  clientId: "1f4f7e164fe945998e2b5904bd676792",
 });
 
 export default function Dashboard({ code }) {
