@@ -1,12 +1,15 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
-import { SelectionProvider } from "../src/Components/Contexts/SelectionContext.jsx";
-import "bootstrap/dist/css/bootstrap.min.css";
+import React from 'react';
+import { createRoot } from 'react-dom/client'; 
+import App from './App';
+import { SelectionProvider } from './Components/Contexts/SelectionContext';
 
-ReactDOM.render(
-  <SelectionProvider>
-    <App />
-  </SelectionProvider>,
-  document.getElementById("root")
+const root = createRoot(document.getElementById('root')); 
+
+root.render(
+  <React.StrictMode>
+    <SelectionProvider>
+      <App />
+    </SelectionProvider>
+  </React.StrictMode>
 );
+
