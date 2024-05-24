@@ -1,12 +1,14 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useContext } from "react";
 
-// SelectionContext.js
-export const SelectionContext = createContext();
+const SelectionContext = createContext();
+
+export const useSelection = () => {
+  return useContext(SelectionContext);
+};
 
 export const SelectionProvider = ({ children }) => {
   const [selectedVisual, setSelectedVisual] = useState(null);
-  const [selectedMusic, setSelectedMusic] = useState([]);
-  const [selectedPlaylist, setSelectedPlaylist] = useState(null); // Add this line
+  const [selectedMusic, setSelectedMusic] = useState(null);
 
   return (
     <SelectionContext.Provider
@@ -15,8 +17,6 @@ export const SelectionProvider = ({ children }) => {
         setSelectedVisual,
         selectedMusic,
         setSelectedMusic,
-        selectedPlaylist, // Add this line
-        setSelectedPlaylist, // Add this line
       }}
     >
       {children}

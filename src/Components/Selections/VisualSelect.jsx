@@ -4,13 +4,7 @@ import visualsData from "../../visuals.json";
 import "../../Styles/visualPage.css";
 
 const VisualSelect = ({ onSelect }) => {
-  const visuals = visualsData.visuals; // Use the imported JSON data
-
-  // Function to handle the selection of a visual
-  const handleVisualClick = () => {
-    // Call the onSelect function passed from the parent component
-    onSelect();
-  };
+  const visuals = visualsData.visuals;
 
   return (
     <div>
@@ -20,7 +14,7 @@ const VisualSelect = ({ onSelect }) => {
           key={visual.id}
           className="video-button"
           variant="outline-primary"
-          onClick={handleVisualClick} // Call handleVisualClick when the button is clicked
+          onClick={() => onSelect(visual)}
         >
           <video
             className="video-preview"

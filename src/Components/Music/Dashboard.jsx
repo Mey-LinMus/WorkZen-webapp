@@ -9,36 +9,36 @@ const spotifyApi = new SpotifyWebApi({
 });
 
 export default function Dashboard({ code }) {
-  console.log("Dashboard code:", code); // Debug logging
+  // console.log("Dashboard code:", code);
 
   const accessToken = useAuth(code);
   const [playlistTracks, setPlaylistTracks] = useState([]);
   const [playingTrack, setPlayingTrack] = useState();
-  const [lyrics, setLyrics] = useState("");
 
   function chooseTrack(track) {
     setPlayingTrack(track);
-    setLyrics("");
+    console.log("Chosen Track", track);
   }
 
   useEffect(() => {
-    console.log("AccessToken:", accessToken); // Debug logging
+    console.log("AccessToken:", accessToken);
     if (!accessToken) return;
     spotifyApi.setAccessToken(accessToken);
 
     const playlistIds = [
-      "37i9dQZF1DX4sWSpwq3LiO",
-      "37i9dQZF1DWV7EzJMK2FUI",
-      "37i9dQZF1DWZqd5JICZI0u",
-      "37i9dQZF1DXebxttQCq0zA",
-      "37i9dQZF1DWWQRwui0ExPn",
-      "37i9dQZF1DWVFeEut75IAL",
+      "3YeJcIqzSIH1sy1molDRre",
+      "2y5zb6o0SFrQXNGq5DPDy5",
+      // "37i9dQZF1DWZqd5JICZI0u",
+      // "37i9dQZF1DXebxttQCq0zA",
+      // "37i9dQZF1DWWQRwui0ExPn",
+      // "37i9dQZF1DWVFeEut75IAL",
     ];
 
     const fetchPlaylistTracks = async (playlistId) => {
       try {
         const response = await spotifyApi.getPlaylistTracks(playlistId);
         return response.body.items.map((item) => {
+          // console.log("Songs", item);
           const track = item.track;
           const smallestAlbumImage = track.album.images.reduce(
             (smallest, image) => {
@@ -104,13 +104,8 @@ export default function Dashboard({ code }) {
           ))}
         </Row>
         {playlistTracks.length === 0 && (
-          <div className="text-center" style={{ whiteSpace: "pre" }}>
-            {lyrics}
-          </div>
+          <div className="text-center" style={{ whiteSpace: "pre" }}></div>
         )}
-      </div>
-      <div>
-        <Player accessToken={accessToken} trackUri={playingTrack?.uri} />
       </div>
     </Container>
   );
