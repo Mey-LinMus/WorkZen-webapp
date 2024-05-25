@@ -1,8 +1,12 @@
+// ScenePage.js
+
 import React, { useEffect, useState } from "react";
+import Player from "../Components/Music/Player";
 
 const ScenePage = () => {
   const [selectedVisual, setSelectedVisual] = useState(null);
   const [selectedTrack, setSelectedTrack] = useState(null);
+  const spotifyAccessToken = localStorage.getItem("spotifyAccessToken"); // Retrieve access token
 
   useEffect(() => {
     // Retrieve selected visual from local storage
@@ -36,6 +40,14 @@ const ScenePage = () => {
           <img src={selectedTrack.albumUrl} alt={selectedTrack.title} />
           <p>{selectedTrack.title}</p>
           <p>{selectedTrack.artist}</p>
+        </div>
+      )}
+      {spotifyAccessToken && selectedTrack && (
+        <div>
+          <Player
+            accessToken={spotifyAccessToken}
+            trackUri={selectedTrack.uri}
+          />
         </div>
       )}
     </div>

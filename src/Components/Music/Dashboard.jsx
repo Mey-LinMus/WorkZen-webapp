@@ -13,8 +13,14 @@ export default function Dashboard({ code }) {
   const accessToken = useAuth(code);
   const [playlistTracks, setPlaylistTracks] = useState([]);
   const [playingTrack, setPlayingTrack] = useState();
-  const [selectedCategory, setSelectedCategory] = useState("classic"); 
-  const navigate = useNavigate(); 
+  const [selectedCategory, setSelectedCategory] = useState("classic");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (accessToken) {
+      localStorage.setItem("spotifyAccessToken", accessToken);
+    }
+  }, [accessToken]);
 
   const playlistIds = {
     classic: "3YeJcIqzSIH1sy1molDRre",
@@ -24,13 +30,13 @@ export default function Dashboard({ code }) {
   function chooseTrack(track) {
     setPlayingTrack(track);
     localStorage.setItem("selectedTrack", JSON.stringify(track));
-    navigate("/scene-page"); 
+    navigate("/scene-page");
   }
 
   useEffect(() => {
     if (!accessToken) return;
     spotifyApi.setAccessToken(accessToken);
-
+    console.log("accessToken", accessToken);
     const fetchPlaylistTracks = async (playlistId) => {
       try {
         const response = await spotifyApi.getPlaylistTracks(playlistId);
@@ -64,7 +70,7 @@ export default function Dashboard({ code }) {
     };
 
     fetchTracks();
-  }, [accessToken, selectedCategory]); 
+  }, [accessToken, selectedCategory]);
 
   return (
     <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>

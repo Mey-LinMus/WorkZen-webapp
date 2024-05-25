@@ -11,6 +11,7 @@ function MusicSelect() {
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get("code");
   const [selectedVisual, setSelectedVisual] = useState(null);
+  const [spotifyCode, setSpotifyCode] = useState(null); // State for Spotify code
 
   useEffect(() => {
     if (!code) {
@@ -19,6 +20,11 @@ function MusicSelect() {
 
     const visual = JSON.parse(localStorage.getItem("selectedVisual"));
     setSelectedVisual(visual);
+
+    localStorage.setItem("spotifyCode", code);
+    setSpotifyCode(code);
+
+    console.log("SpotifyCode", code);
   }, [code]);
 
   return (
@@ -42,5 +48,4 @@ function MusicSelect() {
     </div>
   );
 }
-
 export default MusicSelect;
