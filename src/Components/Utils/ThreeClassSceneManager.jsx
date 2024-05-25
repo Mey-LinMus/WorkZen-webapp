@@ -10,6 +10,7 @@ class ThreeClassSceneManager {
     this.scene = null;
     this.renderer = null;
     this.effect = null;
+    this.isStereoEnabled = false;
 
     this.init();
     this.setupEventListeners();
@@ -79,20 +80,34 @@ class ThreeClassSceneManager {
     } else {
       console.log("DeviceMotionEvent is not defined");
     }
-    this.requestPermission();
   }
 
   onDeviceOrientation(event) {
-    // Extract device orientation data
     const alpha = event.alpha;
     const beta = event.beta;
     const gamma = event.gamma;
 
-    // Update scene based on device orientation
-    // Example: Rotate the camera based on device orientation
-    this.camera.rotation.x = (beta * Math.PI) / 180; // Convert degrees to radians
+    this.camera.rotation.x = (beta * Math.PI) / 180;
     this.camera.rotation.y = (gamma * Math.PI) / 180;
     this.camera.rotation.z = (alpha * Math.PI) / 180;
+  }
+
+  enableStereoEffect() {
+    this.isStereoEnabled = true;
+    this.effect.setSize(window.innerWidth, window.innerHeight);
+  }
+
+  disableStereoEffect() {
+    this.isStereoEnabled = false;
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+  }
+
+  render() {
+    if (this.isStereoEnabled) {
+      this.effect.render(this.scene, this.camera);
+    } else {
+      this.renderer.render(this.scene, this.camera);
+    }
   }
 
   getCamera() {

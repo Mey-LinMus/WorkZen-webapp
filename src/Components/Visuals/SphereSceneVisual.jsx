@@ -1,15 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import * as THREE from "three";
-import DeviceOrientationControls from "../Utils/DeviceOrientationManager";
 import ThreeClassSceneManager from "../Utils/ThreeClassSceneManager";
+import VRButton from "../Utils/VRButton";
 
 const SphereScene = () => {
   const containerRef = useRef(null);
   const spheres = useRef([]);
+  const [sceneManager, setSceneManager] = useState(null);
   const [scene, setScene] = useState(null);
   const [camera, setCamera] = useState(null);
   const [renderer, setRenderer] = useState(null);
-  const [permissionGranted, setPermissionGranted] = useState(false);
 
   useEffect(() => {
     let directionalLight;
@@ -17,7 +17,6 @@ const SphereScene = () => {
     const scene = sceneManager.getScene();
     const camera = sceneManager.getCamera();
     const renderer = sceneManager.getRenderer();
-    const effect = sceneManager.getEffect();
 
     const init = () => {
       scene.background = new THREE.Color(0x011c47);
@@ -52,13 +51,13 @@ const SphereScene = () => {
     setScene(scene);
     setCamera(camera);
     setRenderer(renderer);
-    setPermissionGranted(permissionGranted);
+    setSceneManager(sceneManager);
 
     const onWindowResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
-      effect.setSize(window.innerWidth, window.innerHeight);
+      sceneManager.effect.setSize(window.innerWidth, window.innerHeight);
     };
 
     const animate = () => {
@@ -74,11 +73,13 @@ const SphereScene = () => {
         sphere.position.x = 5000 * Math.cos(timer + i);
         sphere.position.y = 5000 * Math.sin(timer + i * 1.1);
       }
-      effect.render(scene, camera);
+      sceneManager.render();
     };
 
     init();
     animate();
+
+    window.addEventListener("resize", onWindowResize);
 
     return () => {
       window.removeEventListener("resize", onWindowResize);
@@ -86,40 +87,10 @@ const SphereScene = () => {
     };
   }, []);
 
-  const handlePermissionGranted = () => {
-    setPermissionGranted(true); // Update permission state
-  };
-
   return (
     <>
-      <button
-        id="request"
-        style={{
-          position: "absolute",
-          top: "10px",
-          left: "10px",
-          zIndex: "1000",
-          padding: "10px 20px",
-          fontSize: "16px",
-          backgroundColor: "#eb3434",
-          color: "#fff",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
-      >
-        click
-      </button>
+      {sceneManager && <VRButton sceneManager={sceneManager} />}
       <div ref={containerRef} />
-
-      {scene && camera && renderer && (
-        <DeviceOrientationControls
-          camera={camera}
-          renderer={renderer}
-          scene={scene}
-          onPermissionGranted={handlePermissionGranted}
-        />
-      )}
     </>
   );
 };
