@@ -3,18 +3,21 @@ import { Button } from "react-bootstrap";
 import visualsData from "../../visuals.json";
 import "../../Styles/visualPage.css";
 
-const VisualSelect = ({ onSelect }) => {
+const VisualSelect = ({ onVisualSelect }) => {
   const visuals = visualsData.visuals;
+
+  const handleVisualClick = (visual) => {
+    onVisualSelect(visual);
+  };
 
   return (
     <div>
-      <h1>Select a Visual</h1>
       {visuals.map((visual) => (
         <Button
           key={visual.id}
           className="video-button"
           variant="outline-primary"
-          onClick={() => onSelect(visual)}
+          onClick={() => handleVisualClick(visual)}
         >
           <video
             className="video-preview"

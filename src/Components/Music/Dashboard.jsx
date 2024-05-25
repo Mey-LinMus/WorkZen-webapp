@@ -20,6 +20,35 @@ export default function Dashboard({ code }) {
     console.log("Chosen Track", track);
   }
 
+// DEBUG: Code to know if there are duplicate tracks in the playlist
+
+  // useEffect(() => {
+   
+  //   const uriCount = {};
+
+ 
+  //   playlistTracks.forEach((track) => {
+  //     uriCount[track.uri] = (uriCount[track.uri] || 0) + 1;
+  //   });
+
+  //   const duplicateUris = Object.keys(uriCount).filter(
+  //     (uri) => uriCount[uri] > 1
+  //   );
+
+
+  //   console.log("Duplicate URIs:", duplicateUris);
+  //   console.log(
+  //     "Duplicate Tracks:",
+  //     playlistTracks.filter((track) => duplicateUris.includes(track.uri))
+  //   );
+  // }, [playlistTracks]);
+
+
+
+  useEffect(() => {
+    // console.log("playlistTracks:", playlistTracks);
+  }, [playlistTracks]);
+
   useEffect(() => {
     console.log("AccessToken:", accessToken);
     if (!accessToken) return;
@@ -28,10 +57,6 @@ export default function Dashboard({ code }) {
     const playlistIds = [
       "3YeJcIqzSIH1sy1molDRre",
       "2y5zb6o0SFrQXNGq5DPDy5",
-      // "37i9dQZF1DWZqd5JICZI0u",
-      // "37i9dQZF1DXebxttQCq0zA",
-      // "37i9dQZF1DWWQRwui0ExPn",
-      // "37i9dQZF1DWVFeEut75IAL",
     ];
 
     const fetchPlaylistTracks = async (playlistId) => {

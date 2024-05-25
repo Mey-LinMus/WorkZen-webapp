@@ -1,35 +1,13 @@
 import React from "react";
-import { useSelection } from "../Components/Contexts/SelectionContext";
+import Scene from "../Components/Scene";
 
-function ScenePage() {
-  const { selectedVisual, selectedMusic } = useSelection();
-
+const ScenePage = ({ selectedVisual, selectedSong }) => {
   return (
     <div>
-      <h1>ScenePage</h1>
-      {selectedVisual && (
-        <div>
-          <h2>Selected Visual</h2>
-          <video
-            src={selectedVisual.video}
-            type="video/mp4"
-            controls
-            autoPlay
-            loop
-          />
-          <p>{selectedVisual.title}</p>
-        </div>
-      )}
-      {selectedMusic && (
-        <div>
-          <h2>Selected Music</h2>
-          <p>
-            {selectedMusic.title} by {selectedMusic.artist}
-          </p>
-        </div>
-      )}
+      <h1>Scene</h1>
+      <Scene selectedVisual={selectedVisual} selectedSong={selectedSong} />
     </div>
   );
-}
+};
 
 export default ScenePage;
