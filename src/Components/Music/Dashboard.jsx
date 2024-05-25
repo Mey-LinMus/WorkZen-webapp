@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import SpotifyWebApi from "spotify-web-api-node";
-import Player from "./Player";
 import useAuth from "./useAuth";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import "../../Styles/dashboard.css";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: "1f4f7e164fe945998e2b5904bd676792",
@@ -61,7 +61,10 @@ export default function Dashboard({ code }) {
 
           return {
             artist: track.artists[0].name,
-            title: track.name,
+            title:
+              track.name.length > 25
+                ? track.name.substring(0, 25) + "..."
+                : track.name,
             uri: track.uri,
             albumUrl: smallestAlbumImage.url,
           };

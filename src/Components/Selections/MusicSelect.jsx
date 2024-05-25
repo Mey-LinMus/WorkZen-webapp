@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Dashboard from "../Music/Dashboard";
 import Login from "../Music/Login";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../../Styles/musicPage.css";
 
 const URI = "http://localhost:3000/music-select";
 const client_id = "1f4f7e164fe945998e2b5904bd676792";
@@ -11,7 +12,7 @@ function MusicSelect() {
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get("code");
   const [selectedVisual, setSelectedVisual] = useState(null);
-  const [spotifyCode, setSpotifyCode] = useState(null); 
+  const [spotifyCode, setSpotifyCode] = useState(null);
 
   useEffect(() => {
     if (!code) {
@@ -28,11 +29,12 @@ function MusicSelect() {
   }, [code]);
 
   return (
-    <div>
+    <div className="container">
       {selectedVisual && (
         <div>
+          <h2 className="selected-text">Selected</h2>
           <video
-            className="video-preview"
+            className="video-musicSelect"
             src={selectedVisual.video}
             type="video/mp4"
             autoPlay
@@ -47,4 +49,5 @@ function MusicSelect() {
     </div>
   );
 }
+
 export default MusicSelect;
