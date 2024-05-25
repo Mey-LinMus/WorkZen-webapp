@@ -1,13 +1,16 @@
 import React from "react";
 import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom"; 
 import visualsData from "../../visuals.json";
 import "../../Styles/visualPage.css";
 
-const VisualSelect = ({ onVisualSelect }) => {
+const VisualSelect = () => {
   const visuals = visualsData.visuals;
+  const navigate = useNavigate(); 
 
   const handleVisualClick = (visual) => {
-    onVisualSelect(visual);
+    localStorage.setItem("selectedVisual", JSON.stringify(visual)); 
+    navigate("/music-select"); 
   };
 
   return (

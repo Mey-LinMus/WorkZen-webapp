@@ -1,14 +1,14 @@
-import React from "react";
-import VisualSelect from "../../Components/Selections/VisualSelect";
+// import React from "react";
+// import VisualSelect from "../../Components/Selections/VisualSelect";
 
 
-function VisualSelectPage() {
+// function VisualSelectPage() {
 
-  return (
-    <div>
-      <VisualSelect/>
-    </div>
-  );
-}
+//   return (
+//     <div>
+//       <VisualSelect/>
+//     </div>
+//   );
+// }
 
-export default VisualSelectPage;
+// export default VisualSelectPage;

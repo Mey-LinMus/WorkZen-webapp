@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Dashboard from "../Music/Dashboard";
 import Login from "../Music/Login";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -10,14 +10,37 @@ const AUTH_URL = `https://accounts.spotify.com/authorize?client_id=${client_id}&
 function MusicSelect() {
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get("code");
+  const [selectedVisual, setSelectedVisual] = useState(null);
 
   useEffect(() => {
     if (!code) {
       window.location.href = AUTH_URL;
     }
+
+    const visual = JSON.parse(localStorage.getItem("selectedVisual"));
+    setSelectedVisual(visual);
   }, [code]);
 
-  return code ? <Dashboard code={code} /> : <Login />;
+  return (
+    <div>
+      {selectedVisual && (
+        <div>
+          <video
+            className="video-preview"
+            src={selectedVisual.video}
+            type="video/mp4"
+            autoPlay
+            loop
+            muted
+          >
+            Your browser does not support the video tag.
+          </video>
+          <p>{selectedVisual.title}</p>
+        </div>
+      )}
+      {code ? <Dashboard code={code} /> : <Login />}
+    </div>
+  );
 }
 
 export default MusicSelect;

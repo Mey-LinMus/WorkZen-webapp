@@ -1,13 +1,16 @@
 import React from "react";
-import VisualSelectPage from "./VisualSelectPage";
-import MusicSelectPage from "./MusicSelectPage";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import VisualSelect from "../../Components/Selections/VisualSelect";
+import MusicSelect from "../../Components/Selections/MusicSelect";
 
 function SelectionPage() {
   return (
-    <div>
-      <VisualSelectPage />
-      <MusicSelectPage />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/music-select" element={<MusicSelect />} />
+        <Route path="/" element={<VisualSelect />} />
+      </Routes>
+    </Router>
   );
 }
 
