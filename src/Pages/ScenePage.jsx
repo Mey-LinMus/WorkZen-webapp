@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Player from "../Components/Music/Player";
-import { Button, Container } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
 const ScenePage = () => {
   const [selectedVisual, setSelectedVisual] = useState(null);
   const [selectedTracks, setSelectedTracks] = useState([]);
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const spotifyAccessToken = localStorage.getItem("spotifyAccessToken");
 
   useEffect(() => {
@@ -15,18 +14,6 @@ const ScenePage = () => {
     const tracks = JSON.parse(localStorage.getItem("selectedTracks"));
     setSelectedTracks(tracks);
   }, []);
-
-  const handlePrevious = () => {
-    setCurrentTrackIndex((prevIndex) =>
-      prevIndex > 0 ? prevIndex - 1 : selectedTracks.length - 1
-    );
-  };
-
-  const handleNext = () => {
-    setCurrentTrackIndex((prevIndex) =>
-      prevIndex < selectedTracks.length - 1 ? prevIndex + 1 : 0
-    );
-  };
 
   return (
     <div>
@@ -49,14 +36,12 @@ const ScenePage = () => {
           <Container>
             <div>
               <img
-                src={selectedTracks[currentTrackIndex].albumUrl}
-                alt={selectedTracks[currentTrackIndex].title}
+                src={selectedTracks[0].albumUrl}
+                alt={selectedTracks[0].title}
               />
-              <p>{selectedTracks[currentTrackIndex].title}</p>
-              <p>{selectedTracks[currentTrackIndex].artist}</p>
+              <p>{selectedTracks[0].title}</p>
+              <p>{selectedTracks[0].artist}</p>
             </div>
-            <Button onClick={handlePrevious}>Previous</Button>
-            <Button onClick={handleNext}>Next</Button>
           </Container>
         </div>
       )}
@@ -64,7 +49,7 @@ const ScenePage = () => {
         <div>
           <Player
             accessToken={spotifyAccessToken}
-            trackUri={selectedTracks[currentTrackIndex].uri}
+            trackUris={selectedTracks.map((track) => track.uri)}
           />
         </div>
       )}
