@@ -3,7 +3,7 @@ import SpotifyWebApi from "spotify-web-api-node";
 import Player from "./Player";
 import useAuth from "./useAuth";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import { useNavigate } from "react-router-dom";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: "1f4f7e164fe945998e2b5904bd676792",
@@ -13,19 +13,23 @@ export default function Dashboard({ code }) {
   const accessToken = useAuth(code);
   const [playlistTracks, setPlaylistTracks] = useState([]);
   const [playingTrack, setPlayingTrack] = useState();
-  const navigate = useNavigate(); // Create a navigate function for navigation
+  const [selectedCategory, setSelectedCategory] = useState("classic"); 
+  const navigate = useNavigate(); 
+
+  const playlistIds = {
+    classic: "3YeJcIqzSIH1sy1molDRre",
+    jazz: "2y5zb6o0SFrQXNGq5DPDy5",
+  };
 
   function chooseTrack(track) {
     setPlayingTrack(track);
-    localStorage.setItem("selectedTrack", JSON.stringify(track)); // Save track to local storage
-    navigate("/scene-page"); // Navigate to ScenePage
+    localStorage.setItem("selectedTrack", JSON.stringify(track));
+    navigate("/scene-page"); 
   }
 
   useEffect(() => {
     if (!accessToken) return;
     spotifyApi.setAccessToken(accessToken);
-
-    const playlistIds = ["3YeJcIqzSIH1sy1molDRre", "2y5zb6o0SFrQXNGq5DPDy5"];
 
     const fetchPlaylistTracks = async (playlistId) => {
       try {
@@ -53,20 +57,34 @@ export default function Dashboard({ code }) {
       }
     };
 
-    const fetchAllPlaylistTracks = async () => {
-      const promises = playlistIds.map((playlistId) =>
-        fetchPlaylistTracks(playlistId)
-      );
-      const allPlaylistTracks = await Promise.all(promises);
-      const mergedTracks = allPlaylistTracks.flat();
-      setPlaylistTracks(mergedTracks);
+    const fetchTracks = async () => {
+      const playlistId = playlistIds[selectedCategory];
+      const tracks = await fetchPlaylistTracks(playlistId);
+      setPlaylistTracks(tracks);
     };
 
-    fetchAllPlaylistTracks();
-  }, [accessToken]);
+    fetchTracks();
+  }, [accessToken, selectedCategory]); 
 
   return (
     <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>
+      <div className="mb-2">
+        <Button
+          variant={
+            selectedCategory === "classic" ? "primary" : "outline-primary"
+          }
+          onClick={() => setSelectedCategory("classic")}
+          className="me-2"
+        >
+          Classic Songs
+        </Button>
+        <Button
+          variant={selectedCategory === "jazz" ? "primary" : "outline-primary"}
+          onClick={() => setSelectedCategory("jazz")}
+        >
+          Jazz Songs
+        </Button>
+      </div>
       <div
         className="flex-grow-1 my-2"
         style={{ overflowY: "auto", overflowX: "hidden" }}
