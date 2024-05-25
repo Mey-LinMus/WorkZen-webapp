@@ -31,20 +31,7 @@ const ScenePage = () => {
           </video>
         </div>
       )}
-      {selectedTracks.length > 0 && (
-        <div>
-          <Container>
-            <div>
-              <img
-                src={selectedTracks[0].albumUrl}
-                alt={selectedTracks[0].title}
-              />
-              <p>{selectedTracks[0].title}</p>
-              <p>{selectedTracks[0].artist}</p>
-            </div>
-          </Container>
-        </div>
-      )}
+
       {spotifyAccessToken && selectedTracks.length > 0 && (
         <div>
           <Player
