@@ -32,7 +32,6 @@ const ScenePage = () => {
           >
             Your browser does not support the video tag.
           </video>
-          <p>{selectedVisual.title}</p>
         </div>
       )}
       {selectedTrack && (

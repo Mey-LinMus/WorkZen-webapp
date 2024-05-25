@@ -41,7 +41,6 @@ function MusicSelect() {
           >
             Your browser does not support the video tag.
           </video>
-          <p>{selectedVisual.title}</p>
         </div>
       )}
       {code ? <Dashboard code={code} /> : <Login />}
