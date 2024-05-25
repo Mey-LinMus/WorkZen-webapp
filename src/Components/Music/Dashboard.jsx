@@ -3,67 +3,34 @@ import SpotifyWebApi from "spotify-web-api-node";
 import Player from "./Player";
 import useAuth from "./useAuth";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 
 const spotifyApi = new SpotifyWebApi({
   clientId: "1f4f7e164fe945998e2b5904bd676792",
 });
 
 export default function Dashboard({ code }) {
-  // console.log("Dashboard code:", code);
-
   const accessToken = useAuth(code);
   const [playlistTracks, setPlaylistTracks] = useState([]);
   const [playingTrack, setPlayingTrack] = useState();
+  const navigate = useNavigate(); // Create a navigate function for navigation
 
   function chooseTrack(track) {
     setPlayingTrack(track);
-    console.log("Chosen Track", track);
+    localStorage.setItem("selectedTrack", JSON.stringify(track)); // Save track to local storage
+    navigate("/scene-page"); // Navigate to ScenePage
   }
 
-// DEBUG: Code to know if there are duplicate tracks in the playlist
-
-  // useEffect(() => {
-   
-  //   const uriCount = {};
-
- 
-  //   playlistTracks.forEach((track) => {
-  //     uriCount[track.uri] = (uriCount[track.uri] || 0) + 1;
-  //   });
-
-  //   const duplicateUris = Object.keys(uriCount).filter(
-  //     (uri) => uriCount[uri] > 1
-  //   );
-
-
-  //   console.log("Duplicate URIs:", duplicateUris);
-  //   console.log(
-  //     "Duplicate Tracks:",
-  //     playlistTracks.filter((track) => duplicateUris.includes(track.uri))
-  //   );
-  // }, [playlistTracks]);
-
-
-
   useEffect(() => {
-    // console.log("playlistTracks:", playlistTracks);
-  }, [playlistTracks]);
-
-  useEffect(() => {
-    console.log("AccessToken:", accessToken);
     if (!accessToken) return;
     spotifyApi.setAccessToken(accessToken);
 
-    const playlistIds = [
-      "3YeJcIqzSIH1sy1molDRre",
-      "2y5zb6o0SFrQXNGq5DPDy5",
-    ];
+    const playlistIds = ["3YeJcIqzSIH1sy1molDRre", "2y5zb6o0SFrQXNGq5DPDy5"];
 
     const fetchPlaylistTracks = async (playlistId) => {
       try {
         const response = await spotifyApi.getPlaylistTracks(playlistId);
         return response.body.items.map((item) => {
-          // console.log("Songs", item);
           const track = item.track;
           const smallestAlbumImage = track.album.images.reduce(
             (smallest, image) => {

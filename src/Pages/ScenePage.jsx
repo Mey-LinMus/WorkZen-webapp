@@ -1,11 +1,43 @@
-import React from "react";
-import Scene from "../Components/Scene";
+import React, { useEffect, useState } from "react";
 
-const ScenePage = ({ selectedVisual, selectedSong }) => {
+const ScenePage = () => {
+  const [selectedVisual, setSelectedVisual] = useState(null);
+  const [selectedTrack, setSelectedTrack] = useState(null);
+
+  useEffect(() => {
+    // Retrieve selected visual from local storage
+    const visual = JSON.parse(localStorage.getItem("selectedVisual"));
+    setSelectedVisual(visual);
+
+    // Retrieve selected track from local storage
+    const track = JSON.parse(localStorage.getItem("selectedTrack"));
+    setSelectedTrack(track);
+  }, []);
+
   return (
     <div>
-      <h1>Scene</h1>
-      <Scene selectedVisual={selectedVisual} selectedSong={selectedSong} />
+      {selectedVisual && (
+        <div>
+          <video
+            className="video-preview"
+            src={selectedVisual.video}
+            type="video/mp4"
+            autoPlay
+            loop
+            muted
+          >
+            Your browser does not support the video tag.
+          </video>
+          <p>{selectedVisual.title}</p>
+        </div>
+      )}
+      {selectedTrack && (
+        <div>
+          <img src={selectedTrack.albumUrl} alt={selectedTrack.title} />
+          <p>{selectedTrack.title}</p>
+          <p>{selectedTrack.artist}</p>
+        </div>
+      )}
     </div>
   );
 };
