@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import * as THREE from "three";
 import ThreeClassSceneManager from "../Utils/ThreeClassSceneManager";
 import { Sky } from "three/examples/jsm/objects/Sky.js";
-import snowdropTextureImg from "../Texture/snowflake1.png";
+import snowdropTextureImg from "../../Assets/Textures/snowflake1.png";
 import VRButton from "../Utils/VRButton";
 
 const SnowingScene = () => {

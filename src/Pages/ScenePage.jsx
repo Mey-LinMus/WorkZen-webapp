@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense, lazy } from "react";
 import Player from "../Components/Music/Player";
 import { Container } from "react-bootstrap";
 
 const ScenePage = () => {
   const [selectedVisual, setSelectedVisual] = useState(null);
   const [selectedTracks, setSelectedTracks] = useState([]);
+  const [VisualComponent, setVisualComponent] = useState(null);
   const spotifyAccessToken = localStorage.getItem("spotifyAccessToken");
 
   useEffect(() => {
@@ -13,23 +14,24 @@ const ScenePage = () => {
 
     const tracks = JSON.parse(localStorage.getItem("selectedTracks"));
     setSelectedTracks(tracks);
+
+    if (visual) {
+      import(`../Components/Visuals/${visual.component}.jsx`)
+        .then((module) => {
+          setVisualComponent(() => module.default);
+        })
+        .catch((error) => {
+          console.error("Error loading visual component", error);
+        });
+    }
   }, []);
 
   return (
     <div>
-      {selectedVisual && (
-        <div>
-          <video
-            className="video-preview"
-            src={selectedVisual.video}
-            type="video/mp4"
-            autoPlay
-            loop
-            muted
-          >
-            Your browser does not support the video tag.
-          </video>
-        </div>
+      {VisualComponent && (
+        <Suspense fallback={<div>Loading...</div>}>
+          <VisualComponent />
+        </Suspense>
       )}
 
       {spotifyAccessToken && selectedTracks.length > 0 && (
