@@ -1,11 +1,9 @@
-// ScenePage.js
-
 import React, { useEffect, useState } from "react";
 import Player from "../Components/Music/Player";
 
 const ScenePage = () => {
   const [selectedVisual, setSelectedVisual] = useState(null);
-  const [selectedTrack, setSelectedTrack] = useState(null);
+  const [selectedTracks, setSelectedTracks] = useState([]);
   const spotifyAccessToken = localStorage.getItem("spotifyAccessToken"); // Retrieve access token
 
   useEffect(() => {
@@ -13,9 +11,9 @@ const ScenePage = () => {
     const visual = JSON.parse(localStorage.getItem("selectedVisual"));
     setSelectedVisual(visual);
 
-    // Retrieve selected track from local storage
-    const track = JSON.parse(localStorage.getItem("selectedTrack"));
-    setSelectedTrack(track);
+    // Retrieve selected tracks from local storage
+    const tracks = JSON.parse(localStorage.getItem("selectedTracks"));
+    setSelectedTracks(tracks);
   }, []);
 
   return (
@@ -34,18 +32,22 @@ const ScenePage = () => {
           </video>
         </div>
       )}
-      {selectedTrack && (
+      {selectedTracks.length > 0 && (
         <div>
-          <img src={selectedTrack.albumUrl} alt={selectedTrack.title} />
-          <p>{selectedTrack.title}</p>
-          <p>{selectedTrack.artist}</p>
+          {selectedTracks.map((track) => (
+            <div key={track.uri}>
+              <img src={track.albumUrl} alt={track.title} />
+              <p>{track.title}</p>
+              <p>{track.artist}</p>
+            </div>
+          ))}
         </div>
       )}
-      {spotifyAccessToken && selectedTrack && (
+      {spotifyAccessToken && selectedTracks.length > 0 && (
         <div>
           <Player
             accessToken={spotifyAccessToken}
-            trackUri={selectedTrack.uri}
+            trackUri={selectedTracks[0].uri} // Start playing the first track
           />
         </div>
       )}

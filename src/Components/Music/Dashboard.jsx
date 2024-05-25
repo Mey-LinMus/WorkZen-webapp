@@ -12,7 +12,7 @@ const spotifyApi = new SpotifyWebApi({
 export default function Dashboard({ code }) {
   const accessToken = useAuth(code);
   const [playlistTracks, setPlaylistTracks] = useState([]);
-  const [playingTrack, setPlayingTrack] = useState();
+  const [selectedTracks, setSelectedTracks] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("classic");
   const navigate = useNavigate();
 
@@ -27,9 +27,18 @@ export default function Dashboard({ code }) {
     jazz: "2y5zb6o0SFrQXNGq5DPDy5",
   };
 
-  function chooseTrack(track) {
-    setPlayingTrack(track);
-    localStorage.setItem("selectedTrack", JSON.stringify(track));
+  function toggleTrackSelection(track) {
+    const alreadySelected = selectedTracks.find((t) => t.uri === track.uri);
+    if (alreadySelected) {
+      setSelectedTracks(selectedTracks.filter((t) => t.uri !== track.uri));
+    } else {
+      setSelectedTracks([...selectedTracks, track]);
+      console.log("selectedTracks", selectedTracks);
+    }
+  }
+
+  function navigateToScene() {
+    localStorage.setItem("selectedTracks", JSON.stringify(selectedTracks));
     navigate("/scene-page");
   }
 
@@ -99,9 +108,13 @@ export default function Dashboard({ code }) {
           {playlistTracks.map((track) => (
             <Col key={track.uri} xs={6} sm={4} md={3} lg={2} className="mb-3">
               <Button
-                variant="outline-dark"
+                variant={
+                  selectedTracks.find((t) => t.uri === track.uri)
+                    ? "dark"
+                    : "outline-dark"
+                }
                 className="w-100"
-                onClick={() => chooseTrack(track)}
+                onClick={() => toggleTrackSelection(track)}
                 style={{ padding: "0.5rem" }}
               >
                 <img
@@ -123,6 +136,9 @@ export default function Dashboard({ code }) {
           <div className="text-center" style={{ whiteSpace: "pre" }}></div>
         )}
       </div>
+      <Button onClick={navigateToScene} disabled={selectedTracks.length === 0}>
+        Next
+      </Button>
     </Container>
   );
 }

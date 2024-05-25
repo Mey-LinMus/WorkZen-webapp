@@ -11,7 +11,7 @@ function MusicSelect() {
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get("code");
   const [selectedVisual, setSelectedVisual] = useState(null);
-  const [spotifyCode, setSpotifyCode] = useState(null); // State for Spotify code
+  const [spotifyCode, setSpotifyCode] = useState(null); 
 
   useEffect(() => {
     if (!code) {
