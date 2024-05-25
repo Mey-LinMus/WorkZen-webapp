@@ -1,9 +1,43 @@
-.video-preview {
-  width: 320px;
-  height: 240px;
-  border-radius: 20px;
+/* Styles for the visualPage */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.title-visualSelect {
+  text-align: center;
+  margin-bottom: 40px;
+  margin-top: 50px;
 }
 
 .video-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 10px;
+  padding: 10px;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  background-color: white;
+  transition: transform 0.3s;
+}
+
+.video-button:hover {
+  transform: scale(1.05);
+}
+
+.video-preview {
+  width: 200px;
+  height: 150px;
+  border-radius: 5px;
+}
+
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  margin-top: 50px;
 }
