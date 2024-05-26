@@ -14,6 +14,8 @@ export default function Dashboard({ code }) {
   const [playlistTracks, setPlaylistTracks] = useState([]);
   const [selectedTracks, setSelectedTracks] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("classic");
+  const [currentPage, setCurrentPage] = useState(1);
+  const tracksPerPage = 18;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,7 +35,6 @@ export default function Dashboard({ code }) {
       setSelectedTracks(selectedTracks.filter((t) => t.uri !== track.uri));
     } else {
       setSelectedTracks([...selectedTracks, track]);
-      console.log("selectedTracks", selectedTracks);
     }
   }
 
@@ -45,7 +46,7 @@ export default function Dashboard({ code }) {
   useEffect(() => {
     if (!accessToken) return;
     spotifyApi.setAccessToken(accessToken);
-    console.log("accessToken", accessToken);
+
     const fetchPlaylistTracks = async (playlistId) => {
       try {
         const response = await spotifyApi.getPlaylistTracks(playlistId);
@@ -79,10 +80,18 @@ export default function Dashboard({ code }) {
       const playlistId = playlistIds[selectedCategory];
       const tracks = await fetchPlaylistTracks(playlistId);
       setPlaylistTracks(tracks);
+      setCurrentPage(1);
     };
 
     fetchTracks();
   }, [accessToken, selectedCategory]);
+
+  const startIndex = (currentPage - 1) * tracksPerPage;
+  const currentTracks = playlistTracks.slice(
+    startIndex,
+    startIndex + tracksPerPage
+  );
+  const totalPages = Math.ceil(playlistTracks.length / tracksPerPage);
 
   return (
     <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>
@@ -108,7 +117,7 @@ export default function Dashboard({ code }) {
         style={{ overflowY: "auto", overflowX: "hidden" }}
       >
         <Row>
-          {playlistTracks.map((track) => (
+          {currentTracks.map((track) => (
             <Col key={track.uri} xs={6} sm={4} md={3} lg={2} className="mb-3">
               <Button
                 variant={
@@ -123,21 +132,42 @@ export default function Dashboard({ code }) {
                 <img
                   src={track.albumUrl}
                   alt={track.title}
-                  style={{ width: "100%", height: "auto", borderRadius: "4px" }}
+                  style={{ width: "35%", height: "auto", borderRadius: "4px" }}
                 />
-                <div style={{ fontSize: "0.9rem", fontWeight: "bold" }}>
+                <div style={{ fontSize: "0.7rem", fontWeight: "bold" }}>
                   {track.title}
                 </div>
-                <div className="text-muted" style={{ fontSize: "0.8rem" }}>
+                <div className="text-muted" style={{ fontSize: "0.7rem" }}>
                   {track.artist}
                 </div>
               </Button>
             </Col>
           ))}
         </Row>
-        {playlistTracks.length === 0 && (
-          <div className="text-center" style={{ whiteSpace: "pre" }}></div>
+        {currentTracks.length === 0 && (
+          <div className="text-center" style={{ whiteSpace: "pre" }}>
+            No tracks available
+          </div>
         )}
+      </div>
+      <div className="d-flex justify-content-between align-items-center">
+        <Button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+        >
+          ←
+        </Button>
+        <span>
+          Page {currentPage} of {totalPages}
+        </span>
+        <Button
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+          }
+          disabled={currentPage === totalPages}
+        >
+          →
+        </Button>
       </div>
       <Button onClick={navigateToScene} disabled={selectedTracks.length === 0}>
         Next
