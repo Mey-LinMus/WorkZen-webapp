@@ -1,0 +1,13 @@
+.ScenePage {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+body,
+html {
+  overflow-x: hidden;
+}
+
+#root {
+  overflow-x: hidden;
+}

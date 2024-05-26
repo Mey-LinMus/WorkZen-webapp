@@ -1,6 +1,7 @@
-import React, { useEffect, useState, Suspense, lazy } from "react";
+import React, { useEffect, useState, Suspense} from "react";
 import Player from "../Components/Music/Player";
 import { Container } from "react-bootstrap";
+import "../Styles/scenePage.css"; 
 
 const ScenePage = () => {
   const [selectedVisual, setSelectedVisual] = useState(null);
@@ -27,7 +28,7 @@ const ScenePage = () => {
   }, []);
 
   return (
-    <div>
+    <div className="ScenePage">
       {VisualComponent && (
         <Suspense fallback={<div>Loading...</div>}>
           <VisualComponent />
@@ -35,12 +36,12 @@ const ScenePage = () => {
       )}
 
       {spotifyAccessToken && selectedTracks.length > 0 && (
-        <div>
+        <Container fluid>
           <Player
             accessToken={spotifyAccessToken}
             trackUris={selectedTracks.map((track) => track.uri)}
           />
-        </div>
+        </Container>
       )}
     </div>
   );
