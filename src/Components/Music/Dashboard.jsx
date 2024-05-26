@@ -30,8 +30,8 @@ export default function Dashboard({ code }) {
   };
 
   function toggleTrackSelection(track) {
-    const alreadySelected = selectedTracks.find((t) => t.uri === track.uri);
-    if (alreadySelected) {
+    const isSelected = selectedTracks.some((t) => t.uri === track.uri);
+    if (isSelected) {
       setSelectedTracks(selectedTracks.filter((t) => t.uri !== track.uri));
     } else {
       setSelectedTracks([...selectedTracks, track]);
@@ -118,14 +118,21 @@ export default function Dashboard({ code }) {
       >
         <div className="dashboard-track-list">
           {currentTracks.map((track) => (
-            <div key={track.uri} xs={6} className="dashboard-track-item">
+            <div
+              key={track.uri}
+              xs={6}
+              className={`dashboard-track-item ${
+                selectedTracks.find((t) => t.uri === track.uri)
+                  ? "selected"
+                  : ""
+              }`}
+            >
               <button
-                variant={
+                className={`w-100 dashboard-track-button ${
                   selectedTracks.find((t) => t.uri === track.uri)
-                    ? "dark"
-                    : "outline-dark"
-                }
-                className="w-100 dashboard-track-button"
+                    ? "selected"
+                    : "dark"
+                }`}
                 onClick={() => toggleTrackSelection(track)}
               >
                 <img
@@ -133,10 +140,10 @@ export default function Dashboard({ code }) {
                   alt={track.title}
                   className="dashboard-track-image"
                 />
-                <span className="ms-2 dashboard-track-title">
-                  {track.title}
-                </span>
-                <span className="dashboard-track-artist">{track.artist}</span>
+                <div className="dashboard-track-info">
+                  <span className="dashboard-track-title">{track.title}</span>
+                  <span className="dashboard-track-artist">{track.artist}</span>
+                </div>
               </button>
             </div>
           ))}
@@ -177,8 +184,10 @@ export default function Dashboard({ code }) {
                 alt={track.title}
                 className="dashboard-track-image"
               />
-              <span className="ms-2">{track.title}</span>
-              <span>{track.artist}</span>
+              <div className="dashboard-track-info">
+                <span className="dashboard-track-title">{track.title}</span>
+                <span className="dashboard-track-artist">{track.artist}</span>
+              </div>
             </li>
           ))}
         </ul>

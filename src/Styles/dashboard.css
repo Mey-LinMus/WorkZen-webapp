@@ -7,9 +7,9 @@
 
 .dashboard-track-item {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
   background: rgb(0, 0, 0);
   background: linear-gradient(
     0deg,
@@ -24,33 +24,41 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.dashboard-track-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: none;
-  width: 100%;
-  color: white;
+.dashboard-track-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 10%;
+  object-fit: cover;
+  margin-right: 1rem;
 }
 
 .dashboard-track-title {
   font-weight: bold;
   margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.2rem;
 }
 
 .dashboard-track-artist {
   font-size: 0.9rem;
-  margin-top: auto;
+  margin-top: 0;
 }
 
 .dashboard-track-image {
-  width: 100px;
-  height: 100px;
+  width: 50px;
+  height: 50px;
   border-radius: 10%;
   object-fit: cover;
   margin-bottom: 0.5rem;
+}
+
+.dashboard-track-button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: transparent;
+  border: none;
+  width: 100%;
+  color: white;
 }
 
 .selected-tracks-list h4 {
@@ -76,7 +84,7 @@
     rgba(0, 0, 0, 1) 0%,
     rgba(30, 30, 30, 1) 100%
   );
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 0.5rem;
   color: white;
   text-align: center;
@@ -87,7 +95,11 @@
 .selected-tracks-list img {
   width: 30px;
   height: 30px;
-  border-radius: 50%;
+  border-radius: 10%;
   object-fit: cover;
   margin-right: 0.5rem;
 }
+
+.dashboard-track-button.selected {
+    background-color: #08405a;
+  }
