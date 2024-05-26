@@ -114,42 +114,40 @@ export default function Dashboard({ code }) {
       </div>
       <div
         className="flex-grow-1 my-2"
-        style={{ overflowY: "auto", overflowX: "hidden" }}
+        style={{ overflowX: "hidden", width: "100%" }}
       >
-        <Row>
+        <div className="dashboard-track-list">
           {currentTracks.map((track) => (
-            <Col key={track.uri} xs={6} sm={4} md={3} lg={2} className="mb-3">
-              <Button
+            <div key={track.uri} xs={6} className="dashboard-track-item">
+              <button
                 variant={
                   selectedTracks.find((t) => t.uri === track.uri)
                     ? "dark"
                     : "outline-dark"
                 }
-                className="w-100"
+                className="w-100 dashboard-track-button"
                 onClick={() => toggleTrackSelection(track)}
-                style={{ padding: "0.5rem" }}
               >
                 <img
                   src={track.albumUrl}
                   alt={track.title}
-                  style={{ width: "35%", height: "auto", borderRadius: "4px" }}
+                  className="dashboard-track-image"
                 />
-                <div style={{ fontSize: "0.7rem", fontWeight: "bold" }}>
+                <span className="ms-2 dashboard-track-title">
                   {track.title}
-                </div>
-                <div className="text-muted" style={{ fontSize: "0.7rem" }}>
-                  {track.artist}
-                </div>
-              </Button>
-            </Col>
+                </span>
+                <span className="dashboard-track-artist">{track.artist}</span>
+              </button>
+            </div>
           ))}
-        </Row>
+        </div>
         {currentTracks.length === 0 && (
           <div className="text-center" style={{ whiteSpace: "pre" }}>
             No tracks available
           </div>
         )}
       </div>
+
       <div className="d-flex justify-content-between align-items-center">
         <Button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
@@ -169,7 +167,27 @@ export default function Dashboard({ code }) {
           →
         </Button>
       </div>
-      <Button onClick={navigateToScene} disabled={selectedTracks.length === 0}>
+      <div className="selected-tracks-list mt-3">
+        <h4>Selected Tracks</h4>
+        <ul className="list-group">
+          {selectedTracks.map((track) => (
+            <li key={track.uri} className="list-group-item">
+              <img
+                src={track.albumUrl}
+                alt={track.title}
+                className="dashboard-track-image"
+              />
+              <span className="ms-2">{track.title}</span>
+              <span>{track.artist}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <Button
+        onClick={navigateToScene}
+        disabled={selectedTracks.length === 0}
+        className="mt-3"
+      >
         Next
       </Button>
     </Container>
