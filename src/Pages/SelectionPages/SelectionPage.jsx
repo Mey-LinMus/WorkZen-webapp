@@ -11,6 +11,7 @@ function SelectionPage() {
         <Route path="/scene-page" element={<ScenePage />} />
         <Route path="/music-select" element={<MusicSelect />} />
         <Route path="/" element={<VisualSelect />} />
+        
       </Routes>
     </Router>
   );
