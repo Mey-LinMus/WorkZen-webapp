@@ -21,6 +21,7 @@ function MusicSelect() {
 
     const visual = JSON.parse(localStorage.getItem("selectedVisual"));
     setSelectedVisual(visual);
+    console.log("SelectedVisual", selectedVisual);
 
     localStorage.setItem("spotifyCode", code);
     setSpotifyCode(code);
