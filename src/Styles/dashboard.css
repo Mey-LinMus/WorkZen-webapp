@@ -5,12 +5,6 @@
   margin-bottom: 2rem;
 }
 
-@media (max-width: 768px) {
-  .dashboard-track-list {
-    grid-template-columns: 1fr;
-  }
-}
-
 .dashboard-track-item {
   display: flex;
   flex-direction: row;
@@ -42,17 +36,11 @@
   font-weight: bold;
   margin-top: 0.5rem;
   margin-bottom: 0.2rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .dashboard-track-artist {
   font-size: 0.9rem;
   margin-top: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .dashboard-track-image {
@@ -113,5 +101,5 @@
 }
 
 .dashboard-track-button.selected {
-  background-color: #08405a;
-}
+    background-color: #08405a;
+  }

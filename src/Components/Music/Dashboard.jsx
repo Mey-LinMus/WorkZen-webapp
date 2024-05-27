@@ -17,7 +17,6 @@ export default function Dashboard({ code }) {
   const [currentPage, setCurrentPage] = useState(1);
   const tracksPerPage = 18;
   const navigate = useNavigate();
-  const [totalDuration, setTotalDuration] = useState(0);
 
   useEffect(() => {
     if (accessToken) {
@@ -29,6 +28,20 @@ export default function Dashboard({ code }) {
     classic: "3YeJcIqzSIH1sy1molDRre",
     jazz: "2y5zb6o0SFrQXNGq5DPDy5",
   };
+
+  function toggleTrackSelection(track) {
+    const isSelected = selectedTracks.some((t) => t.uri === track.uri);
+    if (isSelected) {
+      setSelectedTracks(selectedTracks.filter((t) => t.uri !== track.uri));
+    } else {
+      setSelectedTracks([...selectedTracks, track]);
+    }
+  }
+
+  function navigateToScene() {
+    localStorage.setItem("selectedTracks", JSON.stringify(selectedTracks));
+    navigate("/scene-page");
+  }
 
   useEffect(() => {
     if (!accessToken) return;
@@ -55,7 +68,6 @@ export default function Dashboard({ code }) {
                 : track.name,
             uri: track.uri,
             albumUrl: smallestAlbumImage.url,
-            duration_ms: track.duration_ms,
           };
         });
       } catch (error) {
@@ -74,37 +86,12 @@ export default function Dashboard({ code }) {
     fetchTracks();
   }, [accessToken, selectedCategory]);
 
-  useEffect(() => {
-    // Calculate total duration when selectedTracks changes
-    let total = 0;
-    selectedTracks.forEach((track) => {
-      total += track.duration_ms;
-    });
-    setTotalDuration(total);
-  }, [selectedTracks]);
-
   const startIndex = (currentPage - 1) * tracksPerPage;
   const currentTracks = playlistTracks.slice(
     startIndex,
     startIndex + tracksPerPage
   );
   const totalPages = Math.ceil(playlistTracks.length / tracksPerPage);
-
-  // Function to toggle track selection
-  function toggleTrackSelection(track) {
-    const isSelected = selectedTracks.some((t) => t.uri === track.uri);
-    if (isSelected) {
-      setSelectedTracks(selectedTracks.filter((t) => t.uri !== track.uri));
-    } else {
-      setSelectedTracks([...selectedTracks, track]);
-    }
-  }
-
-  // Function to navigate to scene page
-  function navigateToScene() {
-    localStorage.setItem("selectedTracks", JSON.stringify(selectedTracks));
-    navigate("/scene-page");
-  }
 
   return (
     <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>
@@ -204,9 +191,6 @@ export default function Dashboard({ code }) {
             </li>
           ))}
         </ul>
-      </div>
-      <div className="mt-3">
-        Total Duration: {Math.floor(totalDuration / 60000)} minutes
       </div>
       <Button
         onClick={navigateToScene}
