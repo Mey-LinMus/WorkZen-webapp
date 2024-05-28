@@ -15,10 +15,10 @@ const Typography = ({ variant, children }) => {
       className = "font-urbane text-h3 text-neutralColor";
       break;
     case "bodyText":
-      className = "font-segoe text-body text-neutralColor";
+      className = "font-segoe text-bodyText text-neutralColor";
       break;
     default:
-      className = "font-segoe text-body text-neutralColor";
+      className = "font-segoe text-bodyText text-neutralColor";
   }
 
   return <div className={className}>{children}</div>;
