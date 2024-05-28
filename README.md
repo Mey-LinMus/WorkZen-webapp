@@ -21,3 +21,4 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - https://www.tailwindhelper.com/
 - npm install -D tailwindcss - npx tailwindcss init - https://tailwindcss.com/docs/installation
 - npm i react-icons - https://www.npmjs.com/package/react-ic
+- -https://www.material-tailwind.com/docs/react/stepper
