@@ -13,10 +13,10 @@ module.exports = {
         urbane: ["urbane-rounded", "sans-serif"],
       },
       fontSize: {
-        h1: "3.5rem",
-        h2: "3rem",
-        h3: "2rem",
-        bodyText: "1.125rem",
+        h1: ["3.5rem", "4rem", "4.5rem", "5rem"],
+        h2: ["3rem", "3.5rem", "4rem", "4.5rem"],
+        h3: ["2rem", "2.5rem", "3rem", "3.5rem"],
+        bodyText: ["1.125rem", "1.25rem", "1.5rem", "1.75rem"],
       },
       screens: {
         sm: "640px",
