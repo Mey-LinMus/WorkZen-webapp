@@ -5,7 +5,7 @@ import UILogo from "../ui-elements/Logo";
 
 const Header = () => {
   return (
-    <div className="bg-primaryColor text-neutralColor font-sans relative h-screen flex flex-col justify-center">
+    <div className="bg-primaryColor relative h-screen flex flex-col justify-center">
       <UILogo />
       <div className="absolute top-0 right-0 m-4">
         <StyledButton>Start</StyledButton>
