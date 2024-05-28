@@ -10,14 +10,14 @@ export default function HomePage() {
       <header>
         <Header />
       </header>
-      <head>
+      <div>
         <div>
           <Welcome />
         </div>
         <div>
           <Research />
         </div>
-      </head>
+      </div>
 
       <footer>
         <Footer />
