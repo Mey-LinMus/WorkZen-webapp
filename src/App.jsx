@@ -1,13 +1,12 @@
 import React from "react";
 import "./App.css";
-import SelectionPage from "./Pages/SelectionPages/SelectionPage";
+import VisualSelectPage from "./Components/Selections/VisualSelect";
 import HomePage from "./Pages/HomePage";
-import "bootstrap/dist/css/bootstrap.min.css";
+
 
 function App() {
-  return  <HomePage/>;
+  return <VisualSelectPage />;
 }
-  // <SelectionPage />;
-
+// <SelectionPage />;
 
 export default App;
