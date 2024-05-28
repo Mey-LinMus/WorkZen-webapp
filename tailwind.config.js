@@ -9,14 +9,20 @@ module.exports = {
         neutralColor: "#FFFAFA",
       },
       fontFamily: {
-        sans: ["Segoe UI", "sans-serif"],
-        urbane: ["urbane-rounded", "sans - serif"],
+        segoe: ["Segoe UI", "sans-serif"],
+        urbane: ["urbane-rounded", "sans-serif"], 
       },
       fontSize: {
         h1: "3.5rem",
         h2: "3rem",
         h3: "2rem",
         body: "1.125rem",
+      },
+      screens: {
+        'sm': '640px',
+        'md': '768px', 
+        'lg': '1024px', 
+        'xl': '1280px', 
       },
     },
   },
