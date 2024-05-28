@@ -3,7 +3,7 @@ import Logo from "../../Assets/Logo/logo-white.svg";
 
 const Header = () => {
   return (
-    <div className="bg-primaryColor text-neutralColor font-sans relative">
+    <div className="bg-primaryColor text-neutralColor font-sans relative h-screen flex flex-col justify-center">
       <div className="flex justify-between items-center px-4 py-2">
         <div>
           <img src={Logo} alt="logo" className="w-12 h-12 mr-2" />
