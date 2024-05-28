@@ -6,8 +6,8 @@ import ImageThree from "../../Assets/Images/Home_asset3.png";
 
 const Research = () => {
   return (
-    <div className="bg-primaryColor p-8 grid gap-12 lg:grid-cols-2">
-      <div className="relative flex justify-center items-center lg:block">
+    <div className="bg-primaryColor p-4 grid gap-12 lg:grid-cols-2  ">
+      <div className="relative flex justify-center items-center mt-5	">
         <img src={ImageOne} alt="asset1" className="size-128 rounded-3xl" />
         <div className="absolute bottom-0 left-0 p-4 bg-black bg-opacity-50 text-white w-full lg:hidden">
           <Typography variant="h3" className="mb-4">
@@ -33,7 +33,12 @@ const Research = () => {
         </Typography>
       </div>
 
-      <div className="relative flex justify-center items-center lg:block">
+      <div className="relative flex justify-center items-center">
+        <img
+          src={ImageTwo}
+          alt="asset2"
+          className="size-128 rounded-3xl object-scale-down"
+        />
         <div className="absolute bottom-0 left-0 p-4 bg-black bg-opacity-50 text-white w-full lg:hidden">
           <Typography variant="h3" className="mb-4">
             Visuele Beelden
@@ -44,13 +49,8 @@ const Research = () => {
             verlagen.
           </Typography>
         </div>
-
-        <img
-          src={ImageTwo}
-          alt="asset2"
-          className="size-128 rounded-3xl object-scale-down"
-        />
       </div>
+
       <div className="hidden lg:flex flex-col justify-center">
         <Typography variant="h3" className="mb-4">
           Visuele Beelden
@@ -62,25 +62,25 @@ const Research = () => {
         </Typography>
       </div>
 
-      <div className="relative flex justify-center items-center lg:block">
-        <img
-          src={ImageThree}
-          alt="asset3"
-          className="size-128 rounded-3xl object-scale-down"
-        />
+      <div className="relative flex justify-center items-center mb-12 ">
         <div className="absolute bottom-0 left-0 p-4 bg-black bg-opacity-50 text-white w-full lg:hidden">
           <Typography variant="h3" className="mb-4">
-            Virtual Reality
+            Visuele Beelden
           </Typography>
           <Typography variant="bodyText">
-            Virtual Reality (VR) biedt een innovatieve manier om stress te
-            verminderen. VR-omgevingen dompelen gebruikers onder in rustgevende
-            scenario's, wat zorgt voor een aanzienlijke vermindering van
-            stressniveaus.
+            Visuele beelden zijn ook effectief in het verminderen van stress.
+            Het gebruik van kalmerende helpt de geest te kalmeren en stress te
+            verlagen.
           </Typography>
         </div>
+        <img
+          src={ImageTwo}
+          alt="asset2"
+          className="size-128 rounded-3xl object-scale-down"
+        />
       </div>
-      <div className="hidden lg:flex flex-col justify-center">
+
+      <div className="hidden lg:flex flex-col justify-center   ">
         <Typography variant="h3" className="mb-4">
           Virtual Reality
         </Typography>
