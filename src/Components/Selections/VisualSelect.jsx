@@ -15,14 +15,14 @@ const VisualSelect = () => {
   };
 
   return (
-    <div className="bg-primaryColor h-screen flex flex-col items-center">
+    <div className="bg-primaryColor min-h-screen flex flex-col items-center">
       <UILogo />
       <div className="mt-14 mb-12 relative translate-y-10 text-center">
         <Typography variant="h2" className="text-center">
           Selecteer een visual
         </Typography>
       </div>
-      <div className="grid grid-cols-2 gap-4 justify-center relative translate-y-10 ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 justify-center relative translate-y-10">
         {visuals.map((visual) => (
           <button
             key={visual.id}
