@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../Components/Home/Header";
 import Welcome from "../Components/Home/Welcome";
-import Research from "../Components/Home/Reasearch";
+import Research from "../Components/Home/Research";
 import Footer from "../Components/Home/Footer";
 
 export default function HomePage() {

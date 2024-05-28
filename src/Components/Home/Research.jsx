@@ -4,17 +4,24 @@ import ImageOne from "../../Assets/Images/Home_asset1.png";
 import ImageTwo from "../../Assets/Images/Home_asset2.png";
 import ImageThree from "../../Assets/Images/Home_asset3.png";
 
-const Reasearch = () => {
+const Research = () => {
   return (
-    <div className="bg-primaryColor grid grid-cols-2 gap-12 p-8">
-      <div className="flex justify-center items-center">
-        <img
-          src={ImageOne}
-          alt="asset1"
-          className="size-128 rounded-3xl 1.5rem 24px"
-        />
+    <div className="bg-primaryColor p-8 grid gap-12 lg:grid-cols-2">
+      <div className="relative flex justify-center items-center lg:block">
+        <img src={ImageOne} alt="asset1" className="size-128 rounded-3xl" />
+        <div className="absolute bottom-0 left-0 p-4 bg-black bg-opacity-50 text-white w-full lg:hidden">
+          <Typography variant="h3" className="mb-4">
+            Muziek
+          </Typography>
+          <Typography variant="bodyText">
+            Uit onderzoek blijkt dat muziek aanzienlijk helpt bij
+            stressvermindering. Vooral klassieke en instrumentale muziek hebben
+            kalmerende effecten. De juiste muziekkeuze kan leiden tot een
+            aanzienlijke vermindering van stress.
+          </Typography>
+        </div>
       </div>
-      <div className="flex flex-col justify-center">
+      <div className="hidden lg:flex flex-col justify-center">
         <Typography variant="h3" className="mb-4">
           Muziek
         </Typography>
@@ -26,7 +33,25 @@ const Reasearch = () => {
         </Typography>
       </div>
 
-      <div className="flex flex-col justify-center">
+      <div className="relative flex justify-center items-center lg:block">
+        <div className="absolute bottom-0 left-0 p-4 bg-black bg-opacity-50 text-white w-full lg:hidden">
+          <Typography variant="h3" className="mb-4">
+            Visuele Beelden
+          </Typography>
+          <Typography variant="bodyText">
+            Visuele beelden zijn ook effectief in het verminderen van stress.
+            Het gebruik van kalmerende helpt de geest te kalmeren en stress te
+            verlagen.
+          </Typography>
+        </div>
+
+        <img
+          src={ImageTwo}
+          alt="asset2"
+          className="size-128 rounded-3xl object-scale-down"
+        />
+      </div>
+      <div className="hidden lg:flex flex-col justify-center">
         <Typography variant="h3" className="mb-4">
           Visuele Beelden
         </Typography>
@@ -36,22 +61,26 @@ const Reasearch = () => {
           verlagen.
         </Typography>
       </div>
-      <div className="flex justify-center items-center">
-        <img
-          src={ImageTwo}
-          alt="asset1"
-          className=" size-128 object-scale-down rounded-3xl 1.5rem 24px"
-        />
-      </div>
 
-      <div className="flex justify-center items-center">
+      <div className="relative flex justify-center items-center lg:block">
         <img
           src={ImageThree}
-          alt="asset1"
-          className="size-128 object-scale-down rounded-3xl 1.5rem 24px"
+          alt="asset3"
+          className="size-128 rounded-3xl object-scale-down"
         />
+        <div className="absolute bottom-0 left-0 p-4 bg-black bg-opacity-50 text-white w-full lg:hidden">
+          <Typography variant="h3" className="mb-4">
+            Virtual Reality
+          </Typography>
+          <Typography variant="bodyText">
+            Virtual Reality (VR) biedt een innovatieve manier om stress te
+            verminderen. VR-omgevingen dompelen gebruikers onder in rustgevende
+            scenario's, wat zorgt voor een aanzienlijke vermindering van
+            stressniveaus.
+          </Typography>
+        </div>
       </div>
-      <div className="flex flex-col justify-center">
+      <div className="hidden lg:flex flex-col justify-center">
         <Typography variant="h3" className="mb-4">
           Virtual Reality
         </Typography>
@@ -66,4 +95,4 @@ const Reasearch = () => {
   );
 };
 
-export default Reasearch;
+export default Research;
