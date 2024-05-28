@@ -3,6 +3,7 @@ import React from "react";
 import visualsData from "../../visuals.json";
 import Typography from "../ui-elements/Typography";
 import UILogo from "../ui-elements/Logo";
+import StepNavigator from "./StepNavigator";
 
 const VisualSelect = () => {
   const visuals = visualsData.visuals;
@@ -16,7 +17,7 @@ const VisualSelect = () => {
   return (
     <div className="bg-primaryColor h-screen flex flex-col items-center">
       <UILogo />
-      <div className="mt-14 mb-12 relative translate-y-10">
+      <div className="mt-14 mb-12 relative translate-y-10 text-center">
         <Typography variant="h2" className="text-center">
           Selecteer een visual
         </Typography>
@@ -26,7 +27,12 @@ const VisualSelect = () => {
           <button
             key={visual.id}
             className="relative overflow-hidden rounded-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none"
-            style={{ aspectRatio: "1/1", minWidth: "200px" }}
+            style={{
+              aspectRatio: "1/1",
+              minWidth: "200px",
+              maxWidth: "300px",
+              width: "100%",
+            }}
             onClick={() => handleVisualClick(visual)}
           >
             <video
@@ -42,6 +48,8 @@ const VisualSelect = () => {
           </button>
         ))}
       </div>
+
+      <StepNavigator />
     </div>
   );
 };
