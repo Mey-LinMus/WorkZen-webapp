@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import SpotifyWebApi from "spotify-web-api-node";
 import useAuth from "./useAuth";
-import { Container, Row, Col, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import "../../Styles/dashboard.css";
+// import { useNavigate } from "react-router-dom";
+import Typography from "../ui-elements/Typography";
+import UILogo from "../ui-elements/Logo";
+import StyledButton from "../ui-elements/Button";
+import StepNavigator from "../Selections/StepNavigator";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: "1f4f7e164fe945998e2b5904bd676792",
@@ -16,7 +18,7 @@ export default function Dashboard({ code }) {
   const [selectedCategory, setSelectedCategory] = useState("classic");
   const [currentPage, setCurrentPage] = useState(1);
   const tracksPerPage = 18;
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     if (accessToken) {
@@ -40,7 +42,7 @@ export default function Dashboard({ code }) {
 
   function navigateToScene() {
     localStorage.setItem("selectedTracks", JSON.stringify(selectedTracks));
-    navigate("/scene-page");
+    // navigate("/scene-page");
   }
 
   useEffect(() => {
@@ -94,111 +96,113 @@ export default function Dashboard({ code }) {
   const totalPages = Math.ceil(playlistTracks.length / tracksPerPage);
 
   return (
-    <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>
-      <div className="mb-2">
-        <Button
-          variant={
-            selectedCategory === "classic" ? "primary" : "outline-primary"
-          }
+    <div className="p-4">
+      <div className="flex mb-4 space-x-6">
+        <button
           onClick={() => setSelectedCategory("classic")}
-          className="me-2"
+          className="me-2 px-4 py-2 rounded-lg bg-gray-700 text-white"
         >
           Classic Songs
-        </Button>
-        <Button
-          variant={selectedCategory === "jazz" ? "primary" : "outline-primary"}
+        </button>
+        <button
           onClick={() => setSelectedCategory("jazz")}
+          className="px-4 py-2 rounded-lg bg-gray-700 text-white"
         >
           Jazz Songs
-        </Button>
+        </button>
       </div>
-      <div
-        className="flex-grow-1 my-2"
-        style={{ overflowX: "hidden", width: "100%" }}
-      >
-        <div className="dashboard-track-list">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="space-y-2">
           {currentTracks.map((track) => (
             <div
               key={track.uri}
-              xs={6}
-              className={`dashboard-track-item ${
+              className={`flex items-center  text-white p-1 rounded-lg ${
                 selectedTracks.find((t) => t.uri === track.uri)
-                  ? "selected"
+                  ? ""
                   : ""
               }`}
             >
               <button
-                className={`w-100 dashboard-track-button ${
+                className={`flex items-center w-80 ${
                   selectedTracks.find((t) => t.uri === track.uri)
-                    ? "selected"
-                    : "dark"
-                }`}
+                    ? "bg-gray-700"
+                    : "bg-gray-900"
+                } rounded-lg p-2`}
                 onClick={() => toggleTrackSelection(track)}
               >
                 <img
                   src={track.albumUrl}
                   alt={track.title}
-                  className="dashboard-track-image"
+                  className="w-8 h-8 rounded-lg object-cover mr-2 sm:w-12 sm:h-12 sm:mr-4"
                 />
-                <div className="dashboard-track-info">
-                  <span className="dashboard-track-title">{track.title}</span>
-                  <span className="dashboard-track-artist">{track.artist}</span>
+                <div className="flex flex-col">
+                  <span className="text-sm sm:text-lg font-semibold">
+                    {track.title}
+                  </span>
+                  <span className="text-xs sm:text-sm text-gray-400">
+                    {track.artist}
+                  </span>
                 </div>
               </button>
             </div>
           ))}
-        </div>
-        {currentTracks.length === 0 && (
-          <div className="text-center" style={{ whiteSpace: "pre" }}>
-            No tracks available
+          {currentTracks.length === 0 && (
+            <div className="text-center text-gray-400">No tracks available</div>
+          )}
+          <div className="flex items-center justify-between mt-2">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="bg-gray-700 text-white px-3 py-1 rounded-lg disabled:opacity-50"
+            >
+              ←
+            </button>
+            <span className="text-white">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
+              disabled={currentPage === totalPages}
+              className="bg-gray-700 text-white px-3 py-1 rounded-lg disabled:opacity-50"
+            >
+              →
+            </button>
           </div>
-        )}
-      </div>
+        </div>
 
-      <div className="d-flex justify-content-between align-items-center">
-        <Button
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-          disabled={currentPage === 1}
-        >
-          ←
-        </Button>
-        <span>
-          Page {currentPage} of {totalPages}
-        </span>
-        <Button
-          onClick={() =>
-            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-          }
-          disabled={currentPage === totalPages}
-        >
-          →
-        </Button>
+        <div className="mt-6">
+          <h4 className="text-xl text-white mb-4">Selected Tracks</h4>
+          <ul className="space-y-2">
+            {selectedTracks.map((track) => (
+              <li
+                key={track.uri}
+                className="flex items-center bg-gray-800 text-white p-2 rounded-lg"
+              >
+                <img
+                  src={track.albumUrl}
+                  alt={track.title}
+                  className="w-8 h-8 rounded-lg object-cover mr-2 sm:w-12 sm:h-12 sm:mr-4"
+                />
+                <div className="flex flex-col">
+                  <span className="text-sm sm:text-lg font-semibold">
+                    {track.title}
+                  </span>
+                  <span className="text-xs sm:text-sm text-gray-400">
+                    {track.artist}
+                  </span>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <StyledButton
+            onClick={navigateToScene}
+            disabled={selectedTracks.length === 0}
+            className="mt-4 text-white px-4 py-2 rounded-lg w-full disabled:opacity-50"
+          ></StyledButton>
+        </div>
       </div>
-      <div className="selected-tracks-list mt-3">
-        <h4>Selected Tracks</h4>
-        <ul className="list-group">
-          {selectedTracks.map((track) => (
-            <li key={track.uri} className="list-group-item">
-              <img
-                src={track.albumUrl}
-                alt={track.title}
-                className="dashboard-track-image"
-              />
-              <div className="dashboard-track-info">
-                <span className="dashboard-track-title">{track.title}</span>
-                <span className="dashboard-track-artist">{track.artist}</span>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <Button
-        onClick={navigateToScene}
-        disabled={selectedTracks.length === 0}
-        className="mt-3"
-      >
-        Next
-      </Button>
-    </Container>
+    </div>
   );
 }
