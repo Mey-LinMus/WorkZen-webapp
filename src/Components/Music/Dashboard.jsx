@@ -21,6 +21,10 @@ export default function Dashboard({ code }) {
   const tracksPerPage = 18;
   // const navigate = useNavigate();
 
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+  };
+
   useEffect(() => {
     if (accessToken) {
       localStorage.setItem("spotifyAccessToken", accessToken);
@@ -102,15 +106,14 @@ export default function Dashboard({ code }) {
         <div className="flex justify-between items-center mb-4 bg-primaryColor w-11/12 h-90  m-2 p-4 rounded-lg shadow-lg fixed  ">
           <div className="flex space-x-4">
             <StyledButton
-              variant="borderButton"
+              selected={selectedCategory === "classic"}
               onClick={() => setSelectedCategory("classic")}
             >
               Classic
             </StyledButton>
             <StyledButton
-              variant="borderButton"
+              selected={selectedCategory === "jazz"}
               onClick={() => setSelectedCategory("jazz")}
-              className="px-4 py-2  border-solid border-neutralColor rounded-lg text-neutralColor"
             >
               Jazz
             </StyledButton>
@@ -123,11 +126,11 @@ export default function Dashboard({ code }) {
               Selecteer liedjes
             </Typography>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center space-x-4">
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
-              className="bg-gray-700 text-neutralColor px-3 py-1 rounded-lg disabled:opacity-50"
+              className="bg-gray-600 text-neutralColor px-3 py-1 rounded-full disabled:opacity-50 size-10 "
             >
               <HiChevronLeft />
             </button>
@@ -137,7 +140,7 @@ export default function Dashboard({ code }) {
                 setCurrentPage((prev) => Math.min(prev + 1, totalPages))
               }
               disabled={currentPage === totalPages}
-              className="bg-gray-700 text-neutralColor px-3 py-1 rounded-lg disabled:opacity-50 "
+              className="bg-gray-600 size-10 text-neutralColor px-3 py-1 rounded-full disabled:opacity-50"
             >
               <HiChevronRight />
             </button>
