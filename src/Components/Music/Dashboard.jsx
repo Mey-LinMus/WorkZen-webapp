@@ -112,101 +112,109 @@ export default function Dashboard({ code }) {
 
   return (
     <div className="p-4">
-      <div className="fixed top-0 left-0 right-0 flex justify-center w-full">
-        <div className="flex flex-col sm:flex-row justify-between items-center mb-4 bg-primaryColor w-full sm:w-11/12 h-auto m-2 p-4 rounded-lg shadow-lg">
-          <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
-            <StyledButton
-              selected={selectedCategory === "classic"}
-              onClick={() => setSelectedCategory("classic")}
-              className="text-sm sm:text-base" // Adjust button text size
-            >
-              Classic
-            </StyledButton>
-            <StyledButton
-              selected={selectedCategory === "jazz"}
-              onClick={() => setSelectedCategory("jazz")}
-              className="text-sm sm:text-base" // Adjust button text size
-            >
-              Jazz
-            </StyledButton>
-          </div>
+      <div className="p-4">
+        <div className="fixed top-0 left-0 right-0 flex justify-center w-full">
+          <div className="flex flex-col sm:flex-row justify-between items-center mb-4 bg-primaryColor w-full sm:w-11/12 h-auto m-2 p-4 rounded-lg shadow-lg">
+            <div className="flex flex-row space-x-2">
+              <StyledButton
+                selected={selectedCategory === "classic"}
+                onClick={() => setSelectedCategory("classic")}
+                className="text-xs sm:text-sm sm:text-base" // Adjust button text size
+              >
+                Classic
+              </StyledButton>
+              <StyledButton
+                selected={selectedCategory === "jazz"}
+                onClick={() => setSelectedCategory("jazz")}
+                className="text-xs sm:text-sm sm:text-base" // Adjust button text size
+              >
+                Jazz
+              </StyledButton>
+            </div>
 
-          <div className="flex flex-col items-center sm:flex-row">
-            <Typography variant="bodyText" className="mt-1 text-xs sm:text-sm">
-              {Math.floor(totalDuration / 60000)} minuten
-            </Typography>
-          </div>
+            <div className="flex items-center mt-2 sm:mt-0">
+              <Typography variant="bodyText" className="text-xs sm:text-sm">
+                {Math.floor(totalDuration / 60000)} minuten
+              </Typography>
+            </div>
 
-          <div className="flex items-center space-x-2">
-            <button
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-              className="bg-gray-600 text-neutralColor px-2 py-1 rounded-full disabled:opacity-50 size-8" // Adjust button size
-            >
-              <HiChevronLeft className="w-4 h-4" />
-            </button>
+            <div className="hidden sm:flex items-center space-x-2">
+              <button
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                className="bg-gray-600 text-neutralColor px-2 py-1 rounded-full disabled:opacity-50 size-8"
+              >
+                <HiChevronLeft className="w-4 h-4" />
+              </button>
 
-            <button
-              onClick={() =>
-                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-              }
-              disabled={currentPage === totalPages}
-              className="bg-gray-600 size-8 text-neutralColor px-2 py-1 rounded-full disabled:opacity-50" // Adjust button size
-            >
-              <HiChevronRight className="w-4 h-4" />
-            </button>
+              <button
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                }
+                disabled={currentPage === totalPages}
+                className="bg-gray-600 size-8 text-neutralColor px-2 py-1 rounded-full disabled:opacity-50"
+              >
+                <HiChevronRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
       <div className="mt-6 sm:mt-10">
-        <div className="flex justify-center sm:mb-0 mt-24 ">
+        <div className="flex justify-center sm:mb-0 mt-24  text-center lg:text-5xl">
           <Typography
-            variant="h1"
-            className="text-center flex justify-center text-xl sm:text-3xl md:text-4xl lg:text-5xl  "
+            variant="h3"
+            className="text-center text-xl sm:text-3xl md:text-4xl lg:text-5xl"
           >
             Selecteer liedjes
           </Typography>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 grid-rows-2 gap-2 align-middle  mt-6">
-          {currentTracks.map((track) => (
-            <div
-              key={track.uri}
-              className={`flex items-center text-neutralColor p-1 rounded-lg ${
-                selectedTracks.find((t) => t.uri === track.uri) ? "" : ""
-              }`}
-            >
-              <button
-                className={`flex items-center w-full sm:w-96 ${
-                  selectedTracks.find((t) => t.uri === track.uri)
-                    ? "bg-gray-800"
-                    : "bg-gray-900/50"
-                } rounded-lg p-2`}
-                onClick={() => toggleTrackSelection(track)}
+
+        <div className="mt-6 overflow-x-scroll sm:overflow-x-auto">
+          <div className="flex flex-wrap justify-center gap-2 align-middle">
+            {currentTracks.map((track) => (
+              <div
+                key={track.uri}
+                className={`flex items-center text-neutralColor p-1 rounded-lg ${
+                  selectedTracks.find((t) => t.uri === track.uri) ? "" : ""
+                }`}
+                style={{ flexBasis: "calc(50% - 0.5rem)" }}
               >
-                <img
-                  src={track.albumUrl}
-                  alt={track.title}
-                  className="w-8 h-8 rounded-lg object-cover mr-2 sm:w-12 sm:h-12 sm:mr-4"
-                />
-                <div className="flex flex-col">
-                  <span className="text-xs sm:text-sm font-semibold">
-                    {track.title}
-                  </span>{" "}
-                  <span className="text-xs sm:text-sm text-gray-400">
-                    {track.artist}
-                  </span>
-                </div>
-              </button>
-            </div>
-          ))}
-          {currentTracks.length === 0 && (
-            <div className="text-center text-gray-400">No tracks available</div>
-          )}
+                <button
+                  className={`flex items-center w-full ${
+                    selectedTracks.find((t) => t.uri === track.uri)
+                      ? "bg-gray-800"
+                      : "bg-gray-900/50"
+                  } rounded-lg p-2`}
+                  onClick={() => toggleTrackSelection(track)}
+                >
+                  <img
+                    src={track.albumUrl}
+                    alt={track.title}
+                    className="w-8 h-8 rounded-lg object-cover mr-2 sm:w-12 sm:h-12 sm:mr-4"
+                  />
+                  <div className="flex flex-col">
+                    <span className="text-xs sm:text-sm font-semibold">
+                      {track.title}
+                    </span>{" "}
+                    <span className="text-xs sm:text-sm text-gray-400">
+                      {track.artist}
+                    </span>
+                  </div>
+                </button>
+              </div>
+            ))}
+            {currentTracks.length === 0 && (
+              <div className="text-center text-gray-400">
+                No tracks available
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="mt-6">
-          <div className="mb-6 mt-12">
+          <div className="mb-6 mt-12 text-center ">
             <Typography variant="h3" className="text-sm sm:text-base">
               Selected liedjes:
             </Typography>
