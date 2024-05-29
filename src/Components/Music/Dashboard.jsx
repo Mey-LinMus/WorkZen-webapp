@@ -6,6 +6,7 @@ import Typography from "../ui-elements/Typography";
 import UILogo from "../ui-elements/Logo";
 import StyledButton from "../ui-elements/Button";
 import StepNavigator from "../Selections/StepNavigator";
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: "1f4f7e164fe945998e2b5904bd676792",
@@ -97,33 +98,64 @@ export default function Dashboard({ code }) {
 
   return (
     <div className="p-4">
-      <div className="flex mb-4 space-x-6">
-        <button
-          onClick={() => setSelectedCategory("classic")}
-          className="me-2 px-4 py-2 rounded-lg bg-gray-700 text-white"
-        >
-          Classic Songs
-        </button>
-        <button
-          onClick={() => setSelectedCategory("jazz")}
-          className="px-4 py-2 rounded-lg bg-gray-700 text-white"
-        >
-          Jazz Songs
-        </button>
+      <div>
+        <div className="flex justify-between items-center mb-4 bg-primaryColor w-11/12 h-90  m-2 p-4 rounded-lg shadow-lg fixed  ">
+          <div className="flex space-x-4">
+            <StyledButton
+              variant="borderButton"
+              onClick={() => setSelectedCategory("classic")}
+            >
+              Classic
+            </StyledButton>
+            <StyledButton
+              variant="borderButton"
+              onClick={() => setSelectedCategory("jazz")}
+              className="px-4 py-2  border-solid border-neutralColor rounded-lg text-neutralColor"
+            >
+              Jazz
+            </StyledButton>
+          </div>
+          <div className="flex justify-center">
+            <Typography
+              variant="h1"
+              className="text-center flex justify-center"
+            >
+              Selecteer liedjes
+            </Typography>
+          </div>
+          <div className="flex items-center">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="bg-gray-700 text-neutralColor px-3 py-1 rounded-lg disabled:opacity-50"
+            >
+              <HiChevronLeft />
+            </button>
+
+            <button
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
+              disabled={currentPage === totalPages}
+              className="bg-gray-700 text-neutralColor px-3 py-1 rounded-lg disabled:opacity-50 "
+            >
+              <HiChevronRight />
+            </button>
+          </div>
+        </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="space-y-2">
+
+      <div className="mt-40">
+        <div className="grid grid-cols-3 grid-rows-2 gap-2">
           {currentTracks.map((track) => (
             <div
               key={track.uri}
-              className={`flex items-center  text-white p-1 rounded-lg ${
-                selectedTracks.find((t) => t.uri === track.uri)
-                  ? ""
-                  : ""
+              className={`flex items-center  text-neutralColor p-1 rounded-lg ${
+                selectedTracks.find((t) => t.uri === track.uri) ? "" : ""
               }`}
             >
               <button
-                className={`flex items-center w-80 ${
+                className={`flex items-center w-96 ${
                   selectedTracks.find((t) => t.uri === track.uri)
                     ? "bg-gray-700"
                     : "bg-gray-900"
@@ -149,36 +181,17 @@ export default function Dashboard({ code }) {
           {currentTracks.length === 0 && (
             <div className="text-center text-gray-400">No tracks available</div>
           )}
-          <div className="flex items-center justify-between mt-2">
-            <button
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-              className="bg-gray-700 text-white px-3 py-1 rounded-lg disabled:opacity-50"
-            >
-              ←
-            </button>
-            <span className="text-white">
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              onClick={() =>
-                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-              }
-              disabled={currentPage === totalPages}
-              className="bg-gray-700 text-white px-3 py-1 rounded-lg disabled:opacity-50"
-            >
-              →
-            </button>
-          </div>
         </div>
 
         <div className="mt-6">
-          <h4 className="text-xl text-white mb-4">Selected Tracks</h4>
+          <div className=" mb-6 mt-12">
+            <Typography variant="h3">Selected liedjes:</Typography>
+          </div>
           <ul className="space-y-2">
             {selectedTracks.map((track) => (
               <li
                 key={track.uri}
-                className="flex items-center bg-gray-800 text-white p-2 rounded-lg"
+                className="flex items-center bg-gray-800 text-neutralColor p-2 rounded-lg"
               >
                 <img
                   src={track.albumUrl}
@@ -196,11 +209,6 @@ export default function Dashboard({ code }) {
               </li>
             ))}
           </ul>
-          <StyledButton
-            onClick={navigateToScene}
-            disabled={selectedTracks.length === 0}
-            className="mt-4 text-white px-4 py-2 rounded-lg w-full disabled:opacity-50"
-          ></StyledButton>
         </div>
       </div>
     </div>
