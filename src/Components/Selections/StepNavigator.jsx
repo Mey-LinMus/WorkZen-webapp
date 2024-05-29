@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { HiArrowLeft, HiArrowRight } from "react-icons/hi";
 
-function App() {
+function StepNavigator() {
   const [currentStep, setCurrentStep] = useState(1);
 
   const handleNextStep = () => {
@@ -13,7 +13,7 @@ function App() {
   };
 
   return (
-    <div className="container mx-auto mt-10 relative translate-y-16">
+    <div className="bg-primaryColor container mt-10">
       <div className="flex items-center justify-center">
         <div className="flex items-center">
           {currentStep > 1 && (
@@ -51,4 +51,4 @@ function App() {
   );
 }
 
-export default App;
+export default StepNavigator;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
 import visualsData from "../../visuals.json";
 import Typography from "../ui-elements/Typography";
@@ -9,6 +9,15 @@ const VisualSelect = () => {
   const visuals = visualsData.visuals;
   // const navigate = useNavigate();
 
+  useEffect(() => {
+    // This ensures that the video elements are correctly muted to allow autoplay on mobile devices
+    const videos = document.querySelectorAll("video");
+    videos.forEach((video) => {
+      video.muted = true;
+      video.play();
+    });
+  }, []);
+
   const handleVisualClick = (visual) => {
     localStorage.setItem("selectedVisual", JSON.stringify(visual));
     // navigate("/music-select");
@@ -17,12 +26,12 @@ const VisualSelect = () => {
   return (
     <div className="bg-primaryColor min-h-screen flex flex-col items-center">
       <UILogo />
-      <div className="mt-14 mb-12 relative translate-y-10 text-center">
+      <div className="mt-14 mb-12 relative text-center">
         <Typography variant="h2" className="text-center">
           Selecteer een visual
         </Typography>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 justify-center relative translate-y-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 justify-center">
         {visuals.map((visual) => (
           <button
             key={visual.id}
