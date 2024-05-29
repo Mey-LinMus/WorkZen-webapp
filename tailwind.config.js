@@ -27,6 +27,11 @@ module.exports = {
       size: {
         128: "25rem",
       },
+      gradientColorStops: {
+        "custom-gradient-start": "rgba(21,80,108,1)",
+        "custom-gradient-middle": "rgba(6,40,59,1)",
+        "custom-gradient-end": "rgba(10,17,40,1)",
+      },
     },
   },
   plugins: [],
