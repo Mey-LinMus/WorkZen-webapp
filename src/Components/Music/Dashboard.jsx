@@ -139,7 +139,7 @@ export default function Dashboard({ code }) {
               </Typography>
             </div>
             <Typography variant="bodyText" className="mt-3">
-              Totaal looptijd: {Math.floor(totalDuration / 60000)} minuten
+              Totale looptijd: {Math.floor(totalDuration / 60000)} minuten
             </Typography>
           </div>
 
@@ -177,8 +177,8 @@ export default function Dashboard({ code }) {
               <button
                 className={`flex items-center w-96 ${
                   selectedTracks.find((t) => t.uri === track.uri)
-                    ? "bg-gray-700"
-                    : "bg-gray-900"
+                    ? "bg-gray-800"
+                    : "bg-gray-900/50"
                 } rounded-lg p-2`}
                 onClick={() => toggleTrackSelection(track)}
               >
