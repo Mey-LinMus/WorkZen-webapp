@@ -112,44 +112,38 @@ export default function Dashboard({ code }) {
 
   return (
     <div className="p-4">
-      <div>
-        <div className="flex justify-between items-center mb-4 bg-primaryColor w-11/12 h-90  m-2 p-4 rounded-lg shadow-lg fixed  ">
-          <div className="flex space-x-4">
+      <div className="fixed top-0 left-0 right-0 flex justify-center w-full">
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-4 bg-primaryColor w-full sm:w-11/12 h-auto m-2 p-4 rounded-lg shadow-lg">
+          <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
             <StyledButton
               selected={selectedCategory === "classic"}
               onClick={() => setSelectedCategory("classic")}
+              className="text-sm sm:text-base" // Adjust button text size
             >
               Classic
             </StyledButton>
             <StyledButton
               selected={selectedCategory === "jazz"}
               onClick={() => setSelectedCategory("jazz")}
+              className="text-sm sm:text-base" // Adjust button text size
             >
               Jazz
             </StyledButton>
           </div>
 
-          <div className="flex flex-col items-center">
-            <div className="flex justify-center mb-4">
-              <Typography
-                variant="h1"
-                className="text-center flex justify-center"
-              >
-                Selecteer liedjes
-              </Typography>
-            </div>
-            <Typography variant="bodyText" className="mt-3">
-              Totale looptijd: {Math.floor(totalDuration / 60000)} minuten
+          <div className="flex flex-col items-center sm:flex-row">
+            <Typography variant="bodyText" className="mt-1 text-xs sm:text-sm">
+              {Math.floor(totalDuration / 60000)} minuten
             </Typography>
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2">
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
-              className="bg-gray-600 text-neutralColor px-3 py-1 rounded-full disabled:opacity-50 size-10 "
+              className="bg-gray-600 text-neutralColor px-2 py-1 rounded-full disabled:opacity-50 size-8" // Adjust button size
             >
-              <HiChevronLeft />
+              <HiChevronLeft className="w-4 h-4" />
             </button>
 
             <button
@@ -157,16 +151,24 @@ export default function Dashboard({ code }) {
                 setCurrentPage((prev) => Math.min(prev + 1, totalPages))
               }
               disabled={currentPage === totalPages}
-              className="bg-gray-600 size-10 text-neutralColor px-3 py-1 rounded-full disabled:opacity-50"
+              className="bg-gray-600 size-8 text-neutralColor px-2 py-1 rounded-full disabled:opacity-50" // Adjust button size
             >
-              <HiChevronRight />
+              <HiChevronRight className="w-4 h-4" />
             </button>
           </div>
         </div>
       </div>
 
-      <div className="mt-40">
-        <div className="grid grid-cols-3 grid-rows-2 gap-2 align-middle">
+      <div className="mt-6 sm:mt-10">
+        <div className="flex justify-center sm:mb-0 mt-24 ">
+          <Typography
+            variant="h1"
+            className="text-center flex justify-center text-xl sm:text-3xl md:text-4xl lg:text-5xl  "
+          >
+            Selecteer liedjes
+          </Typography>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 grid-rows-2 gap-2 align-middle  mt-6">
           {currentTracks.map((track) => (
             <div
               key={track.uri}
@@ -175,7 +177,7 @@ export default function Dashboard({ code }) {
               }`}
             >
               <button
-                className={`flex items-center w-96 ${
+                className={`flex items-center w-full sm:w-96 ${
                   selectedTracks.find((t) => t.uri === track.uri)
                     ? "bg-gray-800"
                     : "bg-gray-900/50"
@@ -188,7 +190,9 @@ export default function Dashboard({ code }) {
                   className="w-8 h-8 rounded-lg object-cover mr-2 sm:w-12 sm:h-12 sm:mr-4"
                 />
                 <div className="flex flex-col">
-                  <span className="text-sm  font-semibold">{track.title}</span>
+                  <span className="text-xs sm:text-sm font-semibold">
+                    {track.title}
+                  </span>{" "}
                   <span className="text-xs sm:text-sm text-gray-400">
                     {track.artist}
                   </span>
@@ -202,10 +206,12 @@ export default function Dashboard({ code }) {
         </div>
 
         <div className="mt-6">
-          <div className=" mb-6 mt-12">
-            <Typography variant="h3">Selected liedjes:</Typography>
+          <div className="mb-6 mt-12">
+            <Typography variant="h3" className="text-sm sm:text-base">
+              Selected liedjes:
+            </Typography>
           </div>
-          <ul className="space-y-2 grid grid-cols-3 grid-rows-2 gap-2">
+          <ul className="space-y-2 grid grid-cols-1 sm:grid-cols-3 grid-rows-2 gap-2">
             {selectedTracks.map((track) => (
               <li
                 key={track.uri}
@@ -217,7 +223,9 @@ export default function Dashboard({ code }) {
                   className="w-8 h-8 rounded-lg object-cover mr-2 sm:w-12 sm:h-12 sm:mr-4"
                 />
                 <div className="flex flex-col">
-                  <span className="text-sm  font-semibold">{track.title}</span>
+                  <span className="text-xs sm:text-sm font-semibold">
+                    {track.title}
+                  </span>{" "}
                   <span className="text-xs sm:text-sm text-gray-400">
                     {track.artist}
                   </span>
