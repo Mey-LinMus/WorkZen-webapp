@@ -18,6 +18,7 @@ export default function Dashboard({ code }) {
   const [selectedTracks, setSelectedTracks] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("classic");
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalDuration, setTotalDuration] = useState(0);
   const tracksPerPage = 18;
   // const navigate = useNavigate();
 
@@ -75,6 +76,7 @@ export default function Dashboard({ code }) {
                 : track.name,
             uri: track.uri,
             albumUrl: smallestAlbumImage.url,
+            duration_ms: track.duration_ms,
           };
         });
       } catch (error) {
@@ -92,6 +94,14 @@ export default function Dashboard({ code }) {
 
     fetchTracks();
   }, [accessToken, selectedCategory]);
+
+  useEffect(() => {
+    let total = 0;
+    selectedTracks.forEach((track) => {
+      total += track.duration_ms;
+    });
+    setTotalDuration(total);
+  }, [selectedTracks]);
 
   const startIndex = (currentPage - 1) * tracksPerPage;
   const currentTracks = playlistTracks.slice(
@@ -118,14 +128,21 @@ export default function Dashboard({ code }) {
               Jazz
             </StyledButton>
           </div>
-          <div className="flex justify-center">
-            <Typography
-              variant="h1"
-              className="text-center flex justify-center"
-            >
-              Selecteer liedjes
+
+          <div className="flex flex-col items-center">
+            <div className="flex justify-center mb-4">
+              <Typography
+                variant="h1"
+                className="text-center flex justify-center"
+              >
+                Selecteer liedjes
+              </Typography>
+            </div>
+            <Typography variant="bodyText" className="mt-3">
+              Totaal looptijd: {Math.floor(totalDuration / 60000)} minuten
             </Typography>
           </div>
+
           <div className="flex items-center space-x-4">
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
@@ -149,11 +166,11 @@ export default function Dashboard({ code }) {
       </div>
 
       <div className="mt-40">
-        <div className="grid grid-cols-3 grid-rows-2 gap-2">
+        <div className="grid grid-cols-3 grid-rows-2 gap-2 align-middle">
           {currentTracks.map((track) => (
             <div
               key={track.uri}
-              className={`flex items-center  text-neutralColor p-1 rounded-lg ${
+              className={`flex items-center text-neutralColor p-1 rounded-lg ${
                 selectedTracks.find((t) => t.uri === track.uri) ? "" : ""
               }`}
             >
@@ -171,9 +188,7 @@ export default function Dashboard({ code }) {
                   className="w-8 h-8 rounded-lg object-cover mr-2 sm:w-12 sm:h-12 sm:mr-4"
                 />
                 <div className="flex flex-col">
-                  <span className="text-sm sm:text-lg font-semibold">
-                    {track.title}
-                  </span>
+                  <span className="text-sm  font-semibold">{track.title}</span>
                   <span className="text-xs sm:text-sm text-gray-400">
                     {track.artist}
                   </span>
@@ -190,7 +205,7 @@ export default function Dashboard({ code }) {
           <div className=" mb-6 mt-12">
             <Typography variant="h3">Selected liedjes:</Typography>
           </div>
-          <ul className="space-y-2">
+          <ul className="space-y-2 grid grid-cols-3 grid-rows-2 gap-2">
             {selectedTracks.map((track) => (
               <li
                 key={track.uri}
@@ -202,9 +217,7 @@ export default function Dashboard({ code }) {
                   className="w-8 h-8 rounded-lg object-cover mr-2 sm:w-12 sm:h-12 sm:mr-4"
                 />
                 <div className="flex flex-col">
-                  <span className="text-sm sm:text-lg font-semibold">
-                    {track.title}
-                  </span>
+                  <span className="text-sm  font-semibold">{track.title}</span>
                   <span className="text-xs sm:text-sm text-gray-400">
                     {track.artist}
                   </span>
