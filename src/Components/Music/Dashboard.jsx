@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SpotifyWebApi from "spotify-web-api-node";
 import useAuth from "./useAuth";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Typography from "../ui-elements/Typography";
 import UILogo from "../ui-elements/Logo";
 import StyledButton from "../ui-elements/Button";
@@ -20,7 +20,7 @@ export default function Dashboard({ code }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalDuration, setTotalDuration] = useState(0);
   const tracksPerPage = 18;
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);

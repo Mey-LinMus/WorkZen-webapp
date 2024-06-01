@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import visualsData from "../../visuals.json";
 import Typography from "../ui-elements/Typography";
 import UILogo from "../ui-elements/Logo";
@@ -7,7 +7,7 @@ import StepNavigator from "./StepNavigator";
 
 const VisualSelect = () => {
   const visuals = visualsData.visuals;
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     // This ensures that the video elements are correctly muted to allow autoplay on mobile devices
@@ -20,7 +20,7 @@ const VisualSelect = () => {
 
   const handleVisualClick = (visual) => {
     localStorage.setItem("selectedVisual", JSON.stringify(visual));
-    // navigate("/music-select");
+    navigate("/music-select");
   };
 
   return (
