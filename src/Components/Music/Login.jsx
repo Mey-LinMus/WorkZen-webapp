@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Button } from "react-bootstrap";
+
 
 const URI = "https://workzen-webapp.onrender.com/music-select";
 const client_id = "1f4f7e164fe945998e2b5904bd676792";
@@ -7,9 +7,8 @@ const AUTH_URL = `https://accounts.spotify.com/authorize?client_id=${client_id}&
 
 export default function Login() {
   return (
-    <Container
-      className="d-flex justify-content-center align-items-center"
+    <div
       style={{ minHeight: "100vh" }}
-    ></Container>
+    ></div>
   );
 }
