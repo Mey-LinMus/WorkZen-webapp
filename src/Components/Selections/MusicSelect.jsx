@@ -12,20 +12,15 @@ function MusicSelect() {
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get("code");
   const [selectedVisual, setSelectedVisual] = useState(null);
-  const [spotifyCode, setSpotifyCode] = useState(null);
 
   useEffect(() => {
     if (!code) {
       window.location.href = AUTH_URL;
+    } else {
+      const visual = JSON.parse(localStorage.getItem("selectedVisual"));
+      setSelectedVisual(visual);
+      localStorage.setItem("spotifyCode", code);
     }
-
-    const visual = JSON.parse(localStorage.getItem("selectedVisual"));
-    setSelectedVisual(visual);
-
-    localStorage.setItem("spotifyCode", code);
-    setSpotifyCode(code);
-
-    console.log("SpotifyCode", code);
   }, [code]);
 
   return (
