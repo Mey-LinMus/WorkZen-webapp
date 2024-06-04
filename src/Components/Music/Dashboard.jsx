@@ -30,6 +30,13 @@ export default function Dashboard({ code }) {
     if (accessToken) {
       localStorage.setItem("spotifyAccessToken", accessToken);
     }
+
+    const storedSelectedTracks = JSON.parse(
+      localStorage.getItem("selectedTracks")
+    );
+    if (storedSelectedTracks) {
+      setSelectedTracks(storedSelectedTracks);
+    }
   }, [accessToken]);
 
   const playlistIds = {
@@ -241,7 +248,6 @@ export default function Dashboard({ code }) {
             ))}
           </ul>
         </div>
-  
       </div>
     </div>
   );
