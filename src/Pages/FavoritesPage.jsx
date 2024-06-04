@@ -23,7 +23,7 @@ const FavoritesPage = () => {
 
   useEffect(() => {
     if (deviceId) {
-      fetch(`/favorites?deviceId=${deviceId}`)
+      fetch(`https://backend-favorites.onrender.com/favorites?deviceId=${deviceId}`)
         .then((response) => response.json())
         .then((data) => setFavorites(data.favorites || []));
     }
