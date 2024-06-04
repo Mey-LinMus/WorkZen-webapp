@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Typography from "./ui-elements/Typography";
+import Typography from "../ui-elements/Typography";
 
 const StepNavigator = ({ currentStep }) => {
   const navigate = useNavigate();
