@@ -10,16 +10,10 @@ function MakeChoicePage() {
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
+    localStorage.setItem("selectedOption", option);
   };
 
-  const handleNextClick = () => {
-    if (selectedOption) {
-      // Perform any necessary actions with the selected option
-      navigate("/music-select");
-    } else {
-      alert("Please select an option first.");
-    }
-  };
+
 
   return (
     <div className="bg-primaryColor min-h-screen flex flex-col items-center">

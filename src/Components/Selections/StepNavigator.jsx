@@ -1,10 +1,11 @@
-import React from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Typography from "../ui-elements/Typography";
 
 const StepNavigator = ({ currentStep }) => {
   const navigate = useNavigate();
-  const totalSteps = 3; // Set the total number of steps
+  const totalSteps = 3;
+  const [showMessage, setShowMessage] = useState(false);
 
   const handlePrevClick = () => {
     switch (currentStep) {
@@ -25,10 +26,22 @@ const StepNavigator = ({ currentStep }) => {
   const handleNextClick = () => {
     switch (currentStep) {
       case 1:
-        navigate("/make-choice");
+        const selectedVisual = JSON.parse(
+          localStorage.getItem("selectedVisual")
+        );
+        if (selectedVisual) {
+          navigate("/make-choice");
+        } else {
+          setShowMessage(true);
+        }
         break;
       case 2:
-        navigate("/music-select");
+        const selectedOption = localStorage.getItem("selectedOption");
+        if (selectedOption) {
+          navigate("/music-select");
+        } else {
+          alert("Please select an option first.");
+        }
         break;
       case 3:
         navigate("/scene-page");
@@ -39,26 +52,33 @@ const StepNavigator = ({ currentStep }) => {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 flex justify-between items-center p-4 bg-gray-800">
-      <button
-        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-        onClick={handlePrevClick}
-        disabled={currentStep === 1}
-      >
-        Previous
-      </button>
-      <div className="text-white">
-        <Typography variant="bodyText">
-          {currentStep} / {totalSteps}
-        </Typography>
+    <div className="fixed bottom-0 left-0 right-0 flex flex-col justify-between items-center p-4 bg-gray-800">
+      <div className="w-full flex justify-between items-center">
+        <button
+          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          onClick={handlePrevClick}
+          disabled={currentStep === 1}
+        >
+          Previous
+        </button>
+        <div className="text-white">
+          <Typography variant="bodyText">
+            Step {currentStep} of {totalSteps}
+          </Typography>
+        </div>
+        <button
+          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          onClick={handleNextClick}
+          disabled={currentStep === totalSteps}
+        >
+          Next
+        </button>
       </div>
-      <button
-        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-        onClick={handleNextClick}
-        disabled={currentStep === totalSteps}
-      >
-        Next
-      </button>
+      {showMessage && currentStep === 1 && (
+        <div className="mt-4 text-red-500">
+          <Typography variant="bodyText">Selecteer een visual</Typography>
+        </div>
+      )}
     </div>
   );
 };
