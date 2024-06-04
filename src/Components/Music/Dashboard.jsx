@@ -48,7 +48,7 @@ export default function Dashboard({ code }) {
 
   function navigateToScene() {
     localStorage.setItem("selectedTracks", JSON.stringify(selectedTracks));
-    // navigate("/scene-page");
+    navigate("/scene-page");
   }
 
   useEffect(() => {
