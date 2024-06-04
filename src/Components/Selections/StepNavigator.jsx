@@ -36,12 +36,7 @@ const StepNavigator = ({ currentStep }) => {
         }
         break;
       case 2:
-        const selectedOption = localStorage.getItem("selectedOption");
-        if (selectedOption) {
-          navigate("/music-select");
-        } else {
-          alert("Please select an option first.");
-        }
+        navigate("/music-select");
         break;
       case 3:
         navigate("/scene-page");
@@ -50,6 +45,7 @@ const StepNavigator = ({ currentStep }) => {
         break;
     }
   };
+  
 
   return (
     <div className="fixed bottom-0 left-0 right-0 flex flex-col justify-between items-center p-4 bg-gray-800">
