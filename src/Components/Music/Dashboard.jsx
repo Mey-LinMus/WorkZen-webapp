@@ -195,7 +195,7 @@ export default function Dashboard({ code }) {
         <div className="mt-6">
           <div className="mb-6 mt-12 text-center ">
             <Typography variant="h3" className="text-sm sm:text-base">
-              Selected liedjes:
+              Geselecteerde liedjes:
             </Typography>
           </div>
           <ul className="space-y-2 grid grid-cols-1 sm:grid-cols-3 grid-rows-2 gap-2">
