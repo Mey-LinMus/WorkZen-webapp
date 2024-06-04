@@ -1,6 +1,6 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Typography from "../ui-elements/Typography";
+import Typography from "./ui-elements/Typography";
 
 const StepNavigator = ({ currentStep }) => {
   const navigate = useNavigate();
@@ -44,7 +44,14 @@ const StepNavigator = ({ currentStep }) => {
         }
         break;
       case 3:
-        navigate("/scene-page");
+        const selectedTracks = JSON.parse(
+          localStorage.getItem("selectedTracks")
+        );
+        if (selectedTracks && selectedTracks.length > 0) {
+          navigate("/scene-page");
+        } else {
+          alert("Please select at least one track.");
+        }
         break;
       default:
         break;

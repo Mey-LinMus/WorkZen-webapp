@@ -46,10 +46,9 @@ export default function Dashboard({ code }) {
     }
   }
 
-  function navigateToScene() {
+  useEffect(() => {
     localStorage.setItem("selectedTracks", JSON.stringify(selectedTracks));
-    navigate("/scene-page");
-  }
+  }, [selectedTracks]);
 
   useEffect(() => {
     if (!accessToken) return;
@@ -242,14 +241,7 @@ export default function Dashboard({ code }) {
             ))}
           </ul>
         </div>
-        {/* <div>
-          <StyledButton
-            onClick={navigateToScene}
-            disabled={selectedTracks.length === 0}
-          >
-            Next
-          </StyledButton>
-        </div> */}
+  
       </div>
     </div>
   );
