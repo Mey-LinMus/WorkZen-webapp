@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Typography from "../ui-elements/Typography";
 
-const StepNavigator = ({ currentStep }) => {
+const StepNavigator = ({ currentStep, isLastStep }) => {
   const navigate = useNavigate();
   const totalSteps = 3;
   const [showMessage, setShowMessage] = useState(false);
@@ -36,16 +36,22 @@ const StepNavigator = ({ currentStep }) => {
         }
         break;
       case 2:
-        navigate("/music-select");
+        const selectedOption = localStorage.getItem("selectedOption");
+        if (selectedOption) {
+          navigate("/music-select");
+        } else {
+          alert("Please select an option first.");
+        }
         break;
       case 3:
-        navigate("/scene-page");
+        if (isLastStep) {
+          navigate("/scene-page");
+        }
         break;
       default:
         break;
     }
   };
-  
 
   return (
     <div className="fixed bottom-0 left-0 right-0 flex flex-col justify-between items-center p-4 bg-gray-800">
@@ -67,7 +73,7 @@ const StepNavigator = ({ currentStep }) => {
           onClick={handleNextClick}
           disabled={currentStep === totalSteps}
         >
-          Next
+          {isLastStep ? "Finish" : "Next"}
         </button>
       </div>
       {showMessage && currentStep === 1 && (

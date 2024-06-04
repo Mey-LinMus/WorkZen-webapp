@@ -3,6 +3,7 @@ import Dashboard from "../Music/Dashboard";
 import Login from "../Music/Login";
 import "../../Styles/musicPage.css";
 import Typography from "../ui-elements/Typography";
+import StepNavigator from "../Selections/StepNavigator";
 
 const URI = "https://workzen-webapp.onrender.com/music-select";
 const client_id = "1f4f7e164fe945998e2b5904bd676792";
