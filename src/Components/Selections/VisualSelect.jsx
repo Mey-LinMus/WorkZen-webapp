@@ -10,7 +10,6 @@ const VisualSelect = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // This ensures that the video elements are correctly muted to allow autoplay on mobile devices
     const videos = document.querySelectorAll("video");
     videos.forEach((video) => {
       video.muted = true;
