@@ -2,19 +2,20 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Typography from "../ui-elements/Typography";
 
-const StepNavigator = ({ currentStep }) => {
+const StepNavigator = ({ currentStep, isLastStep }) => {
   const navigate = useNavigate();
+  const totalSteps = 3;
   const [showMessage, setShowMessage] = useState(false);
 
   const handlePrevClick = () => {
     switch (currentStep) {
-      case 2:
+      case 1:
         navigate("/");
         break;
-      case 3:
+      case 2:
         navigate("/visual-select");
         break;
-      case 4:
+      case 3:
         navigate("/make-choice");
         break;
       default:
@@ -29,7 +30,7 @@ const StepNavigator = ({ currentStep }) => {
           localStorage.getItem("selectedVisual")
         );
         if (selectedVisual) {
-          navigate("/visual-select");
+          navigate("/make-choice");
         } else {
           setShowMessage(true);
         }
@@ -37,13 +38,15 @@ const StepNavigator = ({ currentStep }) => {
       case 2:
         const selectedOption = localStorage.getItem("selectedOption");
         if (selectedOption) {
-          navigate("/make-choice");
+          navigate("/music-select");
         } else {
           alert("Please select an option first.");
         }
         break;
       case 3:
-        navigate("/music-select");
+        if (isLastStep) {
+          navigate("/scene-page");
+        }
         break;
       default:
         break;
@@ -61,16 +64,23 @@ const StepNavigator = ({ currentStep }) => {
           Previous
         </button>
         <div className="text-white">
-          <Typography variant="bodyText">Step {currentStep} of 3</Typography>
+          <Typography variant="bodyText">
+            Step {currentStep} of {totalSteps}
+          </Typography>
         </div>
         <button
           className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
           onClick={handleNextClick}
-          disabled={currentStep === 3}
+          disabled={currentStep === totalSteps}
         >
-          Next
+          {isLastStep ? "Finish" : "Next"}
         </button>
       </div>
+      {showMessage && currentStep === 1 && (
+        <div className="mt-4 text-red-500">
+          <Typography variant="bodyText">Selecteer een visual</Typography>
+        </div>
+      )}
     </div>
   );
 };

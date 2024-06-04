@@ -39,7 +39,7 @@ function SelectionPage() {
             </>
           }
         />
-        <Route path="/scene-page" element={<ScenePage />} />
+        <Route path="/scene-page" element={<ScenePage />} currentStep={4} />
       </Routes>
     </Router>
   );
