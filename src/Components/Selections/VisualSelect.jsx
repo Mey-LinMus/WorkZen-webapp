@@ -19,7 +19,7 @@ const VisualSelect = () => {
 
   const handleVisualClick = (visual) => {
     localStorage.setItem("selectedVisual", JSON.stringify(visual));
-    navigate("/music-select");
+    navigate("/make-choice");
   };
 
   return (
