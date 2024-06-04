@@ -242,6 +242,14 @@ export default function Dashboard({ code }) {
             ))}
           </ul>
         </div>
+        <div>
+          <StyledButton
+            onClick={navigateToScene}
+            disabled={selectedTracks.length === 0}
+          >
+            Next
+          </StyledButton>
+        </div>
       </div>
     </div>
   );
