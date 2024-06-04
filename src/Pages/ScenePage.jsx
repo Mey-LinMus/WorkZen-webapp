@@ -1,13 +1,14 @@
 import React, { useEffect, useState, Suspense } from "react";
 import Player from "../Components/Music/Player";
 import { Container } from "react-bootstrap";
-
+import { useNavigate } from "react-router-dom";
 
 const ScenePage = () => {
   const [selectedVisual, setSelectedVisual] = useState(null);
   const [selectedTracks, setSelectedTracks] = useState([]);
   const [VisualComponent, setVisualComponent] = useState(null);
   const spotifyAccessToken = localStorage.getItem("spotifyAccessToken");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const visual = JSON.parse(localStorage.getItem("selectedVisual"));
@@ -26,6 +27,10 @@ const ScenePage = () => {
         });
     }
   }, []);
+
+  const handleFavoritesClick = () => {
+    navigate("/favorites");
+  };
 
   const getDeviceId = () => {
     // Implement a function to get a unique device ID
@@ -87,6 +92,8 @@ const ScenePage = () => {
       )}
 
       <button onClick={handleSaveCombination}>Save Combination</button>
+
+      <button onClick={handleFavoritesClick}>Favorieten</button>
     </div>
   );
 };

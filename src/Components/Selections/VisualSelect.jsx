@@ -4,6 +4,8 @@ import visualsData from "../../visuals.json";
 import Typography from "../ui-elements/Typography";
 import UILogo from "../ui-elements/Logo";
 import StepNavigator from "./StepNavigator";
+
+
 const VisualSelect = () => {
   const visuals = visualsData.visuals;
   const navigate = useNavigate();
