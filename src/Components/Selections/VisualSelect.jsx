@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import visualsData from "../../visuals.json";
 import Typography from "../ui-elements/Typography";
 import UILogo from "../ui-elements/Logo";
-import StepNavigator from "./StepNavigator";
+import StyledButton from "../ui-elements/Button";
 
+import StepNavigator from "./StepNavigator";
 
 const VisualSelect = () => {
   const visuals = visualsData.visuals;
@@ -69,13 +70,9 @@ const VisualSelect = () => {
           </button>
         ))}
       </div>
-
-      <button
-        className="mt-8 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-        onClick={handleNextClick}
-      >
-        Next
-      </button>
+      <div className="mt-16 px-4 py-2">
+        <StyledButton onClick={handleNextClick}>Next</StyledButton>
+      </div>
     </div>
   );
 };
