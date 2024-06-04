@@ -48,12 +48,12 @@ function MakeChoicePage() {
         </StyledButton>
       </div>
 
-      <button
+      {/* <button
         className="mt-8 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
         onClick={handleNextClick}
       >
         Next
-      </button>
+      </button> */}
     </div>
   );
 }
