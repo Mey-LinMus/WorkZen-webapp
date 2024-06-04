@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import visualsData from "../../visuals.json";
 import Typography from "../ui-elements/Typography";
@@ -8,6 +8,7 @@ import StepNavigator from "./StepNavigator";
 const VisualSelect = () => {
   const visuals = visualsData.visuals;
   const navigate = useNavigate();
+  const [selectedVisual, setSelectedVisual] = useState(null);
 
   useEffect(() => {
     const videos = document.querySelectorAll("video");
@@ -18,8 +19,16 @@ const VisualSelect = () => {
   }, []);
 
   const handleVisualClick = (visual) => {
-    localStorage.setItem("selectedVisual", JSON.stringify(visual));
-    navigate("/make-choice");
+    setSelectedVisual(visual);
+  };
+
+  const handleNextClick = () => {
+    if (selectedVisual) {
+      localStorage.setItem("selectedVisual", JSON.stringify(selectedVisual));
+      navigate("/make-choice");
+    } else {
+      alert("Please select a visual first.");
+    }
   };
 
   return (
@@ -34,7 +43,9 @@ const VisualSelect = () => {
         {visuals.map((visual) => (
           <button
             key={visual.id}
-            className="relative overflow-hidden rounded-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none"
+            className={`relative overflow-hidden rounded-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none ${
+              selectedVisual === visual ? "ring-2 ring-blue-500" : ""
+            }`}
             style={{
               aspectRatio: "1/1",
               minWidth: "200px",
@@ -58,7 +69,14 @@ const VisualSelect = () => {
         ))}
       </div>
 
-      <StepNavigator />
+      <button
+        className="mt-8 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+        onClick={handleNextClick}
+      >
+        Next
+      </button>
+{/* 
+      <StepNavigator /> */}
     </div>
   );
 };
