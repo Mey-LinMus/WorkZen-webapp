@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import visualsData from "../../visuals.json";
 import Typography from "../ui-elements/Typography";
 import UILogo from "../ui-elements/Logo";
-
+import StepNavigator from "./StepNavigator";
 const VisualSelect = () => {
   const visuals = visualsData.visuals;
   const navigate = useNavigate();
@@ -19,7 +19,15 @@ const VisualSelect = () => {
 
   const handleVisualClick = (visual) => {
     setSelectedVisual(visual);
-    localStorage.setItem("selectedVisual", JSON.stringify(visual));
+  };
+
+  const handleNextClick = () => {
+    if (selectedVisual) {
+      localStorage.setItem("selectedVisual", JSON.stringify(selectedVisual));
+      navigate("/make-choice");
+    } else {
+      alert("Please select a visual first.");
+    }
   };
 
   return (
@@ -59,8 +67,14 @@ const VisualSelect = () => {
           </button>
         ))}
       </div>
+
+      <button
+        className="mt-8 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+        onClick={handleNextClick}
+      >
+        Next
+      </button>
     </div>
   );
 };
-
 export default VisualSelect;

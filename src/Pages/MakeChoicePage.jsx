@@ -10,15 +10,20 @@ function MakeChoicePage() {
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
-    localStorage.setItem("selectedOption", option);
   };
 
-
+  const handleNextClick = () => {
+    if (selectedOption) {
+   
+      navigate("/music-select");
+    } else {
+      alert("Please select an option first.");
+    }
+  };
 
   return (
     <div className="bg-primaryColor min-h-screen flex flex-col items-center">
       <UILogo className="mt-12 md:mt-16 lg:mt-20" />
-
       <div className="mt-12 md:mt-16 lg:mt-20 text-center">
         <Typography variant="h1" className="text-2xl md:text-3xl lg:text-4xl">
           Maak je keuze
@@ -42,8 +47,13 @@ function MakeChoicePage() {
         </StyledButton>
       </div>
 
+      <button
+        className="mt-8 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+        onClick={handleNextClick}
+      >
+        Next
+      </button>
     </div>
   );
 }
-
 export default MakeChoicePage;

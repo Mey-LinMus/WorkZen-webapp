@@ -7,11 +7,9 @@ import UILogo from "../ui-elements/Logo";
 import StyledButton from "../ui-elements/Button";
 import StepNavigator from "../Selections/StepNavigator";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
-
 const spotifyApi = new SpotifyWebApi({
   clientId: "1f4f7e164fe945998e2b5904bd676792",
 });
-
 export default function Dashboard({ code }) {
   const accessToken = useAuth(code);
   const [playlistTracks, setPlaylistTracks] = useState([]);
@@ -21,29 +19,18 @@ export default function Dashboard({ code }) {
   const [totalDuration, setTotalDuration] = useState(0);
   const tracksPerPage = 18;
   const navigate = useNavigate();
-
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
-
   useEffect(() => {
     if (accessToken) {
       localStorage.setItem("spotifyAccessToken", accessToken);
     }
-
-    const storedSelectedTracks = JSON.parse(
-      localStorage.getItem("selectedTracks")
-    );
-    if (storedSelectedTracks) {
-      setSelectedTracks(storedSelectedTracks);
-    }
   }, [accessToken]);
-
   const playlistIds = {
     classic: "3YeJcIqzSIH1sy1molDRre",
     jazz: "2y5zb6o0SFrQXNGq5DPDy5",
   };
-
   function toggleTrackSelection(track) {
     const isSelected = selectedTracks.some((t) => t.uri === track.uri);
     if (isSelected) {
@@ -52,15 +39,13 @@ export default function Dashboard({ code }) {
       setSelectedTracks([...selectedTracks, track]);
     }
   }
-
-  useEffect(() => {
+  function navigateToScene() {
     localStorage.setItem("selectedTracks", JSON.stringify(selectedTracks));
-  }, [selectedTracks]);
-
+    navigate("/scene-page");
+  }
   useEffect(() => {
     if (!accessToken) return;
     spotifyApi.setAccessToken(accessToken);
-
     const fetchPlaylistTracks = async (playlistId) => {
       try {
         const response = await spotifyApi.getPlaylistTracks(playlistId);
@@ -73,7 +58,6 @@ export default function Dashboard({ code }) {
             },
             track.album.images[0]
           );
-
           return {
             artist: track.artists[0].name,
             title:
@@ -90,17 +74,14 @@ export default function Dashboard({ code }) {
         return [];
       }
     };
-
     const fetchTracks = async () => {
       const playlistId = playlistIds[selectedCategory];
       const tracks = await fetchPlaylistTracks(playlistId);
       setPlaylistTracks(tracks);
       setCurrentPage(1);
     };
-
     fetchTracks();
   }, [accessToken, selectedCategory]);
-
   useEffect(() => {
     let total = 0;
     selectedTracks.forEach((track) => {
@@ -108,14 +89,12 @@ export default function Dashboard({ code }) {
     });
     setTotalDuration(total);
   }, [selectedTracks]);
-
   const startIndex = (currentPage - 1) * tracksPerPage;
   const currentTracks = playlistTracks.slice(
     startIndex,
     startIndex + tracksPerPage
   );
   const totalPages = Math.ceil(playlistTracks.length / tracksPerPage);
-
   return (
     <div className="p-4">
       <div className="p-4">
@@ -137,13 +116,11 @@ export default function Dashboard({ code }) {
                 Jazz
               </StyledButton>
             </div>
-
             <div className="flex items-center mt-2 sm:mt-0">
               <Typography variant="bodyText" className="text-xs sm:text-sm">
                 {Math.floor(totalDuration / 60000)} minuten
               </Typography>
             </div>
-
             <div className="hidden sm:flex items-center space-x-2">
               <button
                 onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
@@ -152,7 +129,6 @@ export default function Dashboard({ code }) {
               >
                 <HiChevronLeft className="w-4 h-4" />
               </button>
-
               <button
                 onClick={() =>
                   setCurrentPage((prev) => Math.min(prev + 1, totalPages))
@@ -166,7 +142,6 @@ export default function Dashboard({ code }) {
           </div>
         </div>
       </div>
-
       <div className="mt-6 sm:mt-10">
         <div className="flex justify-center sm:mb-0 mt-24  text-center lg:text-5xl">
           <Typography
@@ -176,7 +151,6 @@ export default function Dashboard({ code }) {
             Selecteer liedjes
           </Typography>
         </div>
-
         <div className="mt-6 overflow-x-scroll sm:overflow-x-auto">
           <div className="flex flex-wrap justify-center gap-2 align-middle">
             {currentTracks.map((track) => (
@@ -218,7 +192,6 @@ export default function Dashboard({ code }) {
             )}
           </div>
         </div>
-
         <div className="mt-6">
           <div className="mb-6 mt-12 text-center ">
             <Typography variant="h3" className="text-sm sm:text-base">
@@ -247,6 +220,14 @@ export default function Dashboard({ code }) {
               </li>
             ))}
           </ul>
+        </div>
+        <div>
+          <StyledButton
+            onClick={navigateToScene}
+            disabled={selectedTracks.length === 0}
+          >
+            Next
+          </StyledButton>
         </div>
       </div>
     </div>
