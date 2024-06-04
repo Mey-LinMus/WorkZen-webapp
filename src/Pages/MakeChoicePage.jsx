@@ -14,7 +14,6 @@ function MakeChoicePage() {
 
   const handleNextClick = () => {
     if (selectedOption) {
-   
       navigate("/music-select");
     } else {
       alert("Please select an option first.");
@@ -31,28 +30,29 @@ function MakeChoicePage() {
       </div>
 
       <div className="mt-8 md:mt-12 lg:mt-16 flex flex-col md:flex-row md:space-x-8 space-y-4 md:space-y-0 items-center">
-        <StyledButton
+        <button
           onClick={() => handleOptionClick("custom")}
           selected={selectedOption === "custom"}
-          className="px-4 py-2 text-sm md:px-6 md:py-3 md:text-base lg:px-8 lg:py-4 lg:text-lg"
+          className="border-solid border-neutralColor border rounded-lg text-neutralColor px-6 py-4 sm:px-8 sm:py-6 lg:px-10 lg:py-8 transition duration-300 ease-in-out transform focus:outline-none px-4 py-2 text-sm md:px-6 md:py-3 md:text-base lg:px-8 lg:py-4 lg:text-lg hover:border-2 active:border-2 focus:ring focus:ring-violet-300"
         >
           Maak zelf een selectie van liedjes
-        </StyledButton>
-        <StyledButton
+        </button>
+        <button
           onClick={() => handleOptionClick("suggested")}
           selected={selectedOption === "suggested"}
-          className="px-4 py-2 text-sm md:px-6 md:py-3 md:text-base lg:px-8 lg:py-4 lg:text-lg"
+          className="border-solid border-neutralColor border rounded-lg text-neutralColor px-6 py-4 sm:px-8 sm:py-6 lg:px-10 lg:py-8 transition duration-300 ease-in-out transform focus:outline-none px-4 py-2 text-sm md:px-6 md:py-3 md:text-base lg:px-8 lg:py-4 lg:text-lg hover:border-2 active:border-2 focus:outline-none focus:ring focus:ring-violet-300"
         >
           Voorgestelde selectie liedjes
-        </StyledButton>
+        </button>
       </div>
 
-      <button
-        className="mt-8 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-        onClick={handleNextClick}
-      >
-        Next
-      </button>
+
+
+      <div className="mt-16 px-4 py-2">
+        <StyledButton selected onClick={handleNextClick}>
+          Next
+        </StyledButton>
+      </div>
     </div>
   );
 }
