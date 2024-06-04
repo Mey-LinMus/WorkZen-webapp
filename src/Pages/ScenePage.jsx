@@ -48,13 +48,16 @@ const ScenePage = () => {
     };
 
     try {
-      const response = await fetch(`/favorites/${deviceId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ favorite }),
-      });
+      const response = await fetch(
+        `https://backend-favorites.onrender.com/favorites/${deviceId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ favorite }),
+        }
+      );
 
       if (response.ok) {
         console.log("Combination saved successfully");
