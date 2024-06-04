@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 const FavoritesPage = () => {
-  const [deviceId, setDeviceId] = useState('');
+  const [deviceId, setDeviceId] = useState("");
   const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
@@ -11,19 +11,19 @@ const FavoritesPage = () => {
       return id;
     };
 
-    const storedDeviceId = window.localStorage.getItem('deviceId');
+    const storedDeviceId = window.localStorage.getItem("deviceId");
     if (storedDeviceId) {
       setDeviceId(storedDeviceId);
     } else {
       const newDeviceId = generateDeviceId();
-      window.localStorage.setItem('deviceId', newDeviceId);
+      window.localStorage.setItem("deviceId", newDeviceId);
       setDeviceId(newDeviceId);
     }
   }, []);
 
   useEffect(() => {
     if (deviceId) {
-      fetch(`https://backend-favorites.onrender.com/favorites?deviceId=${deviceId}`)
+      fetch(`https://backend-favorites.onrender.com/favorites/${deviceId}`)
         .then((response) => response.json())
         .then((data) => setFavorites(data.favorites || []));
     }
