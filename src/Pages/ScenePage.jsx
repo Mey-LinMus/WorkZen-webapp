@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Suspense } from "react";
 import Player from "../Components/Music/Player";
 import { Container } from "react-bootstrap";
-import "../Styles/scenePage.css";
+
 
 const ScenePage = () => {
   const [selectedVisual, setSelectedVisual] = useState(null);
