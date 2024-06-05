@@ -30,8 +30,8 @@ export default function Dashboard({ code }) {
     }
   }, [accessToken]);
   const playlistIds = {
-    classic: "3YeJcIqzSIH1sy1molDRre",
-    jazz: "2y5zb6o0SFrQXNGq5DPDy5",
+    classic: "37i9dQZF1DX21hEmly67Fg",
+    jazz: "37i9dQZF1DWXBq4mDDFnfA",
   };
   function toggleTrackSelection(track) {
     const isSelected = selectedTracks.some((t) => t.uri === track.uri);
