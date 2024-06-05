@@ -50,7 +50,7 @@ export default function Dashboard({ code }) {
     const fetchTracks = async () => {
       try {
         const response = await fetch(
-          `https://musicserver-iltx.onrender.com/${playlistIds[selectedCategory]}/tracks`
+          `https://musicserver-iltx.onrender.com/playlist/${playlistIds[selectedCategory]}`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
