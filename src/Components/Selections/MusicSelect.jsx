@@ -37,7 +37,7 @@ function MusicSelect() {
           </video> */}
         </div>
       )}
-      {code ? <Dashboard code={code} /> : <Login />}
+      <Dashboard />
     </div>
   );
 }
