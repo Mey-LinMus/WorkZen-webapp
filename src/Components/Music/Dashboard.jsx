@@ -19,6 +19,7 @@ export default function Dashboard({ code }) {
   const [totalDuration, setTotalDuration] = useState(0);
   const tracksPerPage = 18;
   const navigate = useNavigate();
+
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
@@ -39,49 +40,31 @@ export default function Dashboard({ code }) {
       setSelectedTracks([...selectedTracks, track]);
     }
   }
+
   function navigateToScene() {
     localStorage.setItem("selectedTracks", JSON.stringify(selectedTracks));
     navigate("/scene-page");
   }
+
   useEffect(() => {
-    if (!accessToken) return;
-    spotifyApi.setAccessToken(accessToken);
-    const fetchPlaylistTracks = async (playlistId) => {
+    const fetchTracks = async () => {
       try {
-        const response = await spotifyApi.getPlaylistTracks(playlistId);
-        return response.body.items.map((item) => {
-          const track = item.track;
-          const smallestAlbumImage = track.album.images.reduce(
-            (smallest, image) => {
-              if (image.height < smallest.height) return image;
-              return smallest;
-            },
-            track.album.images[0]
-          );
-          return {
-            artist: track.artists[0].name,
-            title:
-              track.name.length > 25
-                ? track.name.substring(0, 25) + "..."
-                : track.name,
-            uri: track.uri,
-            albumUrl: smallestAlbumImage.url,
-            duration_ms: track.duration_ms,
-          };
-        });
+        const response = await fetch(
+          `https://musicserver-iltx.onrender.com/${playlistIds[selectedCategory]}/tracks`
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setPlaylistTracks(data);
+        setCurrentPage(1);
       } catch (error) {
         console.error("Error fetching playlist tracks:", error);
-        return [];
       }
     };
-    const fetchTracks = async () => {
-      const playlistId = playlistIds[selectedCategory];
-      const tracks = await fetchPlaylistTracks(playlistId);
-      setPlaylistTracks(tracks);
-      setCurrentPage(1);
-    };
     fetchTracks();
-  }, [accessToken, selectedCategory]);
+  }, [selectedCategory]);
+
   useEffect(() => {
     let total = 0;
     selectedTracks.forEach((track) => {
@@ -89,12 +72,14 @@ export default function Dashboard({ code }) {
     });
     setTotalDuration(total);
   }, [selectedTracks]);
+
   const startIndex = (currentPage - 1) * tracksPerPage;
   const currentTracks = playlistTracks.slice(
     startIndex,
     startIndex + tracksPerPage
   );
   const totalPages = Math.ceil(playlistTracks.length / tracksPerPage);
+
   return (
     <div className="p-4">
       <div className="p-4">
