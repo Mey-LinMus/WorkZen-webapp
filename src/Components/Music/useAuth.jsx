@@ -10,6 +10,7 @@ export default function useAuth(code) {
     axios
       .post("https://musicserver-iltx.onrender.com/login", { code })
       .then((res) => {
+        console.log("Login response:", res.data); // Add logging
         setAccessToken(res.data.accessToken);
         setRefreshToken(res.data.refreshToken);
         setExpiresIn(res.data.expiresIn);
@@ -17,6 +18,7 @@ export default function useAuth(code) {
       })
       .catch((err) => {
         console.error("Error during login:", err);
+        window.location = "/";
       });
   }, [code]);
 
@@ -26,6 +28,7 @@ export default function useAuth(code) {
       axios
         .post("https://musicserver-iltx.onrender.com/refresh", { refreshToken })
         .then((res) => {
+          console.log("Refresh response:", res.data); // Add logging
           setAccessToken(res.data.accessToken);
           setExpiresIn(res.data.expiresIn);
         })

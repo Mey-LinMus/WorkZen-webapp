@@ -3,9 +3,7 @@ import SpotifyWebApi from "spotify-web-api-node";
 import useAuth from "./useAuth";
 import { useNavigate } from "react-router-dom";
 import Typography from "../ui-elements/Typography";
-import UILogo from "../ui-elements/Logo";
 import StyledButton from "../ui-elements/Button";
-import StepNavigator from "../Selections/StepNavigator";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 
 const spotifyApi = new SpotifyWebApi({
@@ -21,36 +19,41 @@ export default function Dashboard({ code }) {
   const [totalDuration, setTotalDuration] = useState(0);
   const tracksPerPage = 18;
   const navigate = useNavigate();
-  const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
-  };
+
   useEffect(() => {
     if (accessToken) {
       localStorage.setItem("spotifyAccessToken", accessToken);
     }
   }, [accessToken]);
+
   const playlistIds = {
     classic: "3YeJcIqzSIH1sy1molDRre",
     jazz: "2y5zb6o0SFrQXNGq5DPDy5",
   };
-  function toggleTrackSelection(track) {
+
+  const toggleTrackSelection = (track) => {
     const isSelected = selectedTracks.some((t) => t.uri === track.uri);
     if (isSelected) {
       setSelectedTracks(selectedTracks.filter((t) => t.uri !== track.uri));
     } else {
       setSelectedTracks([...selectedTracks, track]);
     }
-  }
-  function navigateToScene() {
+  };
+
+  const navigateToScene = () => {
     localStorage.setItem("selectedTracks", JSON.stringify(selectedTracks));
     navigate("/scene-page");
-  }
+  };
+
   useEffect(() => {
     if (!accessToken) return;
     spotifyApi.setAccessToken(accessToken);
+    console.log("Access Token set:", accessToken); // Add logging
+
     const fetchPlaylistTracks = async (playlistId) => {
       try {
         const response = await spotifyApi.getPlaylistTracks(playlistId);
+        console.log("Playlist response:", response); // Add logging
         return response.body.items.map((item) => {
           const track = item.track;
           const smallestAlbumImage = track.album.images.reduce(
@@ -76,14 +79,17 @@ export default function Dashboard({ code }) {
         return [];
       }
     };
+
     const fetchTracks = async () => {
       const playlistId = playlistIds[selectedCategory];
       const tracks = await fetchPlaylistTracks(playlistId);
       setPlaylistTracks(tracks);
       setCurrentPage(1);
     };
+
     fetchTracks();
   }, [accessToken, selectedCategory]);
+
   useEffect(() => {
     let total = 0;
     selectedTracks.forEach((track) => {
@@ -91,12 +97,14 @@ export default function Dashboard({ code }) {
     });
     setTotalDuration(total);
   }, [selectedTracks]);
+
   const startIndex = (currentPage - 1) * tracksPerPage;
   const currentTracks = playlistTracks.slice(
     startIndex,
     startIndex + tracksPerPage
   );
   const totalPages = Math.ceil(playlistTracks.length / tracksPerPage);
+
   return (
     <div className="p-4">
       <div className="p-4">
@@ -106,14 +114,14 @@ export default function Dashboard({ code }) {
               <StyledButton
                 selected={selectedCategory === "classic"}
                 onClick={() => setSelectedCategory("classic")}
-                className="text-xs sm:text-sm sm:text-base" // Adjust button text size
+                className="text-xs sm:text-sm sm:text-base"
               >
                 Classic
               </StyledButton>
               <StyledButton
                 selected={selectedCategory === "jazz"}
                 onClick={() => setSelectedCategory("jazz")}
-                className="text-xs sm:text-sm sm:text-base" // Adjust button text size
+                className="text-xs sm:text-sm sm:text-base"
               >
                 Jazz
               </StyledButton>
@@ -145,7 +153,7 @@ export default function Dashboard({ code }) {
         </div>
       </div>
       <div className="mt-6 sm:mt-10">
-        <div className="flex justify-center sm:mb-0 mt-24  text-center lg:text-5xl">
+        <div className="flex justify-center sm:mb-0 mt-24 text-center lg:text-5xl">
           <Typography
             variant="h3"
             className="text-center text-xl sm:text-3xl md:text-4xl lg:text-5xl"
@@ -163,75 +171,26 @@ export default function Dashboard({ code }) {
                 }`}
                 style={{ flexBasis: "calc(50% - 0.5rem)" }}
               >
-                <button
-                  className={`flex items-center w-full ${
-                    selectedTracks.find((t) => t.uri === track.uri)
-                      ? "bg-gray-800"
-                      : "bg-gray-900/50"
-                  } rounded-lg p-2`}
-                  onClick={() => toggleTrackSelection(track)}
-                >
-                  <img
-                    src={track.albumUrl}
-                    alt={track.title}
-                    className="w-8 h-8 rounded-lg object-cover mr-2 sm:w-12 sm:h-12 sm:mr-4"
-                  />
-                  <div className="flex flex-col">
-                    <span className="text-xs sm:text-sm font-semibold">
-                      {track.title}
-                    </span>{" "}
-                    <span className="text-xs sm:text-sm text-gray-400">
-                      {track.artist}
-                    </span>
-                  </div>
-                </button>
-              </div>
-            ))}
-            {currentTracks.length === 0 && (
-              <div className="text-center text-gray-400">
-                No tracks available
-              </div>
-            )}
-          </div>
-        </div>
-        <div className="mt-6">
-          <div className="mb-6 mt-12 text-center ">
-            <Typography variant="h3" className="text-sm sm:text-base">
-              Selected liedjes:
-            </Typography>
-          </div>
-          <ul className="space-y-2 grid grid-cols-1 sm:grid-cols-3 grid-rows-2 gap-2">
-            {selectedTracks.map((track) => (
-              <li
-                key={track.uri}
-                className="flex items-center bg-gray-800 text-neutralColor p-2 rounded-lg"
-              >
                 <img
                   src={track.albumUrl}
                   alt={track.title}
-                  className="w-8 h-8 rounded-lg object-cover mr-2 sm:w-12 sm:h-12 sm:mr-4"
+                  className="w-12 h-12"
                 />
-                <div className="flex flex-col">
-                  <span className="text-xs sm:text-sm font-semibold">
-                    {track.title}
-                  </span>{" "}
-                  <span className="text-xs sm:text-sm text-gray-400">
-                    {track.artist}
-                  </span>
+                <div className="ml-2">
+                  <p>{track.title}</p>
+                  <p>{track.artist}</p>
                 </div>
-              </li>
+                <button onClick={() => toggleTrackSelection(track)}>
+                  {selectedTracks.find((t) => t.uri === track.uri)
+                    ? "Deselect"
+                    : "Select"}
+                </button>
+              </div>
             ))}
-          </ul>
-        </div>
-        <div>
-          <StyledButton
-            onClick={navigateToScene}
-            disabled={selectedTracks.length === 0}
-          >
-            Next
-          </StyledButton>
+          </div>
         </div>
       </div>
+      <button onClick={navigateToScene}>Go to Scene Page</button>
     </div>
   );
 }
