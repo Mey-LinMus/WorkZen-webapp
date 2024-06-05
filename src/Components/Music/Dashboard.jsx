@@ -9,81 +9,93 @@ import StepNavigator from "../Selections/StepNavigator";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 
 const spotifyApi = new SpotifyWebApi({
-  clientId: "1f4f7e164fe945998e2b5904bd676792",
+  clientId: process.env.REACT_APP_SPOTIFY_CLIENT_ID,
+  clientSecret: process.env.REACT_APP_SPOTIFY_CLIENT_SECRET,
+  redirectUri: process.env.REACT_APP_SPOTIFY_REDIRECT_URI,
 });
 
 export default function Dashboard({ code }) {
-  const accessToken = useAuth(code);
+  const [accessToken, setAccessToken] = useState(null);
   const [playlistTracks, setPlaylistTracks] = useState([]);
   const [selectedTracks, setSelectedTracks] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("classic");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalDuration, setTotalDuration] = useState(0);
   const tracksPerPage = 18;
-  const navigate = useNavigate();
-  const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
-  };
-  useEffect(() => {
-    if (accessToken) {
-      localStorage.setItem("spotifyAccessToken", accessToken);
+
+  const fetchPlaylistTracks = async (playlistId) => {
+    try {
+      const response = await spotifyApi.getPlaylistTracks(playlistId);
+      return response.body.items.map((item) => {
+        const track = item.track;
+        const smallestAlbumImage = track.album.images.reduce(
+          (smallest, image) => {
+            if (image.height < smallest.height) return image;
+            return smallest;
+          },
+          track.album.images[0]
+        );
+        return {
+          artist: track.artists[0].name,
+          title:
+            track.name.length > 25
+              ? track.name.substring(0, 25) + "..."
+              : track.name,
+          uri: track.uri,
+          albumUrl: smallestAlbumImage.url,
+          duration_ms: track.duration_ms,
+        };
+      });
+    } catch (error) {
+      console.error("Error fetching playlist tracks:", error);
+      return [];
     }
-  }, [accessToken]);
-  const playlistIds = {
-    classic: "3YeJcIqzSIH1sy1molDRre",
-    jazz: "2y5zb6o0SFrQXNGq5DPDy5",
   };
-  function toggleTrackSelection(track) {
+
+  const toggleTrackSelection = (track) => {
     const isSelected = selectedTracks.some((t) => t.uri === track.uri);
     if (isSelected) {
       setSelectedTracks(selectedTracks.filter((t) => t.uri !== track.uri));
     } else {
       setSelectedTracks([...selectedTracks, track]);
     }
-  }
-  function navigateToScene() {
+  };
+
+  const navigateToScene = () => {
     localStorage.setItem("selectedTracks", JSON.stringify(selectedTracks));
-    navigate("/scene-page");
-  }
+    // Add navigation logic here
+  };
+
+  useEffect(() => {
+    if (code) {
+      spotifyApi
+        .authorizationCodeGrant(code)
+        .then((data) => {
+          const accessToken = data.body.access_token;
+          setAccessToken(accessToken);
+          spotifyApi.setAccessToken(accessToken);
+          localStorage.setItem("spotifyAccessToken", accessToken);
+        })
+        .catch((err) => {
+          console.error("Error during login:", err);
+        });
+    }
+  }, [code]);
+
   useEffect(() => {
     if (!accessToken) return;
-    spotifyApi.setAccessToken(accessToken);
-    const fetchPlaylistTracks = async (playlistId) => {
-      try {
-        const response = await spotifyApi.getPlaylistTracks(playlistId);
-        return response.body.items.map((item) => {
-          const track = item.track;
-          const smallestAlbumImage = track.album.images.reduce(
-            (smallest, image) => {
-              if (image.height < smallest.height) return image;
-              return smallest;
-            },
-            track.album.images[0]
-          );
-          return {
-            artist: track.artists[0].name,
-            title:
-              track.name.length > 25
-                ? track.name.substring(0, 25) + "..."
-                : track.name,
-            uri: track.uri,
-            albumUrl: smallestAlbumImage.url,
-            duration_ms: track.duration_ms,
-          };
-        });
-      } catch (error) {
-        console.error("Error fetching playlist tracks:", error);
-        return [];
-      }
-    };
     const fetchTracks = async () => {
-      const playlistId = playlistIds[selectedCategory];
+      const playlistId = {
+        classic: "3YeJcIqzSIH1sy1molDRre",
+        jazz: "2y5zb6o0SFrQXNGq5DPDy5",
+      }[selectedCategory];
       const tracks = await fetchPlaylistTracks(playlistId);
       setPlaylistTracks(tracks);
       setCurrentPage(1);
     };
     fetchTracks();
   }, [accessToken, selectedCategory]);
+
   useEffect(() => {
     let total = 0;
     selectedTracks.forEach((track) => {
@@ -91,12 +103,14 @@ export default function Dashboard({ code }) {
     });
     setTotalDuration(total);
   }, [selectedTracks]);
+
   const startIndex = (currentPage - 1) * tracksPerPage;
   const currentTracks = playlistTracks.slice(
     startIndex,
     startIndex + tracksPerPage
   );
   const totalPages = Math.ceil(playlistTracks.length / tracksPerPage);
+
   return (
     <div className="p-4">
       <div className="p-4">
