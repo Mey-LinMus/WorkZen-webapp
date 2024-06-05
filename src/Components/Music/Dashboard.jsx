@@ -28,6 +28,7 @@ export default function Dashboard({ code }) {
       const response = await spotifyApi.getPlaylistTracks(playlistId);
       return response.body.items.map((item) => {
         const track = item.track;
+        console.log("Tracks", track);
         const smallestAlbumImage = track.album.images.reduce(
           (smallest, image) => {
             if (image.height < smallest.height) return image;
