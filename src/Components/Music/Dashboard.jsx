@@ -7,9 +7,11 @@ import UILogo from "../ui-elements/Logo";
 import StyledButton from "../ui-elements/Button";
 import StepNavigator from "../Selections/StepNavigator";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
+
 const spotifyApi = new SpotifyWebApi({
   clientId: "1f4f7e164fe945998e2b5904bd676792",
 });
+
 export default function Dashboard({ code }) {
   const accessToken = useAuth(code);
   const [playlistTracks, setPlaylistTracks] = useState([]);
@@ -195,7 +197,7 @@ export default function Dashboard({ code }) {
         <div className="mt-6">
           <div className="mb-6 mt-12 text-center ">
             <Typography variant="h3" className="text-sm sm:text-base">
-              Geselecteerde liedjes:
+              Selected liedjes:
             </Typography>
           </div>
           <ul className="space-y-2 grid grid-cols-1 sm:grid-cols-3 grid-rows-2 gap-2">
