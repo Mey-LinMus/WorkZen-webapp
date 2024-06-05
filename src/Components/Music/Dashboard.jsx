@@ -7,9 +7,11 @@ import UILogo from "../ui-elements/Logo";
 import StyledButton from "../ui-elements/Button";
 import StepNavigator from "../Selections/StepNavigator";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
+
 const spotifyApi = new SpotifyWebApi({
   clientId: "1f4f7e164fe945998e2b5904bd676792",
 });
+
 export default function Dashboard({ code }) {
   const accessToken = useAuth(code);
   const [playlistTracks, setPlaylistTracks] = useState([]);
@@ -19,7 +21,6 @@ export default function Dashboard({ code }) {
   const [totalDuration, setTotalDuration] = useState(0);
   const tracksPerPage = 18;
   const navigate = useNavigate();
-
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
@@ -40,31 +41,49 @@ export default function Dashboard({ code }) {
       setSelectedTracks([...selectedTracks, track]);
     }
   }
-
   function navigateToScene() {
     localStorage.setItem("selectedTracks", JSON.stringify(selectedTracks));
     navigate("/scene-page");
   }
-
   useEffect(() => {
-    const fetchTracks = async () => {
+    if (!accessToken) return;
+    spotifyApi.setAccessToken(accessToken);
+    const fetchPlaylistTracks = async (playlistId) => {
       try {
-        const response = await fetch(
-          `https://musicserver-iltx.onrender.com/api/playlist/${playlistIds[selectedCategory]}`
-        );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setPlaylistTracks(data);
-        setCurrentPage(1);
+        const response = await spotifyApi.getPlaylistTracks(playlistId);
+        return response.body.items.map((item) => {
+          const track = item.track;
+          const smallestAlbumImage = track.album.images.reduce(
+            (smallest, image) => {
+              if (image.height < smallest.height) return image;
+              return smallest;
+            },
+            track.album.images[0]
+          );
+          return {
+            artist: track.artists[0].name,
+            title:
+              track.name.length > 25
+                ? track.name.substring(0, 25) + "..."
+                : track.name,
+            uri: track.uri,
+            albumUrl: smallestAlbumImage.url,
+            duration_ms: track.duration_ms,
+          };
+        });
       } catch (error) {
         console.error("Error fetching playlist tracks:", error);
+        return [];
       }
     };
+    const fetchTracks = async () => {
+      const playlistId = playlistIds[selectedCategory];
+      const tracks = await fetchPlaylistTracks(playlistId);
+      setPlaylistTracks(tracks);
+      setCurrentPage(1);
+    };
     fetchTracks();
-  }, [selectedCategory]);
-
+  }, [accessToken, selectedCategory]);
   useEffect(() => {
     let total = 0;
     selectedTracks.forEach((track) => {
@@ -72,14 +91,12 @@ export default function Dashboard({ code }) {
     });
     setTotalDuration(total);
   }, [selectedTracks]);
-
   const startIndex = (currentPage - 1) * tracksPerPage;
   const currentTracks = playlistTracks.slice(
     startIndex,
     startIndex + tracksPerPage
   );
   const totalPages = Math.ceil(playlistTracks.length / tracksPerPage);
-
   return (
     <div className="p-4">
       <div className="p-4">
@@ -180,7 +197,7 @@ export default function Dashboard({ code }) {
         <div className="mt-6">
           <div className="mb-6 mt-12 text-center ">
             <Typography variant="h3" className="text-sm sm:text-base">
-              Geselecteerde liedjes:
+              Selected liedjes:
             </Typography>
           </div>
           <ul className="space-y-2 grid grid-cols-1 sm:grid-cols-3 grid-rows-2 gap-2">
