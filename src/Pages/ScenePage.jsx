@@ -78,11 +78,11 @@ const ScenePage = () => {
     if (elem.requestFullscreen) {
       elem.requestFullscreen();
     } else if (elem.mozRequestFullScreen) {
-      elem.mozRequestFullScreen(); // Firefox
+      elem.mozRequestFullScreen();
     } else if (elem.webkitRequestFullscreen) {
-      elem.webkitRequestFullscreen(); // Chrome, Safari and Opera
+      elem.webkitRequestFullscreen();
     } else if (elem.msRequestFullscreen) {
-      elem.msRequestFullscreen(); // IE/Edge
+      elem.msRequestFullscreen(); 
     }
     setIsFullscreen(true);
   };
@@ -91,11 +91,11 @@ const ScenePage = () => {
     if (document.exitFullscreen) {
       document.exitFullscreen();
     } else if (document.mozCancelFullScreen) {
-      document.mozCancelFullScreen(); // Firefox
+      document.mozCancelFullScreen(); 
     } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen(); // Chrome, Safari and Opera
+      document.webkitExitFullscreen(); 
     } else if (document.msExitFullscreen) {
-      document.msExitFullscreen(); // IE/Edge
+      document.msExitFullscreen();
     }
     setIsFullscreen(false);
   };
@@ -155,7 +155,7 @@ const ScenePage = () => {
         </Suspense>
       )}
 
-      {spotifyAccessToken && selectedTracks.length > 0 && (
+      {spotifyAccessToken && selectedTracks.length > 0 && !isFullscreen && (
         <Container fluid>
           <Player
             accessToken={spotifyAccessToken}
