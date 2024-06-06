@@ -97,7 +97,6 @@ const ScenePage = () => {
 
       <button onClick={handleSaveCombination}>Save Combination</button>
 
-      <button onClick={handleFavoritesClick}>Favorieten</button>
     </div>
   );
 };

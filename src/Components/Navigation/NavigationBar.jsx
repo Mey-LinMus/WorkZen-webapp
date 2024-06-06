@@ -21,7 +21,6 @@ const NavigationBar = () => {
                 aria-controls="mobile-menu"
                 aria-expanded="false"
               >
-                <span className="sr-only">Open main menu</span>
                 {!isOpen ? (
                   <svg
                     className="block w-4 h-4"
