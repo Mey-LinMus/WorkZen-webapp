@@ -1,6 +1,6 @@
 {
   "short_name": "WorkZen",
-  "name": "Create React App Sample",
+  "name": "WorkZen",
   "icons": [
     {
       "src": "./Favicon.png",
@@ -9,8 +9,28 @@
     },
     {
       "src": "./Favicon.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "./favicon.ico",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "./Favicon.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "./Favicon.png",
       "type": "image/png",
       "sizes": "192x192"
+    },
+    {
+      "src": "./Favicon.png",
+      "sizes": "256x256",
+      "type": "image/png"
     },
     {
       "src": "./Favicon.png",
