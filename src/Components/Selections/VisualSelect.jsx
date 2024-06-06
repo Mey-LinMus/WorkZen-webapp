@@ -4,6 +4,7 @@ import visualsData from "../../visuals.json";
 import Typography from "../ui-elements/Typography";
 import UILogo from "../ui-elements/Logo";
 import StyledButton from "../ui-elements/Button";
+import { HiArrowRight } from "react-icons/hi";
 
 import StepNavigator from "./StepNavigator";
 
@@ -70,9 +71,15 @@ const VisualSelect = () => {
           </button>
         ))}
       </div>
-      <div className="mt-16 px-4 py-2">
-        <StyledButton onClick={handleNextClick}>Next</StyledButton>
+      <div className="mt-16 py-2 flex justify-center space-x-12 items-center ml-32">
+        <div>
+          <p className="text-neutralColor"> 1/3</p>
+        </div>
+        <StyledButton selected onClick={handleNextClick}>
+          <HiArrowRight />
+        </StyledButton>
       </div>
+
     </div>
   );
 };

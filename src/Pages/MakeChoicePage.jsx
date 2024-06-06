@@ -3,6 +3,7 @@ import Typography from "../Components/ui-elements/Typography";
 import UILogo from "../Components/ui-elements/Logo";
 import StyledButton from "../Components/ui-elements/Button";
 import { useNavigate } from "react-router-dom";
+import { HiArrowLeft, HiArrowRight } from "react-icons/hi";
 
 function MakeChoicePage() {
   const navigate = useNavigate();
@@ -50,10 +51,16 @@ function MakeChoicePage() {
         </button>
       </div>
 
-      <div className="mt-16 px-4 py-2 flex space-x-4">
-        <StyledButton onClick={handleBackClick}>Back</StyledButton>
+      <div className="mt-28 px-4 py-2 flex space-x-28 items-center ">
+        <StyledButton onClick={handleBackClick}>
+          <HiArrowLeft />
+        </StyledButton>
+        <div>
+          <p className="text-neutralColor"> 2 / 3</p>
+        </div>
+
         <StyledButton selected onClick={handleNextClick}>
-          Next
+          <HiArrowRight />
         </StyledButton>
       </div>
     </div>
