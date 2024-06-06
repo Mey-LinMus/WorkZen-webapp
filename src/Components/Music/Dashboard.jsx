@@ -106,14 +106,14 @@ export default function Dashboard({ code }) {
               <StyledButton
                 selected={selectedCategory === "classic"}
                 onClick={() => setSelectedCategory("classic")}
-                className="text-xs sm:text-sm sm:text-base" // Adjust button text size
+                className="text-xs sm:text-sm" // Adjust button text size
               >
                 Classic
               </StyledButton>
               <StyledButton
                 selected={selectedCategory === "jazz"}
                 onClick={() => setSelectedCategory("jazz")}
-                className="text-xs sm:text-sm sm:text-base" // Adjust button text size
+                className="text-xs sm:text-sm" // Adjust button text size
               >
                 Jazz
               </StyledButton>
@@ -223,7 +223,8 @@ export default function Dashboard({ code }) {
             ))}
           </ul>
         </div>
-        <div>
+        <div className="flex justify-center">
+          <StyledButton onClick={() => navigate(-1)}>Back</StyledButton>
           <StyledButton
             onClick={navigateToScene}
             disabled={selectedTracks.length === 0}

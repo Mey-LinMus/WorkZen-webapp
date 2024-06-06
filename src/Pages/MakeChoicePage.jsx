@@ -20,6 +20,10 @@ function MakeChoicePage() {
     }
   };
 
+  const handleBackClick = () => {
+    navigate(-1);
+  };
+
   return (
     <div className="bg-primaryColor min-h-screen flex flex-col items-center">
       <UILogo className="mt-12 md:mt-16 lg:mt-20" />
@@ -46,9 +50,8 @@ function MakeChoicePage() {
         </button>
       </div>
 
-
-
-      <div className="mt-16 px-4 py-2">
+      <div className="mt-16 px-4 py-2 flex space-x-4">
+        <StyledButton onClick={handleBackClick}>Back</StyledButton>
         <StyledButton selected onClick={handleNextClick}>
           Next
         </StyledButton>
