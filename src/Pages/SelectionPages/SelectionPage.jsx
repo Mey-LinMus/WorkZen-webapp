@@ -6,17 +6,19 @@ import MusicSelect from "../../Components/Selections/MusicSelect";
 import MakeChoice from "../../Pages/MakeChoicePage";
 import ScenePage from "../ScenePage";
 import Favorites from "../FavoritesPage";
+import Navigation from "../../Components/Navigation/NavigationBar";
 
 function SelectionPage() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<ScenePage />} />
+        {/* <Route path="/" element={<HomePage />} />
         <Route path="/visual-select" element={<VisualSelect />} />
         <Route path="/make-choice" element={<MakeChoice />} />
-        <Route path="/music-select" element={<MusicSelect />} />
-        <Route path="/scene-page" element={<ScenePage />} />
-        <Route path="/favorites" element={<Favorites />} />
+        <Route path="/music-select" element={<MusicSelect />} /> */}
+        {/* <Route path="/scene-page" element={<ScenePage />} />
+        <Route path="/favorites" element={<Favorites />} /> */}
       </Routes>
     </Router>
   );
