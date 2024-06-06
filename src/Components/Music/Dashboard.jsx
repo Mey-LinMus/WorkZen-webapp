@@ -6,7 +6,7 @@ import Typography from "../ui-elements/Typography";
 import UILogo from "../ui-elements/Logo";
 import StyledButton from "../ui-elements/Button";
 import StepNavigator from "../Selections/StepNavigator";
-import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
+import { HiChevronLeft, HiChevronRight, HiArrowLeft } from "react-icons/hi2";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: "1f4f7e164fe945998e2b5904bd676792",
@@ -223,13 +223,15 @@ export default function Dashboard({ code }) {
             ))}
           </ul>
         </div>
-        <div className="flex justify-center">
-          <StyledButton onClick={() => navigate(-1)}>Back</StyledButton>
+        <div className="mt-28 px-4 py-2 flex space-x-28 items-center">
+          <StyledButton onClick={() => navigate(-1)}>
+            <HiArrowLeft />
+          </StyledButton>
           <StyledButton
             onClick={navigateToScene}
             disabled={selectedTracks.length === 0}
           >
-            Next
+            Start
           </StyledButton>
         </div>
       </div>
