@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faVrCardboard } from "@fortawesome/free-solid-svg-icons";
 
 const VRButton = ({ sceneManager }) => {
   const [isStereo, setIsStereo] = useState(false);
@@ -22,7 +24,7 @@ const VRButton = ({ sceneManager }) => {
         isStereo ? "bg-green-500 text-white" : "bg-red-500 text-white"
       }`}
     >
-      {isStereo ? "VR On" : "VR Off"}
+      <FontAwesomeIcon icon={faVrCardboard} />
     </button>
   );
 };
