@@ -18,19 +18,9 @@ const VRButton = ({ sceneManager }) => {
     <button
       id="vr-toggle"
       onClick={toggleVR}
-      style={{
-        position: "absolute",
-        top: "10px",
-        left: "10px",
-        zIndex: "1000",
-        padding: "10px 20px",
-        fontSize: "16px",
-        backgroundColor: isStereo ? "#30d65c" : "#eb3434",
-        color: "#fff",
-        border: "none",
-        borderRadius: "5px",
-        cursor: "pointer",
-      }}
+      className={`fixed top-2 right-2 z-50 px-4 py-2 text-base font-medium rounded-md cursor-pointer ${
+        isStereo ? "bg-green-500 text-white" : "bg-red-500 text-white"
+      }`}
     >
       {isStereo ? "VR On" : "VR Off"}
     </button>

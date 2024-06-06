@@ -2,6 +2,7 @@ import React, { useEffect, useState, Suspense } from "react";
 import Player from "../Components/Music/Player";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import NavigationBar from "../Components/Navigation/NavigationBar";
 
 const ScenePage = () => {
   const [selectedVisual, setSelectedVisual] = useState(null);
@@ -76,6 +77,9 @@ const ScenePage = () => {
 
   return (
     <div className="ScenePage" style={{ overflowX: "hidden" }}>
+      <div>
+        <NavigationBar />
+      </div>
       {VisualComponent && (
         <Suspense fallback={<div>Loading...</div>}>
           <VisualComponent />

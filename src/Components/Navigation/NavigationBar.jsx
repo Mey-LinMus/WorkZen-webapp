@@ -9,7 +9,7 @@ const NavigationBar = () => {
   };
 
   return (
-    <div className="max-w-40 ">
+    <div className="max-w-40 absolute">
       <nav>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
@@ -17,14 +17,14 @@ const NavigationBar = () => {
               <button
                 onClick={toggleMenu}
                 type="button"
-                className="bg-secondaryColor inline-flex items-center justify-center p-2 rounded-md text-neutralColor hover:text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                className="bg-secondaryColor inline-flex items-center justify-center p-2 rounded-md text-neutralColor hover:text-white hover:bg-gray-800 focus:outline-none  "
                 aria-controls="mobile-menu"
                 aria-expanded="false"
               >
                 <span className="sr-only">Open main menu</span>
                 {!isOpen ? (
                   <svg
-                    className="block w-4 h-4" // Adjust the width and height here
+                    className="block w-4 h-4"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -40,7 +40,7 @@ const NavigationBar = () => {
                   </svg>
                 ) : (
                   <svg
-                    className="block w-4 h-4" // Adjust the width and height here
+                    className="block w-4 h-4"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
