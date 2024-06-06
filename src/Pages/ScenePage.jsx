@@ -8,6 +8,7 @@ const ScenePage = () => {
   const [selectedVisual, setSelectedVisual] = useState(null);
   const [selectedTracks, setSelectedTracks] = useState([]);
   const [VisualComponent, setVisualComponent] = useState(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const spotifyAccessToken = localStorage.getItem("spotifyAccessToken");
   const navigate = useNavigate();
 
@@ -83,6 +84,7 @@ const ScenePage = () => {
     } else if (elem.msRequestFullscreen) {
       elem.msRequestFullscreen(); // IE/Edge
     }
+    setIsFullscreen(true);
   };
 
   const exitFullscreen = () => {
@@ -95,6 +97,7 @@ const ScenePage = () => {
     } else if (document.msExitFullscreen) {
       document.msExitFullscreen(); // IE/Edge
     }
+    setIsFullscreen(false);
   };
 
   useEffect(() => {
@@ -110,11 +113,42 @@ const ScenePage = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      if (!document.fullscreenElement) {
+        setIsFullscreen(false);
+      }
+    };
+
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    document.addEventListener("mozfullscreenchange", handleFullscreenChange);
+    document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
+    document.addEventListener("msfullscreenchange", handleFullscreenChange);
+
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+      document.removeEventListener(
+        "mozfullscreenchange",
+        handleFullscreenChange
+      );
+      document.removeEventListener(
+        "webkitfullscreenchange",
+        handleFullscreenChange
+      );
+      document.removeEventListener(
+        "msfullscreenchange",
+        handleFullscreenChange
+      );
+    };
+  }, []);
+
   return (
     <div className="ScenePage" style={{ overflowX: "hidden" }}>
-      <div>
-        <NavigationBar />
-      </div>
+      {!isFullscreen && (
+        <div>
+          <NavigationBar />
+        </div>
+      )}
       {VisualComponent && (
         <Suspense fallback={<div>Loading...</div>}>
           <VisualComponent />
@@ -130,8 +164,12 @@ const ScenePage = () => {
         </Container>
       )}
 
-      <button onClick={handleSaveCombination}>Save Combination</button>
-      <button onClick={enterFullscreen}>Fullscreen</button>
+      {!isFullscreen && (
+        <>
+          <button onClick={enterFullscreen}>Fullscreen</button>
+          <button onClick={handleSaveCombination}>Save Combination</button>
+        </>
+      )}
     </div>
   );
 };
