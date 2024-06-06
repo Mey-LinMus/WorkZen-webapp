@@ -3,6 +3,9 @@ import Player from "../Components/Music/Player";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import NavigationBar from "../Components/Navigation/NavigationBar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExpand } from "@fortawesome/free-solid-svg-icons";
+import { HiOutlineSave } from "react-icons/hi";
 
 const ScenePage = () => {
   const [selectedVisual, setSelectedVisual] = useState(null);
@@ -168,10 +171,20 @@ const ScenePage = () => {
       )}
 
       {!isFullscreen && (
-        <>
-          <button onClick={enterFullscreen}>Fullscreen</button>
-          <button onClick={handleSaveCombination}>Save Combination</button>
-        </>
+        <div className="absolute top-4 right-2 flex mr-24 space-x-4 ">
+          <button
+            className="text-xl mr-2 bg-secondaryColor text-neutralColor p-1 rounded-lg"
+            onClick={enterFullscreen}
+          >
+            <FontAwesomeIcon icon={faExpand} />
+          </button>
+          <button
+            className="text-2xl bg-secondaryColor text-neutralColor rounded-lg p-1"
+            onClick={handleSaveCombination}
+          >
+            <HiOutlineSave />
+          </button>
+        </div>
       )}
     </div>
   );

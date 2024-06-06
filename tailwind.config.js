@@ -6,7 +6,6 @@ module.exports = {
       colors: {
         primaryColor: "#0A1128",
         secondaryColor: "#08405A",
-
         neutralColor: "#FFFAFA",
       },
       fontFamily: {
