@@ -34,13 +34,10 @@ const ScenePage = () => {
   };
 
   const getDeviceId = () => {
-    // Implement a function to get a unique device ID
-    // For example, you could use the browser's localStorage or generate a random ID
     return localStorage.getItem("deviceId") || generateRandomId();
   };
 
   const generateRandomId = () => {
-    // Generate a random ID and store it in localStorage
     const randomId = Math.random().toString(36).substring(2, 15);
     localStorage.setItem("deviceId", randomId);
     return randomId;
@@ -75,6 +72,44 @@ const ScenePage = () => {
     }
   };
 
+  const enterFullscreen = () => {
+    const elem = document.documentElement;
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.mozRequestFullScreen) {
+      elem.mozRequestFullScreen(); // Firefox
+    } else if (elem.webkitRequestFullscreen) {
+      elem.webkitRequestFullscreen(); // Chrome, Safari and Opera
+    } else if (elem.msRequestFullscreen) {
+      elem.msRequestFullscreen(); // IE/Edge
+    }
+  };
+
+  const exitFullscreen = () => {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen(); // Firefox
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen(); // Chrome, Safari and Opera
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen(); // IE/Edge
+    }
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        exitFullscreen();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
     <div className="ScenePage" style={{ overflowX: "hidden" }}>
       <div>
@@ -96,7 +131,7 @@ const ScenePage = () => {
       )}
 
       <button onClick={handleSaveCombination}>Save Combination</button>
-
+      <button onClick={enterFullscreen}>Fullscreen</button>
     </div>
   );
 };
