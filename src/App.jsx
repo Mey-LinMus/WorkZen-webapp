@@ -1,10 +1,9 @@
 import React from "react";
 import "./App.css";
-import SelectionPage from "./Pages/SelectionPages/SelectionPage";
-import HomePage from "./Pages/HomePage";
+import Routes from "./Routes";
 
 function App() {
-  return <SelectionPage />;
+  return <Routes />;
 }
 
 export default App;
