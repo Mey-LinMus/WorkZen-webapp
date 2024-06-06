@@ -19,6 +19,7 @@ export default function Dashboard({ code }) {
   const [selectedCategory, setSelectedCategory] = useState("classic");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalDuration, setTotalDuration] = useState(0);
+  const [isLoading, setIsLoading] = useState(false); // Add loading state
   const tracksPerPage = 18;
   const navigate = useNavigate();
   const handleCategoryClick = (category) => {
@@ -50,6 +51,7 @@ export default function Dashboard({ code }) {
     spotifyApi.setAccessToken(accessToken);
     const fetchPlaylistTracks = async (playlistId) => {
       try {
+        setIsLoading(true); // Set loading state to true
         const response = await spotifyApi.getPlaylistTracks(playlistId);
         return response.body.items.map((item) => {
           const track = item.track;
@@ -74,6 +76,8 @@ export default function Dashboard({ code }) {
       } catch (error) {
         console.error("Error fetching playlist tracks:", error);
         return [];
+      } finally {
+        setIsLoading(false); // Set loading state to false
       }
     };
     const fetchTracks = async () => {
@@ -97,6 +101,13 @@ export default function Dashboard({ code }) {
     startIndex + tracksPerPage
   );
   const totalPages = Math.ceil(playlistTracks.length / tracksPerPage);
+
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+
   return (
     <div className="p-4">
       <div className="p-4">
