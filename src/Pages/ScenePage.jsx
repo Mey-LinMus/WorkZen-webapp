@@ -75,7 +75,7 @@ const ScenePage = () => {
   };
 
   return (
-    <div className="ScenePage">
+    <div className="ScenePage" style={{ overflowX: "hidden" }}>
       {VisualComponent && (
         <Suspense fallback={<div>Loading...</div>}>
           <VisualComponent />
