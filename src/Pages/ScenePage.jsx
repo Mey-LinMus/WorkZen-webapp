@@ -6,15 +6,17 @@ import NavigationBar from "../Components/Navigation/NavigationBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand } from "@fortawesome/free-solid-svg-icons";
 import { HiOutlineSave } from "react-icons/hi";
-import VisualChangeModal from "../Components/Changes/VisualChange";
+import VisualChangeModal from "../Components/Modals/VisualChange";
+import SaveCombinationModal from "../Components/Modals/SaveCombination"; 
 
 const ScenePage = () => {
   const [selectedVisual, setSelectedVisual] = useState(null);
   const [selectedTracks, setSelectedTracks] = useState([]);
   const [VisualComponent, setVisualComponent] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal open/close
-  const [successMessage, setSuccessMessage] = useState(null); // State to store success message
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [isSaveModalOpen, setIsSaveModalOpen] = useState(false); // State for save modal
   const spotifyAccessToken = localStorage.getItem("spotifyAccessToken");
   const navigate = useNavigate();
 
@@ -50,7 +52,7 @@ const ScenePage = () => {
     return randomId;
   };
 
-  const handleSaveCombination = async () => {
+  const handleSaveCombination = async (name) => {
     const deviceId = getDeviceId();
     const favorite = {
       visual: selectedVisual,
@@ -65,19 +67,20 @@ const ScenePage = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ favorite }),
+          body: JSON.stringify({ favorite, name }),
         }
       );
 
       if (response.ok) {
         setSuccessMessage("Combination saved successfully");
-        setTimeout(() => setSuccessMessage(null), 3000); 
+        setTimeout(() => setSuccessMessage(null), 3000);
       } else {
         console.error("Error saving combination");
       }
     } catch (error) {
       console.error("Error saving combination", error);
     }
+    setIsSaveModalOpen(false); // Close the modal after saving
   };
 
   const enterFullscreen = () => {
@@ -91,7 +94,7 @@ const ScenePage = () => {
     } else if (elem.msRequestFullscreen) {
       elem.msRequestFullscreen();
     }
-    document.body.style.overflow = "hidden"; 
+    document.body.style.overflow = "hidden";
     setIsFullscreen(true);
   };
 
@@ -105,7 +108,7 @@ const ScenePage = () => {
     } else if (document.msExitFullscreen) {
       document.msExitFullscreen();
     }
-    document.body.style.overflow = "auto"; 
+    document.body.style.overflow = "auto";
     setIsFullscreen(false);
   };
 
@@ -125,7 +128,7 @@ const ScenePage = () => {
   useEffect(() => {
     const handleFullscreenChange = () => {
       if (!document.fullscreenElement) {
-        document.body.style.overflow = "auto"; 
+        document.body.style.overflow = "auto";
         setIsFullscreen(false);
       }
     };
@@ -168,9 +171,7 @@ const ScenePage = () => {
     <div className="ScenePage" style={{ overflowX: "hidden" }}>
       {!isFullscreen && (
         <div>
-          <NavigationBar
-            onVisualChangeClick={() => setIsModalOpen(true)} 
-          />
+          <NavigationBar onVisualChangeClick={() => setIsModalOpen(true)} />
         </div>
       )}
       {VisualComponent && (
@@ -198,14 +199,14 @@ const ScenePage = () => {
           </button>
           <button
             className="text-2xl bg-secondaryColor text-neutralColor rounded-lg p-1"
-            onClick={handleSaveCombination}
+            onClick={() => setIsSaveModalOpen(true)} // Open the modal when clicked
           >
             <HiOutlineSave />
           </button>
         </div>
       )}
 
-      {successMessage && ( 
+      {successMessage && (
         <div className="fixed bottom-4 left-4 bg-green-500 text-white p-4 rounded-lg">
           {successMessage}
         </div>
@@ -213,10 +214,16 @@ const ScenePage = () => {
 
       {isModalOpen && (
         <VisualChangeModal
-          onClose={() => setIsModalOpen(false)} 
-          onVisualChange={handleVisualChange} 
+          onClose={() => setIsModalOpen(false)}
+          onVisualChange={handleVisualChange}
         />
       )}
+
+      <SaveCombinationModal
+        show={isSaveModalOpen}
+        handleClose={() => setIsSaveModalOpen(false)}
+        handleSave={handleSaveCombination}
+      />
     </div>
   );
 };
