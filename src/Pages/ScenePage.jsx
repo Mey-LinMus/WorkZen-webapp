@@ -1,4 +1,3 @@
-// ScenePage.jsx
 import React, { useEffect, useState, Suspense } from "react";
 import Player from "../Components/Music/Player";
 import { Container } from "react-bootstrap";
@@ -167,7 +166,9 @@ const ScenePage = () => {
     <div className="ScenePage" style={{ overflowX: "hidden" }}>
       {!isFullscreen && (
         <div>
-          <NavigationBar />
+          <NavigationBar
+            onVisualChangeClick={() => setIsModalOpen(true)} // Open the modal
+          />
         </div>
       )}
       {VisualComponent && (
@@ -198,12 +199,6 @@ const ScenePage = () => {
             onClick={handleSaveCombination}
           >
             <HiOutlineSave />
-          </button>
-          <button
-            className="text-2xl bg-secondaryColor text-neutralColor rounded-lg p-1"
-            onClick={() => setIsModalOpen(true)} // Open the modal
-          >
-            Change Visual
           </button>
         </div>
       )}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-const NavigationBar = () => {
+const NavigationBar = ({ onVisualChangeClick }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -17,7 +17,7 @@ const NavigationBar = () => {
               <button
                 onClick={toggleMenu}
                 type="button"
-                className="bg-secondaryColor inline-flex items-center justify-center p-2 rounded-md text-neutralColor hover:text-white hover:bg-gray-800 focus:outline-none  "
+                className="bg-secondaryColor inline-flex items-center justify-center p-2 rounded-md text-neutralColor hover:text-white hover:bg-gray-800 focus:outline-none"
                 aria-controls="mobile-menu"
                 aria-expanded="false"
               >
@@ -59,7 +59,6 @@ const NavigationBar = () => {
             <div className="-mr-2 flex"></div>
           </div>
         </div>
-
         <div className={`${isOpen ? "block" : "hidden"}`}>
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 ml-4 bg-primaryColor rounded-lg">
             <Link
@@ -74,12 +73,12 @@ const NavigationBar = () => {
             >
               Muziek
             </Link>
-            <Link
-              to="/visualChange"
+            <button
+              onClick={onVisualChangeClick}
               className="text-neutralColor hover:bg-secondaryColor block px-3 py-2 rounded-md text-base font-medium"
             >
               Visual
-            </Link>
+            </button>
           </div>
         </div>
       </nav>

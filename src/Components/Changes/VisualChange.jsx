@@ -3,7 +3,7 @@ import visualsData from "../../visuals.json";
 import Typography from "../ui-elements/Typography";
 import StyledButton from "../ui-elements/Button";
 
-const VisualChangeModal = ({ onClose, onVisualChange }) => {
+const VisualChange = ({ onClose, onVisualChange }) => {
   const visuals = visualsData.visuals;
   const [selectedVisual, setSelectedVisual] = useState(null);
 
@@ -74,4 +74,4 @@ const VisualChangeModal = ({ onClose, onVisualChange }) => {
   );
 };
 
-export default VisualChangeModal;
+export default VisualChange;
