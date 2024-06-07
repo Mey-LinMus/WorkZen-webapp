@@ -18,21 +18,25 @@ export default function Dashboard({ code }) {
   const [selectedCategory, setSelectedCategory] = useState("classic");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalDuration, setTotalDuration] = useState(0);
-  const [isLoading, setIsLoading] = useState(false); // Add loading state
+  const [isLoading, setIsLoading] = useState(false);
   const tracksPerPage = 18;
   const navigate = useNavigate();
+
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
+
   useEffect(() => {
     if (accessToken) {
       localStorage.setItem("spotifyAccessToken", accessToken);
     }
   }, [accessToken]);
+
   const playlistIds = {
     classic: "3YeJcIqzSIH1sy1molDRre",
     jazz: "2y5zb6o0SFrQXNGq5DPDy5",
   };
+
   function toggleTrackSelection(track) {
     const isSelected = selectedTracks.some((t) => t.uri === track.uri);
     if (isSelected) {
@@ -41,16 +45,19 @@ export default function Dashboard({ code }) {
       setSelectedTracks([...selectedTracks, track]);
     }
   }
+
   function navigateToScene() {
     localStorage.setItem("selectedTracks", JSON.stringify(selectedTracks));
     navigate("/scene-page");
   }
+
   useEffect(() => {
     if (!accessToken) return;
     spotifyApi.setAccessToken(accessToken);
+
     const fetchPlaylistTracks = async (playlistId) => {
       try {
-        setIsLoading(true); // Set loading state to true
+        setIsLoading(true);
         const response = await spotifyApi.getPlaylistTracks(playlistId);
         return response.body.items.map((item) => {
           const track = item.track;
@@ -76,17 +83,20 @@ export default function Dashboard({ code }) {
         console.error("Error fetching playlist tracks:", error);
         return [];
       } finally {
-        setIsLoading(false); // Set loading state to false
+        setIsLoading(false);
       }
     };
+
     const fetchTracks = async () => {
       const playlistId = playlistIds[selectedCategory];
       const tracks = await fetchPlaylistTracks(playlistId);
       setPlaylistTracks(tracks);
       setCurrentPage(1);
     };
+
     fetchTracks();
   }, [accessToken, selectedCategory]);
+
   useEffect(() => {
     let total = 0;
     selectedTracks.forEach((track) => {
@@ -94,6 +104,7 @@ export default function Dashboard({ code }) {
     });
     setTotalDuration(total);
   }, [selectedTracks]);
+
   const startIndex = (currentPage - 1) * tracksPerPage;
   const currentTracks = playlistTracks.slice(
     startIndex,
@@ -101,11 +112,9 @@ export default function Dashboard({ code }) {
   );
   const totalPages = Math.ceil(playlistTracks.length / tracksPerPage);
 
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
-
 
   return (
     <div className="p-4">
@@ -116,14 +125,14 @@ export default function Dashboard({ code }) {
               <StyledButton
                 selected={selectedCategory === "classic"}
                 onClick={() => setSelectedCategory("classic")}
-                className="text-xs sm:text-sm" // Adjust button text size
+                className="text-xs sm:text-sm"
               >
                 Classic
               </StyledButton>
               <StyledButton
                 selected={selectedCategory === "jazz"}
                 onClick={() => setSelectedCategory("jazz")}
-                className="text-xs sm:text-sm" // Adjust button text size
+                className="text-xs sm:text-sm"
               >
                 Jazz
               </StyledButton>
@@ -169,7 +178,9 @@ export default function Dashboard({ code }) {
               <div
                 key={track.uri}
                 className={`flex items-center text-neutralColor p-1 rounded-lg ${
-                  selectedTracks.find((t) => t.uri === track.uri) ? "" : ""
+                  selectedTracks.find((t) => t.uri === track.uri)
+                    ? "bg-gray-800"
+                    : ""
                 }`}
                 style={{ flexBasis: "calc(50% - 0.5rem)" }}
               >

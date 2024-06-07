@@ -6,7 +6,7 @@ import MusicSelect from "./Components/Selections/MusicSelect";
 import MakeChoice from "./Pages/MakeChoicePage";
 import ScenePage from "./Pages/ScenePage";
 import Favorites from "./Pages/FavoritesPage";
-import Navigation from "./Components/Navigation/NavigationBar";
+
 
 function SelectionPage() {
   return (
