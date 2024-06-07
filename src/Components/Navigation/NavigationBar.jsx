@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HiOutlineRefresh, HiHeart } from "react-icons/hi";
 
 const NavigationBar = ({ onVisualChangeClick }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -62,12 +63,12 @@ const NavigationBar = ({ onVisualChangeClick }) => {
         </div>
         <div className={`${isOpen ? "block" : "hidden"}`}>
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 ml-4 bg-primaryColor rounded-lg">
-            <Link
-              to="/favorites"
+            <button
+              onClick={() => navigate("/favorites")}
               className="text-neutralColor hover:bg-secondaryColor block px-3 py-2 rounded-md text-base font-medium flex items-center"
             >
               <HiHeart className="inline mr-2" /> Favorieten
-            </Link>
+            </button>
             <Link
               to="/music-select"
               className="text-neutralColor hover:bg-secondaryColor block px-3 py-2 rounded-md text-base font-medium flex items-center"
