@@ -3,7 +3,6 @@ import SpotifyWebApi from "spotify-web-api-node";
 import useAuth from "./useAuth";
 import { useNavigate } from "react-router-dom";
 import Typography from "../ui-elements/Typography";
-import UILogo from "../ui-elements/Logo";
 import StyledButton from "../ui-elements/Button";
 import { HiChevronLeft, HiChevronRight, HiArrowLeft } from "react-icons/hi2";
 
@@ -18,25 +17,21 @@ export default function Dashboard({ code }) {
   const [selectedCategory, setSelectedCategory] = useState("classic");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalDuration, setTotalDuration] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Add loading state
   const tracksPerPage = 18;
   const navigate = useNavigate();
-
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
-
   useEffect(() => {
     if (accessToken) {
       localStorage.setItem("spotifyAccessToken", accessToken);
     }
   }, [accessToken]);
-
   const playlistIds = {
     classic: "3YeJcIqzSIH1sy1molDRre",
     jazz: "2y5zb6o0SFrQXNGq5DPDy5",
   };
-
   function toggleTrackSelection(track) {
     const isSelected = selectedTracks.some((t) => t.uri === track.uri);
     if (isSelected) {
@@ -45,19 +40,16 @@ export default function Dashboard({ code }) {
       setSelectedTracks([...selectedTracks, track]);
     }
   }
-
   function navigateToScene() {
     localStorage.setItem("selectedTracks", JSON.stringify(selectedTracks));
     navigate("/scene-page");
   }
-
   useEffect(() => {
     if (!accessToken) return;
     spotifyApi.setAccessToken(accessToken);
-
     const fetchPlaylistTracks = async (playlistId) => {
       try {
-        setIsLoading(true);
+        setIsLoading(true); // Set loading state to true
         const response = await spotifyApi.getPlaylistTracks(playlistId);
         return response.body.items.map((item) => {
           const track = item.track;
@@ -83,20 +75,17 @@ export default function Dashboard({ code }) {
         console.error("Error fetching playlist tracks:", error);
         return [];
       } finally {
-        setIsLoading(false);
+        setIsLoading(false); // Set loading state to false
       }
     };
-
     const fetchTracks = async () => {
       const playlistId = playlistIds[selectedCategory];
       const tracks = await fetchPlaylistTracks(playlistId);
       setPlaylistTracks(tracks);
       setCurrentPage(1);
     };
-
     fetchTracks();
   }, [accessToken, selectedCategory]);
-
   useEffect(() => {
     let total = 0;
     selectedTracks.forEach((track) => {
@@ -104,7 +93,6 @@ export default function Dashboard({ code }) {
     });
     setTotalDuration(total);
   }, [selectedTracks]);
-
   const startIndex = (currentPage - 1) * tracksPerPage;
   const currentTracks = playlistTracks.slice(
     startIndex,
@@ -125,14 +113,14 @@ export default function Dashboard({ code }) {
               <StyledButton
                 selected={selectedCategory === "classic"}
                 onClick={() => setSelectedCategory("classic")}
-                className="text-xs sm:text-sm"
+                className="text-xs sm:text-sm" // Adjust button text size
               >
                 Classic
               </StyledButton>
               <StyledButton
                 selected={selectedCategory === "jazz"}
                 onClick={() => setSelectedCategory("jazz")}
-                className="text-xs sm:text-sm"
+                className="text-xs sm:text-sm" // Adjust button text size
               >
                 Jazz
               </StyledButton>
@@ -178,9 +166,7 @@ export default function Dashboard({ code }) {
               <div
                 key={track.uri}
                 className={`flex items-center text-neutralColor p-1 rounded-lg ${
-                  selectedTracks.find((t) => t.uri === track.uri)
-                    ? "bg-gray-800"
-                    : ""
+                  selectedTracks.find((t) => t.uri === track.uri) ? "" : ""
                 }`}
                 style={{ flexBasis: "calc(50% - 0.5rem)" }}
               >
@@ -227,19 +213,24 @@ export default function Dashboard({ code }) {
                 key={track.uri}
                 className="flex items-center bg-gray-800 text-neutralColor p-2 rounded-lg"
               >
-                <img
-                  src={track.albumUrl}
-                  alt={track.title}
-                  className="w-8 h-8 rounded-lg object-cover mr-2 sm:w-12 sm:h-12 sm:mr-4"
-                />
-                <div className="flex flex-col">
-                  <span className="text-xs sm:text-sm font-semibold">
-                    {track.title}
-                  </span>{" "}
-                  <span className="text-xs sm:text-sm text-gray-400">
-                    {track.artist}
-                  </span>
-                </div>
+                <button
+                  className="flex items-center w-full"
+                  onClick={() => toggleTrackSelection(track)}
+                >
+                  <img
+                    src={track.albumUrl}
+                    alt={track.title}
+                    className="w-8 h-8 rounded-lg object-cover mr-2 sm:w-12 sm:h-12 sm:mr-4"
+                  />
+                  <div className="flex flex-col">
+                    <span className="text-xs sm:text-sm font-semibold">
+                      {track.title}
+                    </span>{" "}
+                    <span className="text-xs sm:text-sm text-gray-400">
+                      {track.artist}
+                    </span>
+                  </div>
+                </button>
               </li>
             ))}
           </ul>
