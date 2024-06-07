@@ -29,9 +29,13 @@ const FavoritePage = () => {
     <div>
       <h2>Favorieten</h2>
       {favoriteCombination ? (
-        <div>
+        <div className="border border-4 border-gray-900">
           <h3>Visual:</h3>
-          <p>{favoriteCombination.visual}</p>
+          {favoriteCombination.favorites[0].visual && (
+            <div>
+              <p>{favoriteCombination.favorites[0].visual.title}</p>
+            </div>
+          )}
           <h3>Tracks:</h3>
           <ul>
             {favoriteCombination.tracks ? (
