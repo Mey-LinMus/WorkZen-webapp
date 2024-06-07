@@ -1,3 +1,4 @@
+// ScenePage.jsx
 import React, { useEffect, useState, Suspense } from "react";
 import Player from "../Components/Music/Player";
 import { Container } from "react-bootstrap";
@@ -6,12 +7,14 @@ import NavigationBar from "../Components/Navigation/NavigationBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand } from "@fortawesome/free-solid-svg-icons";
 import { HiOutlineSave } from "react-icons/hi";
+import VisualChangeModal from "../Components/Changes/VisualChange";
 
 const ScenePage = () => {
   const [selectedVisual, setSelectedVisual] = useState(null);
   const [selectedTracks, setSelectedTracks] = useState([]);
   const [VisualComponent, setVisualComponent] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal open/close
   const spotifyAccessToken = localStorage.getItem("spotifyAccessToken");
   const navigate = useNavigate();
 
@@ -148,6 +151,18 @@ const ScenePage = () => {
     };
   }, []);
 
+  const handleVisualChange = (newVisual) => {
+    setSelectedVisual(newVisual);
+    localStorage.setItem("selectedVisual", JSON.stringify(newVisual));
+    import(`../Components/Visuals/${newVisual.component}.jsx`)
+      .then((module) => {
+        setVisualComponent(() => module.default);
+      })
+      .catch((error) => {
+        console.error("Error loading visual component", error);
+      });
+  };
+
   return (
     <div className="ScenePage" style={{ overflowX: "hidden" }}>
       {!isFullscreen && (
@@ -184,7 +199,20 @@ const ScenePage = () => {
           >
             <HiOutlineSave />
           </button>
+          <button
+            className="text-2xl bg-secondaryColor text-neutralColor rounded-lg p-1"
+            onClick={() => setIsModalOpen(true)} // Open the modal
+          >
+            Change Visual
+          </button>
         </div>
+      )}
+
+      {isModalOpen && (
+        <VisualChangeModal
+          onClose={() => setIsModalOpen(false)} // Close the modal
+          onVisualChange={handleVisualChange} // Handle visual change
+        />
       )}
     </div>
   );

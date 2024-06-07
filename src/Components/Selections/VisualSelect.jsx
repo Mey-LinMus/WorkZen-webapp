@@ -6,7 +6,6 @@ import UILogo from "../ui-elements/Logo";
 import StyledButton from "../ui-elements/Button";
 import { HiArrowRight } from "react-icons/hi";
 
-import StepNavigator from "./StepNavigator";
 
 const VisualSelect = () => {
   const visuals = visualsData.visuals;

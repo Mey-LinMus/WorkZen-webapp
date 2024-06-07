@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import Typography from "../ui-elements/Typography";
 import UILogo from "../ui-elements/Logo";
 import StyledButton from "../ui-elements/Button";
-import StepNavigator from "../Selections/StepNavigator";
 import { HiChevronLeft, HiChevronRight, HiArrowLeft } from "react-icons/hi2";
 
 const spotifyApi = new SpotifyWebApi({
