@@ -32,10 +32,12 @@ const FavoritePage = () => {
         favoriteCombinations.map((favorite, index) => (
           <div key={index} className="border border-4 border-gray-900">
             <h3>Visual:</h3>
-            {favorite.visual && (
+            {favorite.visual && favorite.visual.title ? (
               <div>
                 <p>{favorite.visual.title}</p>
               </div>
+            ) : (
+              <p>No visual title found</p>
             )}
             <h3>Tracks:</h3>
             <ul>
@@ -50,7 +52,7 @@ const FavoritePage = () => {
           </div>
         ))
       ) : (
-        <p>Loading...</p>
+        <p>No favorite combinations found</p>
       )}
     </div>
   );
