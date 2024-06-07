@@ -39,7 +39,7 @@ const FavoritePage = () => {
             ) : (
               <p>No visual title found</p>
             )}
-            <h3>Tracks:</h3>
+            {/* <h3>Tracks:</h3>
             <ul>
               {favorite.tracks ? (
                 favorite.tracks.map((track, index) => (
@@ -48,7 +48,7 @@ const FavoritePage = () => {
               ) : (
                 <li>No tracks found</li>
               )}
-            </ul>
+            </ul> */}
           </div>
         ))
       ) : (
