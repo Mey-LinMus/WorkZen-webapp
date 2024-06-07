@@ -19,7 +19,7 @@ const Header = () => {
       setCurrentVideoIndex((prevIndex) =>
         prevIndex === videoSources.length - 1 ? 0 : prevIndex + 1
       );
-    }, 10000);
+    }, 20000);
 
     return () => clearInterval(interval);
   }, []);
@@ -30,16 +30,20 @@ const Header = () => {
 
   return (
     <div className="relative h-screen flex flex-col justify-center bg-primaryColor">
-      <video
-        key={videoSources[currentVideoIndex]}
-        className="absolute top-0 left-0 w-full h-full object-cover z-10 brightness-50"
-        autoPlay
-        loop
-        muted
-      >
-        <source src={videoSources[currentVideoIndex]} type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+      {videoSources.map((src, index) => (
+        <video
+          key={src}
+          className={`absolute top-0 left-0 w-full h-full object-cover z-10 brightness-50 transition-opacity duration-1000 ${
+            currentVideoIndex === index ? "opacity-100" : "opacity-0"
+          }`}
+          autoPlay
+          loop
+          muted
+        >
+          <source src={src} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      ))}
       <div className="z-20">
         <UILogo />
       </div>
