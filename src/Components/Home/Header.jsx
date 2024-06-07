@@ -12,12 +12,23 @@ const Header = () => {
   };
 
   return (
-    <div className="bg-primaryColor relative h-screen flex flex-col justify-center">
-      <UILogo />
-      <div className="absolute top-0 right-0 m-4">
+    <div className="relative h-screen flex flex-col justify-center bg-primaryColor">
+      <video
+        className="absolute top-0 left-0 w-full h-full object-cover z-10 brightness-50"
+        autoPlay
+        loop
+        muted
+      >
+        <source src="/Videos/SnowingScene-horizontal.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <div className="z-10">
+        <UILogo />
+      </div>
+      <div className="absolute top-0 right-0 m-4 z-10">
         <StyledButton onClick={handleStartClick}>Start</StyledButton>
       </div>
-      <div className="flex justify-center px-4">
+      <div className="flex justify-center px-4 relative z-10">
         <Typography variant="h1">WorkZen</Typography>
       </div>
     </div>
