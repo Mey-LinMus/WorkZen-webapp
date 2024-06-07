@@ -17,7 +17,7 @@ function SelectionPage() {
         <Route path="/make-choice" element={<MakeChoice />} />
         <Route path="/music-select" element={<MusicSelect />} />
         <Route path="/scene-page" element={<ScenePage />} />
-        <Route path="/favorites" element={<Favorites />} />
+        <Route path="/favorite-page" element={<Favorites />} />
       </Routes>
     </Router>
   );

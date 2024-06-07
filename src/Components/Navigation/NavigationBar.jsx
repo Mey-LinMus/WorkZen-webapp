@@ -64,7 +64,7 @@ const NavigationBar = ({ onVisualChangeClick }) => {
         <div className={`${isOpen ? "block" : "hidden"}`}>
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 ml-4 bg-primaryColor rounded-lg">
             <button
-              onClick={() => navigate("/favorites")}
+              onClick={() => navigate("/favorite-page")}
               className="text-neutralColor hover:bg-secondaryColor block px-3 py-2 rounded-md text-base font-medium flex items-center"
             >
               <HiHeart className="inline mr-2" /> Favorieten
