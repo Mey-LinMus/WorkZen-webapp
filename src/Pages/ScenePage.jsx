@@ -16,7 +16,7 @@ const ScenePage = () => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState(null);
-  const [isSaveModalOpen, setIsSaveModalOpen] = useState(false); // State for save modal
+  const [isSaveModalOpen, setIsSaveModalOpen] = useState(false); 
   const spotifyAccessToken = localStorage.getItem("spotifyAccessToken");
   const navigate = useNavigate();
 
