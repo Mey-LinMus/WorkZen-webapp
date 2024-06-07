@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { HiOutlineRefresh, HiHeart } from "react-icons/hi";
 
 const NavigationBar = ({ onVisualChangeClick }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -63,20 +64,21 @@ const NavigationBar = ({ onVisualChangeClick }) => {
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 ml-4 bg-primaryColor rounded-lg">
             <Link
               to="/favorites"
-              className="text-neutralColor hover:bg-secondaryColor block px-3 py-2 rounded-md text-base font-medium"
+              className="text-neutralColor hover:bg-secondaryColor block px-3 py-2 rounded-md text-base font-medium flex items-center"
             >
-              Favorieten
+              <HiHeart className="inline mr-2" /> Favorieten
             </Link>
             <Link
-              to="/musicChange"
-              className="text-neutralColor hover:bg-secondaryColor block px-3 py-2 rounded-md text-base font-medium"
+              to="/music-select"
+              className="text-neutralColor hover:bg-secondaryColor block px-3 py-2 rounded-md text-base font-medium flex items-center"
             >
-              Muziek
+              <HiOutlineRefresh className="inline mr-2" /> Muziek
             </Link>
             <button
               onClick={onVisualChangeClick}
-              className="text-neutralColor hover:bg-secondaryColor block px-3 py-2 rounded-md text-base font-medium"
+              className="text-neutralColor hover:bg-secondaryColor block px-3 py-2 rounded-md text-base font-medium flex items-center"
             >
+              <HiOutlineRefresh className="inline mr-2" />
               Visual
             </button>
           </div>
