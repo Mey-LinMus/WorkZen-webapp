@@ -17,7 +17,7 @@ export default function Dashboard({ code }) {
   const [selectedCategory, setSelectedCategory] = useState("classic");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalDuration, setTotalDuration] = useState(0);
-  const [isLoading, setIsLoading] = useState(false); // Add loading state
+  const [isLoading, setIsLoading] = useState(false);
   const tracksPerPage = 18;
   const navigate = useNavigate();
   const handleCategoryClick = (category) => {
@@ -49,7 +49,7 @@ export default function Dashboard({ code }) {
     spotifyApi.setAccessToken(accessToken);
     const fetchPlaylistTracks = async (playlistId) => {
       try {
-        setIsLoading(true); // Set loading state to true
+        setIsLoading(true);
         const response = await spotifyApi.getPlaylistTracks(playlistId);
         return response.body.items.map((item) => {
           const track = item.track;

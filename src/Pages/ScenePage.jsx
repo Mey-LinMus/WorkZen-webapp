@@ -14,6 +14,7 @@ const ScenePage = () => {
   const [VisualComponent, setVisualComponent] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal open/close
+  const [successMessage, setSuccessMessage] = useState(null); // State to store success message
   const spotifyAccessToken = localStorage.getItem("spotifyAccessToken");
   const navigate = useNavigate();
 
@@ -69,7 +70,8 @@ const ScenePage = () => {
       );
 
       if (response.ok) {
-        console.log("Combination saved successfully");
+        setSuccessMessage("Combination saved successfully");
+        setTimeout(() => setSuccessMessage(null), 3000); 
       } else {
         console.error("Error saving combination");
       }
@@ -89,7 +91,7 @@ const ScenePage = () => {
     } else if (elem.msRequestFullscreen) {
       elem.msRequestFullscreen();
     }
-    document.body.style.overflow = "hidden"; // Disable vertical scrolling
+    document.body.style.overflow = "hidden"; 
     setIsFullscreen(true);
   };
 
@@ -103,7 +105,7 @@ const ScenePage = () => {
     } else if (document.msExitFullscreen) {
       document.msExitFullscreen();
     }
-    document.body.style.overflow = "auto"; // Enable vertical scrolling
+    document.body.style.overflow = "auto"; 
     setIsFullscreen(false);
   };
 
@@ -123,7 +125,7 @@ const ScenePage = () => {
   useEffect(() => {
     const handleFullscreenChange = () => {
       if (!document.fullscreenElement) {
-        document.body.style.overflow = "auto"; // Enable vertical scrolling
+        document.body.style.overflow = "auto"; 
         setIsFullscreen(false);
       }
     };
@@ -167,7 +169,7 @@ const ScenePage = () => {
       {!isFullscreen && (
         <div>
           <NavigationBar
-            onVisualChangeClick={() => setIsModalOpen(true)} // Open the modal
+            onVisualChangeClick={() => setIsModalOpen(true)} 
           />
         </div>
       )}
@@ -203,10 +205,16 @@ const ScenePage = () => {
         </div>
       )}
 
+      {successMessage && ( 
+        <div className="fixed bottom-4 left-4 bg-green-500 text-white p-4 rounded-lg">
+          {successMessage}
+        </div>
+      )}
+
       {isModalOpen && (
         <VisualChangeModal
-          onClose={() => setIsModalOpen(false)} // Close the modal
-          onVisualChange={handleVisualChange} // Handle visual change
+          onClose={() => setIsModalOpen(false)} 
+          onVisualChange={handleVisualChange} 
         />
       )}
     </div>
