@@ -4,13 +4,15 @@
       "id": 1,
       "title": "Snowing",
       "component": "SnowingSceneVisual",
-      "video": "Videos/SnowingVisual.mp4"
+      "video": "Videos/SnowingVisual.mp4",
+      "videoLarge": "Videos/SnowingScene-horizontal.mp4"
     },
     {
       "id": 2,
       "title": "Sphere",
       "component": "SphereSceneVisual",
-      "video": "Videos/SphereVisual.mp4"
+      "video": "Videos/SphereVisual.mp4",
+      "videoLarge": "Videos/SphereScene-horizontal.mp4"
     }
   ]
 }
