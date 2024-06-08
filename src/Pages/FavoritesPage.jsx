@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const FavoritePage = () => {
   const [favoriteCombinations, setFavoriteCombinations] = useState([]);
   const deviceId = localStorage.getItem("deviceId");
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchFavoriteCombinations = async () => {
@@ -27,12 +27,15 @@ const FavoritePage = () => {
     fetchFavoriteCombinations();
   }, [deviceId]);
 
+
   const handleFavoriteClick = (favorite) => {
     console.log("Favorite clicked:", favorite);
 
-    localStorage.setItem("lastClickedFavorite", JSON.stringify(favorite));
+    localStorage.removeItem("selectedVisual");
 
-    navigate("/scene-page"); 
+    localStorage.setItem("Favorite", JSON.stringify(favorite));
+
+    navigate("/scene-page");
   };
 
   return (
