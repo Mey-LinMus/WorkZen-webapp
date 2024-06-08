@@ -83,7 +83,9 @@ const SphereScene = () => {
 
     return () => {
       window.removeEventListener("resize", onWindowResize);
-      containerRef.current.removeChild(renderer.domElement);
+      if (containerRef.current && renderer) {
+        containerRef.current.removeChild(renderer.domElement);
+      }
     };
   }, []);
 

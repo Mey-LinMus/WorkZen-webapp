@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand } from "@fortawesome/free-solid-svg-icons";
 import { HiOutlineSave } from "react-icons/hi";
 import VisualChangeModal from "../Components/Modals/VisualChange";
-import SaveCombinationModal from "../Components/Modals/SaveCombination"; 
+import SaveCombinationModal from "../Components/Modals/SaveCombination";
 
 const ScenePage = () => {
   const [selectedVisual, setSelectedVisual] = useState(null);
@@ -16,9 +16,8 @@ const ScenePage = () => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState(null);
-  const [isSaveModalOpen, setIsSaveModalOpen] = useState(false); 
+  const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
   const spotifyAccessToken = localStorage.getItem("spotifyAccessToken");
-  
 
   useEffect(() => {
     const visual = JSON.parse(localStorage.getItem("selectedVisual"));
@@ -37,8 +36,6 @@ const ScenePage = () => {
         });
     }
   }, []);
-
-
 
   const getDeviceId = () => {
     return localStorage.getItem("deviceId") || generateRandomId();
@@ -78,7 +75,7 @@ const ScenePage = () => {
     } catch (error) {
       console.error("Error saving combination", error);
     }
-    setIsSaveModalOpen(false); 
+    setIsSaveModalOpen(false);
   };
 
   const enterFullscreen = () => {
@@ -197,7 +194,7 @@ const ScenePage = () => {
           </button>
           <button
             className="text-2xl bg-secondaryColor text-neutralColor rounded-lg p-1"
-            onClick={() => setIsSaveModalOpen(true)} 
+            onClick={() => setIsSaveModalOpen(true)}
           >
             <HiOutlineSave />
           </button>
