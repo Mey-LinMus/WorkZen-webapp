@@ -35,7 +35,7 @@ const VisualSelect = () => {
   };
 
   return (
-    <div className="bg-primaryColor min-h-screen flex flex-col items-center">
+    <div className="bg-gradient-to-b from-custom-gradient-start via-custom-gradient-middle to-custom-gradient-end min-h-screen flex flex-col items-center">
       <div className="z-10">
         <UILogo />
         <div className="mt-14 mb-12 relative text-center z-10">

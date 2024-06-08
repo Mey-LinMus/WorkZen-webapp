@@ -22,7 +22,7 @@ function MusicSelect() {
   }, [code]);
 
   return (
-    <div className="p-4 bg-gradient-to-b from-custom-gradient-start via-custom-gradient-middle to-custom-gradient-end">
+    <div className="p-4 bg-gradient-to-b from-custom-gradient-start via-custom-gradient-middle to-custom-gradient-end min-h-screen">
       {selectedVisual && (
         <div>
           {/* <video

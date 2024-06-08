@@ -26,7 +26,7 @@ function MakeChoicePage() {
   };
 
   return (
-    <div className="bg-primaryColor min-h-screen flex flex-col items-center">
+    <div className="bg-gradient-to-b from-custom-gradient-start via-custom-gradient-middle to-custom-gradient-end min-h-screen flex flex-col items-center">
       <UILogo className="mt-12 md:mt-16 lg:mt-20" />
       <div className="mt-12 md:mt-16 lg:mt-20 text-center">
         <Typography variant="h1" className="text-2xl md:text-3xl lg:text-4xl">
