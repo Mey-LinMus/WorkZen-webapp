@@ -18,6 +18,7 @@ const ScenePage = () => {
   const [successMessage, setSuccessMessage] = useState(null);
   const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
   const spotifyAccessToken = localStorage.getItem("spotifyAccessToken");
+  const [lastClickedFavorite, setLastClickedFavorite] = useState(null);
 
   useEffect(() => {
     const visual = JSON.parse(localStorage.getItem("selectedVisual"));
@@ -35,6 +36,11 @@ const ScenePage = () => {
           console.error("Error loading visual component", error);
         });
     }
+
+    const clickedFavorite = JSON.parse(
+      localStorage.getItem("lastClickedFavorite")
+    );
+    setLastClickedFavorite(clickedFavorite);
   }, []);
 
   const getDeviceId = () => {
@@ -219,6 +225,29 @@ const ScenePage = () => {
         handleClose={() => setIsSaveModalOpen(false)}
         handleSave={handleSaveCombination}
       />
+
+      {/* Display last clicked favorite */}
+      {lastClickedFavorite && (
+        <div className="fixed bottom-4 right-4 bg-white text-gray-900 p-4 rounded-lg shadow-lg">
+          <h3>Last Clicked Favorite:</h3>
+          <p>Name: {lastClickedFavorite.name}</p>
+          {lastClickedFavorite.favorite &&
+          lastClickedFavorite.favorite.visual &&
+          lastClickedFavorite.favorite.visual.video ? (
+            <div>
+              <video controls width="300">
+                <source
+                  src={lastClickedFavorite.favorite.visual.video}
+                  type="video/mp4"
+                />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          ) : (
+            <p>No visual video found</p>
+          )}
+        </div>
+      )}
     </div>
   );
 };
