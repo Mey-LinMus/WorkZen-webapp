@@ -25,13 +25,21 @@ const FavoritePage = () => {
     fetchFavoriteCombinations();
   }, [deviceId]);
 
+  const handleFavoriteClick = (favorite) => {
+    console.log("Favorite clicked:", favorite);
+  };
+
   return (
     <div>
       <h2>Favorieten</h2>
 
       {favoriteCombinations.length > 0 ? (
         favoriteCombinations.map((favorite, index) => (
-          <div key={index} className="border border-4 border-gray-900 p-4 mb-4">
+          <button
+            key={index}
+            className="border border-4 border-gray-900 p-4 mb-4 text-left w-full"
+            onClick={() => handleFavoriteClick(favorite)}
+          >
             {favorite.name ? (
               <p>
                 <strong>Name:</strong> {favorite.name}
@@ -54,7 +62,7 @@ const FavoritePage = () => {
             ) : (
               <p>No visual video found</p>
             )}
-          </div>
+          </button>
         ))
       ) : (
         <p>No favorite combinations found</p>
