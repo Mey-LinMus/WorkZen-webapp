@@ -26,14 +26,22 @@ const FavoritePage = () => {
 
     fetchFavoriteCombinations();
   }, [deviceId]);
-  
 
   const handleFavoriteClick = (favorite) => {
     console.log("Favorite clicked:", favorite);
 
     localStorage.removeItem("selectedVisual");
+    localStorage.removeItem("selectedTracks");
 
     localStorage.setItem("Favorite", JSON.stringify(favorite));
+    localStorage.setItem(
+      "selectedVisual",
+      JSON.stringify(favorite.favorite.visual)
+    );
+    localStorage.setItem(
+      "selectedTracks",
+      JSON.stringify(favorite.favorite.tracks)
+    );
 
     navigate("/scene-page");
   };
