@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Typography from "../Components/ui-elements/Typography";
 
 const FavoritePage = () => {
   const [favoriteCombinations, setFavoriteCombinations] = useState([]);
@@ -47,28 +48,39 @@ const FavoritePage = () => {
   };
 
   return (
-    <div>
-      <h2>Favorites</h2>
+    <div className="bg-gradient-to-b from-custom-gradient-start via-custom-gradient-middle to-custom-gradient-end min-h-screen flex flex-col items-center">
+      <div className="mt-12 mb-12">
+        <Typography variant="h2">Favorites</Typography>
+      </div>
 
       {favoriteCombinations.length > 0 ? (
         favoriteCombinations.map((favorite, index) => (
           <button
             key={index}
-            className="border border-4 border-gray-900 p-4 mb-4 text-left w-full"
+            className="relative overflow-hidden rounded-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none"
             onClick={() => handleFavoriteClick(favorite)}
           >
             {favorite.name ? (
-              <p>
-                <strong>Name:</strong> {favorite.name}
-              </p>
+              <div className="bg-neutralColor text-primaryColor font-segoe text-bodyText ">
+                <strong>
+                  <p className="p-4 ">{favorite.name}</p>
+                </strong>
+              </div>
             ) : (
-              <p>No name found</p>
+              <Typography variant="bodyText">No name found</Typography>
             )}
             {favorite.favorite &&
             favorite.favorite.visual &&
             favorite.favorite.visual.video ? (
               <div>
-                <video controls width="300">
+                <video
+                  width="300"
+                  type="video/mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                >
                   <source
                     src={favorite.favorite.visual.video}
                     type="video/mp4"
@@ -77,12 +89,14 @@ const FavoritePage = () => {
                 </video>
               </div>
             ) : (
-              <p>No visual video found</p>
+              <Typography variant="bodyText">No visual video found</Typography>
             )}
           </button>
         ))
       ) : (
-        <p>No favorite combinations found</p>
+        <Typography variant="bodyText">
+          No favorite combinations found
+        </Typography>
       )}
     </div>
   );
