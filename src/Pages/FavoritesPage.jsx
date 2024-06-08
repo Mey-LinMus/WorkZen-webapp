@@ -28,27 +28,32 @@ const FavoritePage = () => {
   return (
     <div>
       <h2>Favorieten</h2>
+
       {favoriteCombinations.length > 0 ? (
         favoriteCombinations.map((favorite, index) => (
-          <div key={index} className="border border-4 border-gray-900">
-            <h3>Visual:</h3>
-            {favorite.visual && favorite.visual.title ? (
+          <div key={index} className="border border-4 border-gray-900 p-4 mb-4">
+            {favorite.name ? (
+              <p>
+                <strong>Name:</strong> {favorite.name}
+              </p>
+            ) : (
+              <p>No name found</p>
+            )}
+            {favorite.favorite &&
+            favorite.favorite.visual &&
+            favorite.favorite.visual.video ? (
               <div>
-                <p>{favorite.visual.title}</p>
+                <video controls width="300">
+                  <source
+                    src={favorite.favorite.visual.video}
+                    type="video/mp4"
+                  />
+                  Your browser does not support the video tag.
+                </video>
               </div>
             ) : (
-              <p>No visual title found</p>
+              <p>No visual video found</p>
             )}
-            {/* <h3>Tracks:</h3>
-            <ul>
-              {favorite.tracks ? (
-                favorite.tracks.map((track, index) => (
-                  <li key={index}>{track}</li>
-                ))
-              ) : (
-                <li>No tracks found</li>
-              )}
-            </ul> */}
           </div>
         ))
       ) : (
