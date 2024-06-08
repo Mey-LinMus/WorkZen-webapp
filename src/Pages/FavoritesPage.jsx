@@ -26,7 +26,7 @@ const FavoritePage = () => {
 
     fetchFavoriteCombinations();
   }, [deviceId]);
-
+  
 
   const handleFavoriteClick = (favorite) => {
     console.log("Favorite clicked:", favorite);

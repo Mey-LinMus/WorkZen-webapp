@@ -27,13 +27,19 @@ const ScenePage = () => {
     const tracks = JSON.parse(localStorage.getItem("selectedTracks"));
     setSelectedTracks(tracks);
 
- 
     const clickedFavorite = JSON.parse(localStorage.getItem("Favorite"));
+
     if (clickedFavorite) {
-    
-      setLastClickedFavorite(clickedFavorite);
+      import(
+        `../Components/Visuals/${clickedFavorite.favorite.visual.component}.jsx`
+      )
+        .then((module) => {
+          setVisualComponent(() => module.default);
+        })
+        .catch((error) => {
+          console.error("Error loading visual component", error);
+        });
     } else {
-   
       if (visual) {
         import(`../Components/Visuals/${visual.component}.jsx`)
           .then((module) => {
