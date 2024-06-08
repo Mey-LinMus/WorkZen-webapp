@@ -134,7 +134,7 @@ export default function Dashboard({ code }) {
               <button
                 onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-                className="bg-gray-600 text-neutralColor px-2 py-1 rounded-full disabled:opacity-50 size-8"
+                className="bg-gray-600 text-neutralColor border border-neutralColor px-2 py-1 rounded-full disabled:opacity-50 size-8"
               >
                 <HiChevronLeft className="w-4 h-4" />
               </button>
@@ -173,8 +173,8 @@ export default function Dashboard({ code }) {
                 <button
                   className={`flex items-center w-full ${
                     selectedTracks.find((t) => t.uri === track.uri)
-                      ? "bg-gray-800"
-                      : "bg-gray-900/50"
+                      ? "bg-gray-800 border border-1 border-neutralColor"
+                      : "bg-gray-900/50 "
                   } rounded-lg p-2`}
                   onClick={() => toggleTrackSelection(track)}
                 >
@@ -204,7 +204,7 @@ export default function Dashboard({ code }) {
         <div className="mt-6">
           <div className="mb-6 mt-12 text-center ">
             <Typography variant="h3" className="text-sm sm:text-base">
-              Selected liedjes:
+              Geselecteerde liedjes:
             </Typography>
           </div>
           <ul className="space-y-2 grid grid-cols-1 sm:grid-cols-3 grid-rows-2 gap-2">
@@ -225,7 +225,7 @@ export default function Dashboard({ code }) {
                   <div className="flex flex-col">
                     <span className="text-xs sm:text-sm font-semibold">
                       {track.title}
-                    </span>{" "}
+                    </span>
                     <span className="text-xs sm:text-sm text-gray-400">
                       {track.artist}
                     </span>
