@@ -27,6 +27,8 @@ const FavoritePage = () => {
 
   const handleFavoriteClick = (favorite) => {
     console.log("Favorite clicked:", favorite);
+    // Save favorite to localStorage
+    localStorage.setItem("lastClickedFavorite", JSON.stringify(favorite));
   };
 
   return (
