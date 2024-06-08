@@ -10,6 +10,10 @@ const NavigationBar = ({ onVisualChangeClick }) => {
     setIsOpen(!isOpen);
   };
 
+  const handleChangeMusic = () => {
+    navigate(-1);
+  };
+
   return (
     <div className="max-w-40 absolute">
       <nav>
@@ -69,12 +73,12 @@ const NavigationBar = ({ onVisualChangeClick }) => {
             >
               <HiHeart className="inline mr-2" /> Favorieten
             </button>
-            <Link
-              to="/music-select"
+            <button
+              onClick={handleChangeMusic}
               className="text-neutralColor hover:bg-secondaryColor block px-3 py-2 rounded-md text-base font-medium flex items-center"
             >
               <HiOutlineRefresh className="inline mr-2" /> Muziek
-            </Link>
+            </button>
             <button
               onClick={onVisualChangeClick}
               className="text-neutralColor hover:bg-secondaryColor block px-3 py-2 rounded-md text-base font-medium flex items-center"
