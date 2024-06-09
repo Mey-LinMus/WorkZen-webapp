@@ -33,7 +33,7 @@ export default function Dashboard({ code }) {
 
   const playlistIds = {
     classic: "37i9dQZF1DWVFeEut75IAL",
-    Instrumenteel: "37i9dQZF1DX9j444F9NCBa",
+    Instrumenteel: "37i9dQZF1DX9j444F9NCBa?si=9e40f073f07d421e",
   };
 
   function toggleTrackSelection(track) {
