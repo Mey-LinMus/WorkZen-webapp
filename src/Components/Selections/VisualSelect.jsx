@@ -12,7 +12,6 @@ const VisualSelect = () => {
   const [selectedVisual, setSelectedVisual] = useState(null);
 
   useEffect(() => {
-    // Automatically play muted videos on load
     const videos = document.querySelectorAll("video");
     videos.forEach((video) => {
       video.muted = true;
@@ -22,7 +21,6 @@ const VisualSelect = () => {
 
   const handleVisualClick = (visual) => {
     setSelectedVisual(visual);
-    // Optionally pause other videos or handle any other logic
   };
 
   const handleNextClick = () => {
@@ -34,10 +32,18 @@ const VisualSelect = () => {
     }
   };
 
+  const handleClickLogo = () => {
+    navigate("/");
+    console.log("clickLogo");
+  };
+
   return (
     <div className="bg-gradient-to-b from-custom-gradient-start via-custom-gradient-middle to-custom-gradient-end min-h-screen flex flex-col items-center">
       <div className="z-10">
-        <UILogo />
+        <div onClick={handleClickLogo} className="cursor-pointer">
+          <UILogo />
+        </div>
+
         <div className="mt-14 mb-12 relative text-center z-10">
           <Typography variant="h2" className="text-center">
             Selecteer een visual
