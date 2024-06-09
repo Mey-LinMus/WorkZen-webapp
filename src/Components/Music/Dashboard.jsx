@@ -20,18 +20,22 @@ export default function Dashboard({ code }) {
   const [isLoading, setIsLoading] = useState(false);
   const tracksPerPage = 18;
   const navigate = useNavigate();
+
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
+
   useEffect(() => {
     if (accessToken) {
       localStorage.setItem("spotifyAccessToken", accessToken);
     }
   }, [accessToken]);
+
   const playlistIds = {
-    classic: "3YeJcIqzSIH1sy1molDRre",
-    jazz: "2y5zb6o0SFrQXNGq5DPDy5",
+    classic: "37i9dQZF1DWVFeEut75IAL",
+    Instrumenteel: "37i9dQZF1DX9j444F9NCBa",
   };
+
   function toggleTrackSelection(track) {
     const isSelected = selectedTracks.some((t) => t.uri === track.uri);
     if (isSelected) {
@@ -40,10 +44,12 @@ export default function Dashboard({ code }) {
       setSelectedTracks([...selectedTracks, track]);
     }
   }
+
   function navigateToScene() {
     localStorage.setItem("selectedTracks", JSON.stringify(selectedTracks));
     navigate("/scene-page");
   }
+
   useEffect(() => {
     if (!accessToken) return;
     spotifyApi.setAccessToken(accessToken);
@@ -75,9 +81,10 @@ export default function Dashboard({ code }) {
         console.error("Error fetching playlist tracks:", error);
         return [];
       } finally {
-        setIsLoading(false); // Set loading state to false
+        setIsLoading(false);
       }
     };
+
     const fetchTracks = async () => {
       const playlistId = playlistIds[selectedCategory];
       const tracks = await fetchPlaylistTracks(playlistId);
@@ -86,6 +93,7 @@ export default function Dashboard({ code }) {
     };
     fetchTracks();
   }, [accessToken, selectedCategory]);
+
   useEffect(() => {
     let total = 0;
     selectedTracks.forEach((track) => {
@@ -93,6 +101,7 @@ export default function Dashboard({ code }) {
     });
     setTotalDuration(total);
   }, [selectedTracks]);
+
   const startIndex = (currentPage - 1) * tracksPerPage;
   const currentTracks = playlistTracks.slice(
     startIndex,
@@ -113,16 +122,16 @@ export default function Dashboard({ code }) {
               <StyledButton
                 selected={selectedCategory === "classic"}
                 onClick={() => setSelectedCategory("classic")}
-                className="text-xs sm:text-sm" // Adjust button text size
+                className="text-xs sm:text-sm"
               >
                 Classic
               </StyledButton>
               <StyledButton
                 selected={selectedCategory === "jazz"}
                 onClick={() => setSelectedCategory("jazz")}
-                className="text-xs sm:text-sm" // Adjust button text size
+                className="text-xs sm:text-sm"
               >
-                Jazz
+                Instrumenteel
               </StyledButton>
             </div>
             <div className="flex items-center mt-2 sm:mt-0">
