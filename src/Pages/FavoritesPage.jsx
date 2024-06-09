@@ -57,7 +57,7 @@ const FavoritePage = () => {
   return (
     <div className="bg-gradient-to-b from-custom-gradient-start via-custom-gradient-middle to-custom-gradient-end min-h-screen flex flex-col items-center">
       <div className="mt-12 mb-12">
-        <Typography variant="h2">Favorites</Typography>
+        <Typography variant="h2">Favorieten</Typography>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 justify-center ">
@@ -112,7 +112,7 @@ const FavoritePage = () => {
             variant="bodyText"
             className="flex items-center justify-center"
           >
-            No favorite combinations found
+            Geen favorieten gevonden
           </Typography>
         )}
       </div>

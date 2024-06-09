@@ -11,7 +11,7 @@ const NavigationBar = ({ onVisualChangeClick }) => {
   };
 
   const handleChangeMusic = () => {
-    navigate(-1);
+    navigate("/music-select"); 
   };
 
   return (

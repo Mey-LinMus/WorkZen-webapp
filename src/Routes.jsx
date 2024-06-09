@@ -7,8 +7,7 @@ import MakeChoice from "./Pages/MakeChoicePage";
 import ScenePage from "./Pages/ScenePage";
 import Favorites from "./Pages/FavoritesPage";
 
-
-function SelectionPage() {
+function RoutesComponent() {
   return (
     <Router>
       <Routes>
@@ -23,4 +22,4 @@ function SelectionPage() {
   );
 }
 
-export default SelectionPage;
+export default RoutesComponent;

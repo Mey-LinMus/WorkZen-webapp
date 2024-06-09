@@ -27,6 +27,9 @@ const Header = () => {
   const handleStartClick = () => {
     navigate("/visual-select");
   };
+  const handleFavoritesClick = () => {
+    navigate("/favorite-page");
+  };
 
   return (
     <div className="relative h-screen flex flex-col justify-center bg-primaryColor">
@@ -47,8 +50,9 @@ const Header = () => {
       <div className="z-20">
         <UILogo />
       </div>
-      <div className="absolute top-0 right-0 m-4 z-20">
+      <div className="absolute top-0 right-0 m-4 z-20 space-x-4">
         <StyledButton onClick={handleStartClick}>Start</StyledButton>
+        <StyledButton onClick={handleFavoritesClick}>Favorieten </StyledButton>
       </div>
       <div className="flex justify-center px-4 relative z-20">
         <Typography variant="h1">WorkZen</Typography>
