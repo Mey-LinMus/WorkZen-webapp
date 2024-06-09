@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import visualsData from "../../visuals.json";
+import visualsData from "../../Data/visuals.json";
 import Typography from "../ui-elements/Typography";
 import StyledButton from "../ui-elements/Button";
 

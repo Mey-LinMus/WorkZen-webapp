@@ -74,7 +74,7 @@ const Research = () => {
           </Typography>
         </div>
         <img
-          src={ImageTwo}
+          src={ImageThree}
           alt="asset2"
           className="size-128 rounded-3xl object-scale-down"
         />
