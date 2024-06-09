@@ -131,8 +131,8 @@ export default function Dashboard({ code }) {
                 Classic
               </StyledButton>
               <StyledButton
-                selected={selectedCategory === "jazz"}
-                onClick={() => setSelectedCategory("jazz")}
+                selected={selectedCategory === "Instrumenteel"}
+                onClick={() => setSelectedCategory("Instrumenteel")}
                 className="text-xs sm:text-sm"
               >
                 Instrumenteel
