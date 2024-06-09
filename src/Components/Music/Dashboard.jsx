@@ -111,7 +111,7 @@ export default function Dashboard({ code }) {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center">
+      <div className="flex justify-center mt-12">
         <Typography>Loading...</Typography>
       </div>
     );
