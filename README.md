@@ -30,21 +30,21 @@ Om te starten met het project WorkZen, volg deze stappen:
 
     1. Clone de repository:
 
-    ```bash
+```bash
     git clone https://github.com/Mey-LinMus/WorkZen-webapp.git
     cd WorkZen-webapp
-    ```
+```
     2. Installeer dependencies:
 
-    ```bash
+```bash
     npm install
-     ```
+ ```
 
     3. Start het project:
 
-    `````bash
+```bash
     npm start
-    ```
+ ```
 
 De applicatie is beschikbaar op http://localhost:3000.
 
