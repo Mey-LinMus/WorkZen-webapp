@@ -110,7 +110,11 @@ export default function Dashboard({ code }) {
   const totalPages = Math.ceil(playlistTracks.length / tracksPerPage);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center">
+        <Typography>Loading...</Typography>
+      </div>
+    );
   }
 
   return (
