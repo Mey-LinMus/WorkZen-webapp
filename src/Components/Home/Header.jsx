@@ -3,6 +3,7 @@ import StyledButton from "../ui-elements/Button";
 import Typography from "../ui-elements/Typography";
 import UILogo from "../ui-elements/Logo";
 import { useNavigate } from "react-router-dom";
+import { HiOutlineChevronDoubleDown } from "react-icons/hi";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const Header = () => {
   ];
 
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [showArrow, setShowArrow] = useState(true);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -24,9 +26,23 @@ const Header = () => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setShowArrow(false);
+      } else {
+        setShowArrow(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const handleStartClick = () => {
     navigate("/visual-select");
   };
+
   const handleFavoritesClick = () => {
     navigate("/favorite-page");
   };
@@ -57,6 +73,11 @@ const Header = () => {
       <div className="flex justify-center px-4 relative z-20">
         <Typography variant="h1">WorkZen</Typography>
       </div>
+      {showArrow && (
+        <div className="absolute bottom-10 w-full flex justify-center z-20">
+          <HiOutlineChevronDoubleDown className="text-white text-4xl animate-bounce" />
+        </div>
+      )}
     </div>
   );
 };
