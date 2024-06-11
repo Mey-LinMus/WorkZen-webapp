@@ -235,7 +235,6 @@ const ScenePage = () => {
         handleSave={handleSaveCombination}
       />
 
-      {/* Display last clicked favorite */}
       {lastClickedFavorite && (
         <div className="fixed bottom-4 right-4 bg-white text-gray-900 p-4 rounded-lg shadow-lg">
           <h3>Last Clicked Favorite:</h3>
