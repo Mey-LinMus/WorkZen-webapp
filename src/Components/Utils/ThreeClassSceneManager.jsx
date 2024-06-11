@@ -14,7 +14,6 @@ class ThreeClassSceneManager {
 
     this.init();
     this.setupEventListeners();
-    this.setupDeviceOrientation();
   }
 
   init() {
@@ -53,7 +52,7 @@ class ThreeClassSceneManager {
   }
 
   removeDeviceOrientation() {
-    if (window.DeviceOrientationEvent) {
+    if (this.onDeviceOrientationHandler && window.DeviceOrientationEvent) {
       window.removeEventListener(
         "deviceorientation",
         this.onDeviceOrientationHandler
@@ -74,25 +73,6 @@ class ThreeClassSceneManager {
     this.mouseY = (event.clientY - window.innerHeight / 2) * 10;
   }
 
-  requestPermission() {
-    if (
-      typeof DeviceOrientationEvent !== "undefined" &&
-      typeof DeviceOrientationEvent.requestPermission === "function"
-    ) {
-      DeviceOrientationEvent.requestPermission()
-        .then((response) => {
-          if (response === "granted") {
-            window.addEventListener("devicemotion", (e) => {
-              // Handle 'e' here (e.g., update UI based on motion data)
-            });
-          }
-        })
-        .catch(console.error);
-    } else {
-      console.log("DeviceMotionEvent is not defined");
-    }
-  }
-
   onDeviceOrientation(event) {
     const alpha = event.alpha;
     const beta = event.beta;
@@ -106,12 +86,13 @@ class ThreeClassSceneManager {
   enableStereoEffect() {
     this.isStereoEnabled = true;
     this.effect.setSize(window.innerWidth, window.innerHeight);
+    this.setupDeviceOrientation(); 
   }
 
   disableStereoEffect() {
     this.isStereoEnabled = false;
     this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.removeDeviceOrientation(); 
+    this.removeDeviceOrientation();
   }
 
   render() {
