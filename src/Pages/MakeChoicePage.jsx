@@ -26,7 +26,7 @@ function MakeChoicePage() {
   };
 
   return (
-    <div className="bg-gradient-to-b from-custom-gradient-start via-custom-gradient-middle to-custom-gradient-end min-h-screen flex flex-col items-center">
+    <div className="bg-gradient-to-b from-custom-gradient-start via-custom-gradient-middle to-custom-gradient-end min-h-screen flex flex-col items-center justify-center">
       <div className="md:block hidden">
         <UILogo />
       </div>

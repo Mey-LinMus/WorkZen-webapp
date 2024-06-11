@@ -38,22 +38,24 @@ const VisualSelect = () => {
   };
 
   return (
-    <div className="bg-gradient-to-b from-custom-gradient-start via-custom-gradient-middle to-custom-gradient-end min-h-screen flex flex-col items-center">
-      <div className="z-10">
+    <div className="bg-gradient-to-b from-custom-gradient-start via-custom-gradient-middle to-custom-gradient-end min-h-screen flex flex-col items-center justify-center">
+      <div className="z-10 flex flex-col items-center justify-center w-full">
         <div
           onClick={handleClickLogo}
-          className="cursor-pointer md:block hidden"
+          className="cursor-pointer md:block hidden mb-4"
         >
           <UILogo />
         </div>
 
-        <div className="mt-14 mb-12 relative text-center z-10">
-          <Typography variant="h2" className="text-center">
+        <div className="mb-12 relative text-center z-10">
+          <Typography
+            variant="h2"
+            className="text-center text-2xl md:text-3xl lg:text-4xl"
+          >
             Selecteer een visual
           </Typography>
         </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-4 sm:gap-4 sm:grid justify-items-center">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-4 justify-items-center w-full">
           {visuals.map((visual) => (
             <button
               key={visual.id}
@@ -63,7 +65,7 @@ const VisualSelect = () => {
                   : ""
               } ${
                 selectedVisual === visual
-                  ? "w-full sm:w-1/2 md:w-1/3"
+                  ? "w-full sm:w-1/2 md:w-2/4 lg:w-2/4"
                   : "w-full sm:w-1/2 md:w-1/3 sm:max-w-sm md:max-w-md"
               }`}
               style={{
@@ -89,13 +91,15 @@ const VisualSelect = () => {
           ))}
         </div>
 
-        <div className="mt-16 py-2 flex justify-center space-x-12 items-center ml-32">
-          <div>
+        <div className="mt-16 py-2 flex items-center justify-between w-full px-4 md:px-12">
+          <div className="flex-1 flex justify-center">
             <p className="text-neutralColor">1/3</p>
           </div>
-          <StyledButton selected onClick={handleNextClick}>
-            <HiArrowRight />
-          </StyledButton>
+          <div className="flex-shrink-0">
+            <StyledButton selected onClick={handleNextClick}>
+              <HiArrowRight />
+            </StyledButton>
+          </div>
         </div>
       </div>
       {selectedVisual && (
