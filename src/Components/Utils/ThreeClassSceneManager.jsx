@@ -85,10 +85,10 @@ class ThreeClassSceneManager {
           if (response === "granted") {
             this.deviceOrientationPermissionGranted = true;
             window.addEventListener("devicemotion", (e) => {
-              // Handle 'e' here (e.g., update UI based on motion data)
+           
             });
           }
-          // Dispatch a custom event or callback to notify permission change
+      
           this.dispatchEvent(new Event("permissionchange"));
         })
         .catch(console.error);
