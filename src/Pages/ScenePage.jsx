@@ -127,6 +127,24 @@ const ScenePage = () => {
     setIsFullscreen(false);
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (isFullscreen) {
+      
+        const scrollY = window.scrollY;
+        if (scrollY > 0) {
+          exitFullscreen();
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isFullscreen]);
+
   const handleKeyDown = (event) => {
     if (event.key === "Escape") {
       exitFullscreen();
