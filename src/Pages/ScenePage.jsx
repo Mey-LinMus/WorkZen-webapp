@@ -109,15 +109,19 @@ const ScenePage = () => {
   };
 
   const exitFullscreen = () => {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.mozCancelFullScreen) {
-      document.mozCancelFullScreen();
-    } else if (document.webkitExitFullscreen) {
+    const elem = document;
+    const exitFullscreen =
+      elem.exitFullscreen ||
+      elem.mozCancelFullScreen ||
+      elem.webkitExitFullscreen ||
+      elem.msExitFullscreen;
+
+    if (exitFullscreen) {
+      exitFullscreen.call(elem);
+    } else if (document.webkitIsFullScreen) {
       document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) {
-      document.msExitFullscreen();
     }
+
     document.body.style.overflow = "auto";
     setIsFullscreen(false);
   };
