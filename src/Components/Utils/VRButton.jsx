@@ -19,11 +19,11 @@ const VRButton = ({ sceneManager }) => {
     if (!isStereo && isMobile) {
       sceneManager.enableStereoEffect();
       setIsStereo(true);
+      sceneManager.requestPermission(); 
     } else if (isStereo) {
       sceneManager.disableStereoEffect();
       setIsStereo(false);
     }
-    sceneManager.requestPermission();
   };
 
   return (
