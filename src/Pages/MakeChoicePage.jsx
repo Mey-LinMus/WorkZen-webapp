@@ -30,13 +30,13 @@ function MakeChoicePage() {
       <div className="md:block hidden">
         <UILogo />
       </div>
-      <div className="mt-6 md:mt-12 lg:mt-12 text-center">
+      <div className="mt-12 md:mt-12 lg:mt-12 text-center">
         <Typography variant="h1" className="text-2xl md:text-3xl lg:text-4xl">
           Maak je keuze
         </Typography>
       </div>
 
-      <div className="mt-8 md:mt-12 lg:mt-16 flex flex-row justify-center space-x-4 md:space-x-8 items-center w-full">
+      <div className="mt-12 md:mt-12 lg:mt-16 flex flex-row justify-center space-x-4 md:space-x-8 items-center w-full">
         <button
           onClick={() => handleOptionClick("custom")}
           selected={selectedOption === "custom"}
