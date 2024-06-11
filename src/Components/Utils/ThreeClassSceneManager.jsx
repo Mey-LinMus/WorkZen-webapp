@@ -11,9 +11,11 @@ class ThreeClassSceneManager {
     this.renderer = null;
     this.effect = null;
     this.isStereoEnabled = false;
+    this.deviceOrientationPermissionGranted = false;
 
     this.init();
     this.setupEventListeners();
+    this.setupDeviceOrientation();
   }
 
   init() {
@@ -52,7 +54,7 @@ class ThreeClassSceneManager {
   }
 
   removeDeviceOrientation() {
-    if (this.onDeviceOrientationHandler && window.DeviceOrientationEvent) {
+    if (window.DeviceOrientationEvent) {
       window.removeEventListener(
         "deviceorientation",
         this.onDeviceOrientationHandler
@@ -73,6 +75,28 @@ class ThreeClassSceneManager {
     this.mouseY = (event.clientY - window.innerHeight / 2) * 10;
   }
 
+  requestPermission() {
+    if (
+      typeof DeviceOrientationEvent !== "undefined" &&
+      typeof DeviceOrientationEvent.requestPermission === "function"
+    ) {
+      DeviceOrientationEvent.requestPermission()
+        .then((response) => {
+          if (response === "granted") {
+            this.deviceOrientationPermissionGranted = true;
+            window.addEventListener("devicemotion", (e) => {
+              // Handle 'e' here (e.g., update UI based on motion data)
+            });
+          }
+          // Dispatch a custom event or callback to notify permission change
+          this.dispatchEvent(new Event("permissionchange"));
+        })
+        .catch(console.error);
+    } else {
+      console.log("DeviceMotionEvent is not defined");
+    }
+  }
+
   onDeviceOrientation(event) {
     const alpha = event.alpha;
     const beta = event.beta;
@@ -86,13 +110,16 @@ class ThreeClassSceneManager {
   enableStereoEffect() {
     this.isStereoEnabled = true;
     this.effect.setSize(window.innerWidth, window.innerHeight);
-    this.setupDeviceOrientation(); 
+    if (!this.deviceOrientationPermissionGranted) {
+      this.requestPermission();
+    }
   }
 
   disableStereoEffect() {
     this.isStereoEnabled = false;
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.removeDeviceOrientation();
+    this.deviceOrientationPermissionGranted = false;
   }
 
   render() {
@@ -117,6 +144,19 @@ class ThreeClassSceneManager {
 
   getEffect() {
     return this.effect;
+  }
+
+  
+  addEventListener(type, listener) {
+    this.renderer.domElement.addEventListener(type, listener);
+  }
+
+  removeEventListener(type, listener) {
+    this.renderer.domElement.removeEventListener(type, listener);
+  }
+
+  dispatchEvent(event) {
+    this.renderer.domElement.dispatchEvent(event);
   }
 }
 

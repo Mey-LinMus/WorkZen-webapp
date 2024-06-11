@@ -5,6 +5,7 @@ import { faVrCardboard } from "@fortawesome/free-solid-svg-icons";
 const VRButton = ({ sceneManager }) => {
   const [isStereo, setIsStereo] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isPermissionGranted, setIsPermissionGranted] = useState(false);
 
   useEffect(() => {
     const userAgent = navigator.userAgent;
@@ -13,13 +14,27 @@ const VRButton = ({ sceneManager }) => {
         userAgent
       );
     setIsMobile(isMobileDevice);
-  }, []);
+
+    const handlePermissionChange = () => {
+      setIsPermissionGranted(sceneManager.deviceOrientationPermissionGranted);
+    };
+
+    sceneManager.addEventListener("permissionchange", handlePermissionChange);
+    return () => {
+      sceneManager.removeEventListener(
+        "permissionchange",
+        handlePermissionChange
+      );
+    };
+  }, [sceneManager]);
 
   const toggleVR = () => {
     if (!isStereo && isMobile) {
       sceneManager.enableStereoEffect();
       setIsStereo(true);
-      sceneManager.requestPermission(); 
+      if (!isPermissionGranted) {
+        sceneManager.requestPermission();
+      }
     } else if (isStereo) {
       sceneManager.disableStereoEffect();
       setIsStereo(false);
