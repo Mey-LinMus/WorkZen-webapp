@@ -50,7 +50,7 @@ const VisualSelect = () => {
           </Typography>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8 justify-center sm:justify-start">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-4 sm:gap-4 sm:grid justify-items-center">
           {visuals.map((visual) => (
             <button
               key={visual.id}
@@ -62,11 +62,11 @@ const VisualSelect = () => {
                 selectedVisual === visual
                   ? "w-full sm:w-1/2 md:w-1/3"
                   : "w-full sm:w-1/2 md:w-1/3 sm:max-w-sm md:max-w-md"
-              } sm:w-1/2 md:w-1/3`}
+              }`}
               style={{
                 aspectRatio: "1/1",
-                minWidth: "150px", // Adjusted for mobile
-                maxWidth: "250px", // Adjusted for mobile
+                minWidth: "100px",
+                maxWidth: "140px",
                 width: "100%",
               }}
               onClick={() => handleVisualClick(visual)}
@@ -84,7 +84,7 @@ const VisualSelect = () => {
               </video>
             </button>
           ))}
-        </div> 
+        </div>
 
         <div className="mt-16 py-2 flex justify-center space-x-12 items-center ml-32">
           <div>
