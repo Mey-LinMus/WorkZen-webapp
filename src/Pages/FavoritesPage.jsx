@@ -60,21 +60,21 @@ const FavoritePage = () => {
         <Typography variant="h2">Favorieten</Typography>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 justify-center ">
-        <UILogo className="z-10" />
-
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 justify-center">
+        <div className="cursor-pointer md:block hidden mb-4">
+          <UILogo className="z-10" />
+        </div>
         {favoriteCombinations.length > 0 ? (
           favoriteCombinations.map((favorite, index) => (
             <button
               key={index}
-              className="relative overflow-hidden rounded-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none"
+              className="relative overflow-hidden rounded-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none sm:text-sm sm:p-2 p-1"
               onClick={() => handleFavoriteClick(favorite)}
+              style={{ padding: "0.5rem", fontSize: "0.875rem" }} 
             >
               {favorite.name ? (
-                <div className="bg-neutralColor text-primaryColor font-segoe text-bodyText ">
-                  <strong>
-                    <p className="p-4 ">{favorite.name}</p>
-                  </strong>
+                <div className="bg-neutralColor text-primaryColor font-segoe text-bodyText p-2 text-sm">
+                  <strong>{favorite.name}</strong>
                 </div>
               ) : (
                 <Typography variant="bodyText">No name found</Typography>
@@ -100,7 +100,7 @@ const FavoritePage = () => {
                 </div>
               ) : (
                 <div className="items-center justify-center">
-                  <Typography variant="bodyText ">
+                  <Typography variant="bodyText">
                     No visual video found
                   </Typography>
                 </div>
@@ -116,6 +116,7 @@ const FavoritePage = () => {
           </Typography>
         )}
       </div>
+
       <div className="mt-28 mb-12 flex flex-col items-center justify-center h-screen text-center">
         <Typography variant="h2">Maak een nieuw combinatie</Typography>
 
