@@ -13,22 +13,6 @@ const VRButton = ({ sceneManager }) => {
         userAgent
       );
     setIsMobile(isMobileDevice);
-
-    const lockOrientation = () => {
-      if (isMobileDevice) {
-        // Lock screen orientation to landscape mode
-        window.screen.orientation.lock("landscape");
-      }
-    };
-
-    lockOrientation();
-
-    return () => {
-      if (isMobileDevice) {
-        // Unlock screen orientation when component unmounts
-        window.screen.orientation.unlock();
-      }
-    };
   }, []);
 
   const toggleVR = () => {
