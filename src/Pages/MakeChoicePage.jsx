@@ -28,9 +28,9 @@ function MakeChoicePage() {
   return (
     <div className="bg-gradient-to-b from-custom-gradient-start via-custom-gradient-middle to-custom-gradient-end min-h-screen flex flex-col items-center">
       <div className="md:block hidden">
-        <UILogo className="mt-12 md:mt-16 lg:mt-20" />
+        <UILogo />
       </div>
-      <div className="mt-12 md:mt-16 lg:mt-20 text-center">
+      <div className="mt-6 md:mt-12 lg:mt-12 text-center">
         <Typography variant="h1" className="text-2xl md:text-3xl lg:text-4xl">
           Maak je keuze
         </Typography>
@@ -61,7 +61,7 @@ function MakeChoicePage() {
         </button>
       </div>
 
-      <div className="mt-28 px-4 py-2 flex space-x-28 items-center">
+      <div className="mt-28 mb-6 px-4 py-2 flex space-x-28 items-center">
         <StyledButton onClick={handleBackClick}>
           <HiArrowLeft />
         </StyledButton>
