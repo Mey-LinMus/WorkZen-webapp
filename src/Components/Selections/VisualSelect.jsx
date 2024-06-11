@@ -49,7 +49,8 @@ const VisualSelect = () => {
             Selecteer een visual
           </Typography>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 justify-center">
+
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8 justify-center sm:justify-start">
           {visuals.map((visual) => (
             <button
               key={visual.id}
@@ -57,7 +58,7 @@ const VisualSelect = () => {
                 selectedVisual === visual
                   ? "active:border-8 focus:ring focus:ring-violet-300 scale-110"
                   : ""
-              }`}
+              } sm:w-1/2 md:w-1/3`}
               style={{
                 aspectRatio: "1/1",
                 minWidth: "200px",
