@@ -15,7 +15,7 @@ const Footer = () => {
       <div className="mb-4">
         <Typography variant="h2">Get Started</Typography>
       </div>
-      <div className="mb-4">
+      <div className="mb-4 mx-2 sm:mx-6">
         <Typography variant="bodyText">
           Wacht niet langer. Druk op "Start" om deze bewezen methoden voor
           stressvermindering te ervaren en je welzijn te verbeteren.
