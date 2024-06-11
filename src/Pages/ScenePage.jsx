@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Suspense } from "react";
+import React, { useEffect, useState, useRef, Suspense } from "react";
 import Player from "../Components/Music/Player";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +19,7 @@ const ScenePage = () => {
   const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
   const spotifyAccessToken = localStorage.getItem("spotifyAccessToken");
   const [lastClickedFavorite, setLastClickedFavorite] = useState(null);
+  const fullscreenRef = useRef(null);
 
   useEffect(() => {
     const visual = JSON.parse(localStorage.getItem("selectedVisual"));
@@ -126,33 +127,28 @@ const ScenePage = () => {
     setIsFullscreen(false);
   };
 
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") {
-        exitFullscreen();
-      }
-    };
+  const handleKeyDown = (event) => {
+    if (event.key === "Escape") {
+      exitFullscreen();
+    }
+  };
 
+  const handleFullscreenChange = () => {
+    if (!document.fullscreenElement) {
+      document.body.style.overflow = "auto";
+      setIsFullscreen(false);
+    }
+  };
+
+  useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleFullscreenChange = () => {
-      if (!document.fullscreenElement) {
-        document.body.style.overflow = "auto";
-        setIsFullscreen(false);
-      }
-    };
-
     document.addEventListener("fullscreenchange", handleFullscreenChange);
     document.addEventListener("mozfullscreenchange", handleFullscreenChange);
     document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
     document.addEventListener("msfullscreenchange", handleFullscreenChange);
 
     return () => {
+      window.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("fullscreenchange", handleFullscreenChange);
       document.removeEventListener(
         "mozfullscreenchange",
@@ -182,7 +178,11 @@ const ScenePage = () => {
   };
 
   return (
-    <div className="ScenePage" style={{ overflowX: "hidden" }}>
+    <div
+      className="ScenePage"
+      style={{ overflowX: "hidden" }}
+      ref={fullscreenRef}
+    >
       {!isFullscreen && (
         <div>
           <NavigationBar onVisualChangeClick={() => setIsModalOpen(true)} />
