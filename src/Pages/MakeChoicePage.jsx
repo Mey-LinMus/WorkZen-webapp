@@ -24,38 +24,35 @@ function MakeChoicePage() {
   const handleBackClick = () => {
     navigate(-1);
   };
-
   return (
     <div className="bg-gradient-to-b from-custom-gradient-start via-custom-gradient-middle to-custom-gradient-end min-h-screen flex flex-col items-center">
-      
       <div className="md:block hidden">
-        <UILogo className="mt-12 md:mt-16 lg:mt-20 " />
+        <UILogo className="mt-12 md:mt-16 lg:mt-20" />
       </div>
-
       <div className="mt-12 md:mt-16 lg:mt-20 text-center">
         <Typography variant="h1" className="text-2xl md:text-3xl lg:text-4xl">
           Maak je keuze
         </Typography>
       </div>
 
-      <div className="mt-8 md:mt-12 lg:mt-16 flex flex-row space-x-4 md:space-x-8 items-center">
+      <div className="mt-8 md:mt-12 lg:mt-16 flex flex-row justify-center space-x-4 md:space-x-8 items-center w-full">
         <button
           onClick={() => handleOptionClick("custom")}
           selected={selectedOption === "custom"}
-          className="border-solid border-neutralColor border rounded-lg text-neutralColor w-24 h-24 sm:w-28 sm:h-28 lg:w-36 lg:h-36 transition duration-300 ease-in-out transform focus:outline-none text-sm md:text-base lg:text-lg hover:border-2 active:border-2 focus:ring focus:ring-violet-300"
+          className="border-solid border-neutralColor border rounded-lg text-neutralColor w-4/12 h-24 sm:w-28 sm:h-28 lg:w-36 lg:h-36 transition duration-300 ease-in-out transform focus:outline-none text-sm md:text-base lg:text-lg hover:border-2 active:border-2 focus:ring focus:ring-violet-300 px-2.5"
         >
           Maak zelf een selectie van liedjes
         </button>
         <button
           onClick={() => handleOptionClick("suggested")}
           selected={selectedOption === "suggested"}
-          className="border-solid border-neutralColor border rounded-lg text-neutralColor w-24 h-24 sm:w-28 sm:h-28 lg:w-36 lg:h-36 transition duration-300 ease-in-out transform focus:outline-none text-sm md:text-base lg:text-lg hover:border-2 active:border-2 focus:ring focus:ring-violet-300"
+          className="border-solid border-neutralColor border rounded-lg text-neutralColor w-4/12 h-24 sm:w-28 sm:h-28 lg:w-36 lg:h-36 transition duration-300 ease-in-out transform focus:outline-none text-sm md:text-base lg:text-lg hover:border-2 active:border-2 focus:ring focus:ring-violet-300 px-2.5"
         >
           Voorgestelde selectie liedjes
         </button>
       </div>
 
-      <div className="mt-28 mb-12 px-4 py-2 flex space-x-28 items-center ">
+      <div className="mt-28 px-4 py-2 flex space-x-28 items-center">
         <StyledButton onClick={handleBackClick}>
           <HiArrowLeft />
         </StyledButton>
