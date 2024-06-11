@@ -57,6 +57,13 @@ export default function Dashboard({ code }) {
       try {
         setIsLoading(true);
         const response = await spotifyApi.getPlaylistTracks(playlistId);
+   
+
+        console.log("Request URL:", response.request.href);
+        console.log("Request Headers:", response.request.headers);
+
+        
+        console.log("Response:", response.body);
         return response.body.items.map((item) => {
           const track = item.track;
           const smallestAlbumImage = track.album.images.reduce(
@@ -112,7 +119,7 @@ export default function Dashboard({ code }) {
   if (isLoading) {
     return (
       <div className="flex justify-center mt-12">
-        <Typography>Loading...</Typography>
+        <Typography variant="h3">Loading...</Typography>
       </div>
     );
   }
