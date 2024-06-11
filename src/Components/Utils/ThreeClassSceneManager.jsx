@@ -146,7 +146,6 @@ class ThreeClassSceneManager {
     return this.effect;
   }
 
-  
   addEventListener(type, listener) {
     this.renderer.domElement.addEventListener(type, listener);
   }

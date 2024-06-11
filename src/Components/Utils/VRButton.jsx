@@ -35,13 +35,9 @@ const VRButton = ({ sceneManager }) => {
       if (!isPermissionGranted) {
         sceneManager.requestPermission();
       }
-    } else if (isStereo) {
+    } else {
       sceneManager.disableStereoEffect();
       setIsStereo(false);
-  
-      if (!isPermissionGranted) {
-        sceneManager.requestPermission();
-      }
     }
   };
 
