@@ -55,9 +55,11 @@ const Header = () => {
           className={`absolute top-0 left-0 w-full h-full object-cover z-10 brightness-50 transition-opacity duration-1000 ${
             currentVideoIndex === index ? "opacity-100" : "opacity-0"
           }`}
+          type="video/mp4"
           autoPlay
           loop
           muted
+          playsInline
         >
           <source src={src} type="video/mp4" />
           Your browser does not support the video tag.
