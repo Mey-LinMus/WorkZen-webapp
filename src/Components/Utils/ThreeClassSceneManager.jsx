@@ -42,12 +42,23 @@ class ThreeClassSceneManager {
 
   setupDeviceOrientation() {
     if (window.DeviceOrientationEvent) {
+      this.onDeviceOrientationHandler = this.onDeviceOrientation.bind(this);
       window.addEventListener(
         "deviceorientation",
-        this.onDeviceOrientation.bind(this)
+        this.onDeviceOrientationHandler
       );
     } else {
       console.log("Device orientation not supported");
+    }
+  }
+
+  removeDeviceOrientation() {
+    if (window.DeviceOrientationEvent) {
+      window.removeEventListener(
+        "deviceorientation",
+        this.onDeviceOrientationHandler
+      );
+      this.onDeviceOrientationHandler = null;
     }
   }
 
@@ -100,6 +111,7 @@ class ThreeClassSceneManager {
   disableStereoEffect() {
     this.isStereoEnabled = false;
     this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.removeDeviceOrientation(); 
   }
 
   render() {
