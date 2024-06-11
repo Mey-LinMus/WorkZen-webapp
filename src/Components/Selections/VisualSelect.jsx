@@ -91,17 +91,18 @@ const VisualSelect = () => {
           ))}
         </div>
 
-        <div className="mt-16 py-2 flex items-center justify-between w-full px-4 md:px-12">
-          <div className="flex-1 flex justify-center">
+        <div className="relative mt-16 py-2 flex items-center w-full">
+          <div className="flex-grow flex justify-center">
             <p className="text-neutralColor">1/3</p>
           </div>
-          <div className="flex-shrink-0">
+          <div className="absolute right-0 pr-4 md:pr-12">
             <StyledButton selected onClick={handleNextClick}>
               <HiArrowRight />
             </StyledButton>
           </div>
         </div>
       </div>
+
       {selectedVisual && (
         <video
           className="fixed inset-0 w-full h-full object-cover z-0 brightness-50"
