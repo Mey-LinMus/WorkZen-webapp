@@ -116,7 +116,7 @@ const FavoritePage = () => {
           </Typography>
         )}
       </div>
-      <div className="mt-28 mb-12 flex flex-col items-center justify-center h-screen">
+      <div className="mt-28 mb-12 flex flex-col items-center justify-center h-screen text-center">
         <Typography variant="h2">Maak een nieuw combinatie</Typography>
 
         <div className="flex items-center justify-center mt-28">
