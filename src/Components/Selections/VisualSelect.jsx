@@ -40,7 +40,10 @@ const VisualSelect = () => {
   return (
     <div className="bg-gradient-to-b from-custom-gradient-start via-custom-gradient-middle to-custom-gradient-end min-h-screen flex flex-col items-center">
       <div className="z-10">
-        <div onClick={handleClickLogo} className="cursor-pointer">
+        <div
+          onClick={handleClickLogo}
+          className="cursor-pointer md:block hidden"
+        >
           <UILogo />
         </div>
 
