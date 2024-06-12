@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useState, useEffect } from "react";
 
 export default function useAuth(code) {
   const [accessToken, setAccessToken] = useState();
@@ -7,10 +7,11 @@ export default function useAuth(code) {
   const [expiresIn, setExpiresIn] = useState();
 
   useEffect(() => {
+    if (!code) return;
+
     axios
-      .post("https://musicserver-iltx.onrender.com/login", { code })
+      .post("http://localhost:8888/login", { code })
       .then((res) => {
-        console.log("Login response:", res.data); // Add logging
         setAccessToken(res.data.accessToken);
         setRefreshToken(res.data.refreshToken);
         setExpiresIn(res.data.expiresIn);
@@ -18,23 +19,21 @@ export default function useAuth(code) {
       })
       .catch((err) => {
         console.error("Error during login:", err);
-        window.location = "/";
       });
   }, [code]);
 
   useEffect(() => {
     if (!refreshToken || !expiresIn) return;
+
     const interval = setInterval(() => {
       axios
-        .post("https://musicserver-iltx.onrender.com/refresh", { refreshToken })
+        .post("http://localhost:8888/refresh", { refreshToken })
         .then((res) => {
-          console.log("Refresh response:", res.data); // Add logging
           setAccessToken(res.data.accessToken);
           setExpiresIn(res.data.expiresIn);
         })
         .catch((err) => {
           console.error("Error refreshing token:", err);
-          window.location = "/";
         });
     }, (expiresIn - 60) * 1000);
 
