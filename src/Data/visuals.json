@@ -6,7 +6,7 @@
       "component": "SnowingSceneVisual",
       "video": "Videos/SnowingVisual.mp4",
       "videoLarge": "Videos/SnowingScene-horizontal.mp4",
-      "playlistId": "37i9dQZF1DWVFeEut75IAL"
+      "linkedPlaylist": "37i9dQZF1DWVFeEut75IAL"
     },
     {
       "id": 2,
@@ -14,7 +14,7 @@
       "component": "SphereSceneVisual",
       "video": "Videos/SphereVisual.mp4",
       "videoLarge": "Videos/SphereScene-horizontal.mp4",
-      "playlistId": "37i9dQZF1EIgrs7YFJARua"
+      "linkedPlaylist": "37i9dQZF1EIgrs7YFJARua"
     }
   ]
 }
