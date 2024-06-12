@@ -20,7 +20,7 @@ function MakeChoicePage() {
         if (visual && visual.playlistId) {
           localStorage.setItem("LinkedPlaylistId", visual.playlistId);
         }
-        navigate("/scene-page"); 
+        navigate("/scene-page");
       } else {
         navigate("/music-select");
       }
@@ -74,7 +74,7 @@ function MakeChoicePage() {
           <HiArrowLeft />
         </StyledButton>
         <div>
-          <p className="text-neutralColor"> 2 / 3</p>
+          <p className="text-neutralColor"> Stap 2 / 3</p>
         </div>
 
         <StyledButton selected onClick={handleNextClick}>
