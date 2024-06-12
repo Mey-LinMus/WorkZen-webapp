@@ -20,8 +20,10 @@ function MakeChoicePage() {
         if (visual && visual.playlistId) {
           localStorage.setItem("selectedPlaylistId", visual.playlistId);
         }
+        navigate("/scene-page"); 
+      } else {
+        navigate("/music-select");
       }
-      navigate("/music-select");
     } else {
       alert("Please select an option first.");
     }
