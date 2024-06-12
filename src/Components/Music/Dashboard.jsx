@@ -11,7 +11,7 @@ const spotifyApi = new SpotifyWebApi({
 });
 
 export default function Dashboard({ code }) {
-  const accessToken = useAuth(code);
+  const { accessToken, error } = useAuth(code);
   const [playlistTracks, setPlaylistTracks] = useState([]);
   const [selectedTracks, setSelectedTracks] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("classic");
@@ -21,8 +21,14 @@ export default function Dashboard({ code }) {
   const tracksPerPage = 18;
   const navigate = useNavigate();
 
+  const playlistIds = {
+    classic: "37i9dQZF1DWVFeEut75IAL",
+    instrumental: "37i9dQZF1EIgrs7YFJARua",
+  };
+
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
+    setCurrentPage(1);
   };
 
   useEffect(() => {
@@ -30,11 +36,6 @@ export default function Dashboard({ code }) {
       localStorage.setItem("spotifyAccessToken", accessToken);
     }
   }, [accessToken]);
-
-  const playlistIds = {
-    classic: "37i9dQZF1DWVFeEut75IAL",
-    Instrumenteel: "37i9dQZF1EIgrs7YFJARua",
-  };
 
   function toggleTrackSelection(track) {
     const isSelected = selectedTracks.some((t) => t.uri === track.uri);
@@ -51,17 +52,12 @@ export default function Dashboard({ code }) {
   }
 
   useEffect(() => {
-    if (!accessToken) return;
-    spotifyApi.setAccessToken(accessToken);
     const fetchPlaylistTracks = async (playlistId) => {
       try {
         setIsLoading(true);
         const response = await spotifyApi.getPlaylistTracks(playlistId);
-
-        // console.log("Request URL:", response.request.href);
-        console.log("Request Headers:", response.request.headers);
-
         console.log("Response:", response.body);
+
         return response.body.items.map((item) => {
           const track = item.track;
           const smallestAlbumImage = track.album.images.reduce(
@@ -71,11 +67,12 @@ export default function Dashboard({ code }) {
             },
             track.album.images[0]
           );
+
           return {
             artist: track.artists[0].name,
             title:
               track.name.length > 25
-                ? track.name.substring(0, 25) + "..."
+                ? `${track.name.substring(0, 25)}...`
                 : track.name,
             uri: track.uri,
             albumUrl: smallestAlbumImage.url,
@@ -90,20 +87,24 @@ export default function Dashboard({ code }) {
       }
     };
 
+    if (!accessToken) return;
+
+    spotifyApi.setAccessToken(accessToken);
+
     const fetchTracks = async () => {
       const playlistId = playlistIds[selectedCategory];
       const tracks = await fetchPlaylistTracks(playlistId);
       setPlaylistTracks(tracks);
-      setCurrentPage(1);
     };
+
     fetchTracks();
   }, [accessToken, selectedCategory]);
 
   useEffect(() => {
-    let total = 0;
-    selectedTracks.forEach((track) => {
-      total += track.duration_ms;
-    });
+    const total = selectedTracks.reduce(
+      (acc, track) => acc + track.duration_ms,
+      0
+    );
     setTotalDuration(total);
   }, [selectedTracks]);
 
@@ -122,6 +123,13 @@ export default function Dashboard({ code }) {
     );
   }
 
+  if (error) {
+    return (
+      <div className="flex justify-center mt-12">
+        <Typography variant="h3">Error: {error}</Typography>
+      </div>
+    );
+  }
   return (
     <div className="p-4">
       <div className="p-4">
