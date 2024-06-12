@@ -39,7 +39,7 @@ function MakeChoicePage() {
         <UILogo />
       </div>
       <div className="mt-12 md:mt-12 lg:mt-12 text-center">
-        <Typography variant="h1" className="text-2xl md:text-3xl lg:text-4xl">
+        <Typography variant="h2" className="text-2xl md:text-3xl lg:text-4xl">
           Maak je keuze
         </Typography>
       </div>
