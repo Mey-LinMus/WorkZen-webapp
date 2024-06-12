@@ -15,6 +15,12 @@ function MakeChoicePage() {
 
   const handleNextClick = () => {
     if (selectedOption) {
+      if (selectedOption === "suggested") {
+        const visual = JSON.parse(localStorage.getItem("selectedVisual"));
+        if (visual && visual.playlistId) {
+          localStorage.setItem("selectedPlaylistId", visual.playlistId);
+        }
+      }
       navigate("/music-select");
     } else {
       alert("Please select an option first.");
@@ -76,4 +82,5 @@ function MakeChoicePage() {
     </div>
   );
 }
+
 export default MakeChoicePage;
