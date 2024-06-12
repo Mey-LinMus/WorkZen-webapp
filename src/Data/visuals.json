@@ -8,12 +8,21 @@
       "videoLarge": "Videos/SnowingScene-horizontal.mp4",
       "linkedPlaylist": "37i9dQZF1DWVFeEut75IAL"
     },
+
     {
       "id": 2,
       "title": "Sphere",
       "component": "SphereSceneVisual",
       "video": "Videos/SphereVisual.mp4",
       "videoLarge": "Videos/SphereScene-horizontal.mp4",
+      "linkedPlaylist": "37i9dQZF1EIgrs7YFJARua"
+    },
+    {
+      "id": 3,
+      "title": "Gradient",
+      "component": "GradientVisual",
+      "video": "Videos/GradientVisual.mp4",
+      "videoLarge": "Videos/GradientScene-horizontal.mp4",
       "linkedPlaylist": "37i9dQZF1EIgrs7YFJARua"
     }
   ]
