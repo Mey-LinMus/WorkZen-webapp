@@ -18,7 +18,7 @@ function MakeChoicePage() {
       if (selectedOption === "suggested") {
         const visual = JSON.parse(localStorage.getItem("selectedVisual"));
         if (visual && visual.playlistId) {
-          localStorage.setItem("selectedPlaylistId", visual.playlistId);
+          localStorage.setItem("LinkedPlaylistId", visual.playlistId);
         }
         navigate("/scene-page"); 
       } else {
