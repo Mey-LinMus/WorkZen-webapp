@@ -26,9 +26,11 @@ const Research = () => {
         </div>
       </div>
       <div className="hidden lg:flex flex-col justify-center">
-        <Typography variant="h3" className="mb-4">
-          Muziek
-        </Typography>
+        <div className="mb-4">
+          <Typography variant="h3" className="mb-4">
+            Muziek
+          </Typography>
+        </div>
         <Typography variant="bodyText">
           Uit onderzoek blijkt dat bepaalde muziekgenres effectief kunnen zijn
           bij het verminderen van stress. Klassieke muziek staat bekend om zijn
@@ -63,9 +65,11 @@ const Research = () => {
       </div>
 
       <div className="hidden lg:flex flex-col justify-center">
-        <Typography variant="h3" className="mb-4">
-          Visuele Beelden
-        </Typography>
+        <div className="mb-4">
+          <Typography variant="h3" className="mb-4">
+            Visuele Beelden
+          </Typography>
+        </div>
         <Typography variant="bodyText">
           Visuele beelden zijn een krachtig middel om stress te verminderen.
           Veel mensen maken gebruik van visualisatietechnieken als onderdeel van
@@ -101,10 +105,10 @@ const Research = () => {
         />
       </div>
 
-      <div className="hidden lg:flex flex-col justify-center   ">
-        <Typography variant="h3" className="mb-4">
-          Virtual Reality
-        </Typography>
+      <div className="hidden lg:flex flex-col justify-center">
+        <div className="mb-4">
+          <Typography variant="h3">Virtual Reality</Typography>
+        </div>
         <Typography variant="bodyText">
           Virtual reality (VR) wordt steeds meer erkend als een effectief
           hulpmiddel voor stressvermindering. Recent onderzoek toont aan dat
