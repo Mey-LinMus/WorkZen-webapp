@@ -10,7 +10,7 @@ export default function useAuth(code) {
     if (!code) return;
 
     axios
-      .post("http://localhost:8888/login", { code })
+      .post("https://musicserver-iltx.onrender.com/login", { code })
       .then((res) => {
         setAccessToken(res.data.accessToken);
         setRefreshToken(res.data.refreshToken);
@@ -27,7 +27,7 @@ export default function useAuth(code) {
 
     const interval = setInterval(() => {
       axios
-        .post("http://localhost:8888/refresh", { refreshToken })
+        .post("https://musicserver-iltx.onrender.com/refresh", { refreshToken })
         .then((res) => {
           setAccessToken(res.data.accessToken);
           setExpiresIn(res.data.expiresIn);
