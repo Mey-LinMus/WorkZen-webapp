@@ -14,10 +14,14 @@ const Research = () => {
             Muziek
           </Typography>
           <Typography variant="bodyText">
-            Uit onderzoek blijkt dat muziek aanzienlijk helpt bij
-            stressvermindering. Vooral klassieke en instrumentale muziek hebben
-            kalmerende effecten. De juiste muziekkeuze kan leiden tot een
-            aanzienlijke vermindering van stress.
+            Uit onderzoek blijkt dat bepaalde muziekgenres effectief kunnen zijn
+            bij het verminderen van stress. Klassieke muziek staat bekend om
+            zijn kalmerende eigenschappen, terwijl instrumentale muziek vaak de
+            voorkeur heeft omdat het minder afleidend is dan muziek met
+            zangteksten. Dit helpt bij het bevorderen van concentratie en
+            ontspanning. Het is echter belangrijk op te merken dat de voorkeur
+            voor een bepaald muziekgenre sterk kan variëren van persoon tot
+            persoon.
           </Typography>
         </div>
       </div>
@@ -26,10 +30,14 @@ const Research = () => {
           Muziek
         </Typography>
         <Typography variant="bodyText">
-          Uit onderzoek blijkt dat muziek aanzienlijk helpt bij
-          stressvermindering. Vooral klassieke en instrumentale muziek hebben
-          kalmerende effecten. De juiste muziekkeuze kan leiden tot een
-          aanzienlijke vermindering van stress.
+          Uit onderzoek blijkt dat bepaalde muziekgenres effectief kunnen zijn
+          bij het verminderen van stress. Klassieke muziek staat bekend om zijn
+          kalmerende eigenschappen, terwijl instrumentale muziek vaak de
+          voorkeur heeft omdat het minder afleidend is dan muziek met
+          zangteksten. Dit helpt bij het bevorderen van concentratie en
+          ontspanning. Het is echter belangrijk op te merken dat de voorkeur
+          voor een bepaald muziekgenre sterk kan variëren van persoon tot
+          persoon.
         </Typography>
       </div>
 
@@ -44,9 +52,12 @@ const Research = () => {
             Visuele Beelden
           </Typography>
           <Typography variant="bodyText">
-            Visuele beelden zijn ook effectief in het verminderen van stress.
-            Het gebruik van kalmerende helpt de geest te kalmeren en stress te
-            verlagen.
+            Visuele beelden zijn een krachtig middel om stress te verminderen.
+            Veel mensen maken gebruik van visualisatietechnieken als onderdeel
+            van stressmanagement en mindfulness-oefeningen. Het visualiseren van
+            positieve, kalmerende beelden kan de geest tot rust brengen.
+            Beweging en ritme worden beschouwd als de meest effectieve visuele
+            elementen bij het verminderen van stress.
           </Typography>
         </div>
       </div>
@@ -56,21 +67,33 @@ const Research = () => {
           Visuele Beelden
         </Typography>
         <Typography variant="bodyText">
-          Visuele beelden zijn ook effectief in het verminderen van stress. Het
-          gebruik van kalmerende helpt de geest te kalmeren en stress te
-          verlagen.
+          Visuele beelden zijn een krachtig middel om stress te verminderen.
+          Veel mensen maken gebruik van visualisatietechnieken als onderdeel van
+          stressmanagement en mindfulness-oefeningen. Het visualiseren van
+          positieve, kalmerende beelden kan de geest tot rust brengen. Beweging
+          en ritme worden beschouwd als de meest effectieve visuele elementen
+          bij het verminderen van stress.
         </Typography>
       </div>
 
       <div className="relative flex justify-center items-center mb-12 ">
         <div className="absolute bottom-0 left-0 p-4 bg-black bg-opacity-50 text-white w-full lg:hidden">
           <Typography variant="h3" className="mb-4">
-            Visuele Beelden
+            Virtual Reality
           </Typography>
           <Typography variant="bodyText">
-            Visuele beelden zijn ook effectief in het verminderen van stress.
-            Het gebruik van kalmerende helpt de geest te kalmeren en stress te
-            verlagen.
+            Virtual reality (VR) wordt steeds meer erkend als een effectief
+            hulpmiddel voor stressvermindering. Recent onderzoek toont aan dat
+            VR-omgevingen gebruikers kunnen onderdompelen in therapeutische
+            omgevingen die ontspanning en mindfulness bevorderen. Een
+            veelgebruikte methode in VR-systemen is begeleide beeldvorming,
+            waarbij gebruikers door rustgevende scenario’s en activiteiten
+            worden geleid. De effectiviteit van VR bij het verminderen van
+            stress wordt vaak geëvalueerd met zowel subjectieve als objectieve
+            metingen, wat bewijst dat VR een aanzienlijke impact kan hebben op
+            stressniveaus. Ondanks de veelbelovende resultaten blijven er
+            uitdagingen bestaan met betrekking tot de definitie, detectie en
+            evaluatie van stress in VR-systemen.
           </Typography>
         </div>
         <img
@@ -85,10 +108,18 @@ const Research = () => {
           Virtual Reality
         </Typography>
         <Typography variant="bodyText">
-          Virtual Reality (VR) biedt een innovatieve manier om stress te
-          verminderen. VR-omgevingen dompelen gebruikers onder in rustgevende
-          scenario's, wat zorgt voor een aanzienlijke vermindering van
-          stressniveaus.
+          Virtual reality (VR) wordt steeds meer erkend als een effectief
+          hulpmiddel voor stressvermindering. Recent onderzoek toont aan dat
+          VR-omgevingen gebruikers kunnen onderdompelen in therapeutische
+          omgevingen die ontspanning en mindfulness bevorderen. Een
+          veelgebruikte methode in VR-systemen is begeleide beeldvorming,
+          waarbij gebruikers door rustgevende scenario’s en activiteiten worden
+          geleid. De effectiviteit van VR bij het verminderen van stress wordt
+          vaak geëvalueerd met zowel subjectieve als objectieve metingen, wat
+          bewijst dat VR een aanzienlijke impact kan hebben op stressniveaus.
+          Ondanks de veelbelovende resultaten blijven er uitdagingen bestaan met
+          betrekking tot de definitie, detectie en evaluatie van stress in
+          VR-systemen.
         </Typography>
       </div>
     </div>
