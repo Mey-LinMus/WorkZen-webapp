@@ -11,6 +11,7 @@ const Header = () => {
   const videoSources = [
     "/Videos/SnowingScene-horizontal.mp4",
     "/Videos/SphereScene-horizontal.mp4",
+    "Videos/GradientScene-horizontal.mp4",
   ];
 
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
