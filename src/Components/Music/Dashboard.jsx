@@ -198,10 +198,12 @@ export default function Dashboard({ code }) {
             ))}
           </ul>
         </div>
-        <div className="mt-28 px-4 py-2 flex space-x-28 items-center">
-          <StyledButton onClick={() => navigate(-1)}>
-            <HiArrowLeft />
-          </StyledButton>
+        <div className="mt-28 px-4 py-2 flex space-x-28 items-center md:justify-center md:mr-48">
+          <div className="mr-4 md:mr-28">
+            <StyledButton onClick={() => navigate(-1)}>
+              <HiArrowLeft />
+            </StyledButton>
+          </div>
           <StyledButton
             onClick={navigateToScene}
             disabled={selectedTracks.length === 0}

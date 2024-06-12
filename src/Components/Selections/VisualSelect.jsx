@@ -88,7 +88,7 @@ const VisualSelect = () => {
 
         <div className="relative mt-16 py-2 flex items-center w-full">
           <div className="flex-grow flex justify-center">
-            <p className="text-neutralColor">1/3</p>
+            <p className="text-neutralColor mr-12">Stap 1 / 3</p>
           </div>
           <div className="absolute right-0 pr-4 md:pr-12">
             <StyledButton selected onClick={handleNextClick}>
