@@ -91,9 +91,7 @@ const Research = () => {
             worden geleid. De effectiviteit van VR bij het verminderen van
             stress wordt vaak geëvalueerd met zowel subjectieve als objectieve
             metingen, wat bewijst dat VR een aanzienlijke impact kan hebben op
-            stressniveaus. Ondanks de veelbelovende resultaten blijven er
-            uitdagingen bestaan met betrekking tot de definitie, detectie en
-            evaluatie van stress in VR-systemen.
+            stressniveaus.
           </Typography>
         </div>
         <img
@@ -117,9 +115,6 @@ const Research = () => {
           geleid. De effectiviteit van VR bij het verminderen van stress wordt
           vaak geëvalueerd met zowel subjectieve als objectieve metingen, wat
           bewijst dat VR een aanzienlijke impact kan hebben op stressniveaus.
-          Ondanks de veelbelovende resultaten blijven er uitdagingen bestaan met
-          betrekking tot de definitie, detectie en evaluatie van stress in
-          VR-systemen.
         </Typography>
       </div>
     </div>
