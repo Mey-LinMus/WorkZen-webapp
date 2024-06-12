@@ -39,7 +39,7 @@ const VisualSelect = () => {
 
   return (
     <div className="bg-gradient-to-b from-custom-gradient-start via-custom-gradient-middle to-custom-gradient-end min-h-screen flex flex-col items-center justify-center">
-      <div className="z-10 flex flex-col items-center justify-center  my-12">
+      <div className="z-10 flex flex-col items-center justify-center  my-6">
         <div
           onClick={handleClickLogo}
           className="cursor-pointer md:block hidden mb-4"
@@ -56,18 +56,18 @@ const VisualSelect = () => {
           </Typography>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-4 justify-items-center w-full">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-4 justify-items-center w-full mb-12">
           {visuals.map((visual) => (
             <button
               key={visual.id}
-              className={`relative overflow-hidden rounded-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none md:h-full md:w-48${
+              className={`relative overflow-hidden rounded-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none md:h-full md:w-36 md:${
                 selectedVisual === visual
-                  ? "active:border-8 focus:ring focus:ring-violet-300 scale-110"
+                  ? "active:border-8 focus:ring focus:ring-violet-300 "
                   : ""
               } ${
                 selectedVisual === visual
-                  ? "w-full sm:w-1/2 md:w-2/3 lg:w-2/4"
-                  : "w-full sm:w-1/2 md:w-2/4 sm:max-w-sm md:max-w-lg"
+                  ? "md:w-32"
+                  : "w-full sm:w-1/2  sm:max-w-sm md:max-w-lg"
               } aspect-square min-w-[100px] max-w-[140px]`}
               onClick={() => handleVisualClick(visual)}
             >

@@ -23,8 +23,8 @@ module.exports = {
       },
       fontSize: {
         h1: ["3.5rem"],
-        h2: ["3rem"],
-        h3: ["2rem"],
+        h2: ["2rem"],
+        h3: ["1.5rem"],
         bodyText: ["1.125rem"],
       },
   
