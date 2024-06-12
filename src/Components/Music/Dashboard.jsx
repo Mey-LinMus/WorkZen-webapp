@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
-import SpotifyWebApi from "spotify-web-api-node";
 import useAuth from "./useAuth";
 import { useNavigate } from "react-router-dom";
 import Typography from "../ui-elements/Typography";
 import StyledButton from "../ui-elements/Button";
 import { HiChevronLeft, HiChevronRight, HiArrowLeft } from "react-icons/hi2";
-
-const spotifyApi = new SpotifyWebApi({
-  clientId: "1f4f7e164fe945998e2b5904bd676792",
-});
+import TrackFetcher from "./TrackFetcher";
 
 export default function Dashboard({ code }) {
   const { accessToken, error } = useAuth(code);
@@ -52,55 +48,6 @@ export default function Dashboard({ code }) {
   }
 
   useEffect(() => {
-    const fetchPlaylistTracks = async (playlistId) => {
-      try {
-        setIsLoading(true);
-        const response = await spotifyApi.getPlaylistTracks(playlistId);
-        console.log("Response:", response.body);
-
-        return response.body.items.map((item) => {
-          const track = item.track;
-          const smallestAlbumImage = track.album.images.reduce(
-            (smallest, image) => {
-              if (image.height < smallest.height) return image;
-              return smallest;
-            },
-            track.album.images[0]
-          );
-
-          return {
-            artist: track.artists[0].name,
-            title:
-              track.name.length > 25
-                ? `${track.name.substring(0, 25)}...`
-                : track.name,
-            uri: track.uri,
-            albumUrl: smallestAlbumImage.url,
-            duration_ms: track.duration_ms,
-          };
-        });
-      } catch (error) {
-        console.error("Error fetching playlist tracks:", error);
-        return [];
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (!accessToken) return;
-
-    spotifyApi.setAccessToken(accessToken);
-
-    const fetchTracks = async () => {
-      const playlistId = playlistIds[selectedCategory];
-      const tracks = await fetchPlaylistTracks(playlistId);
-      setPlaylistTracks(tracks);
-    };
-
-    fetchTracks();
-  }, [accessToken, selectedCategory]);
-
-  useEffect(() => {
     const total = selectedTracks.reduce(
       (acc, track) => acc + track.duration_ms,
       0
@@ -115,23 +62,13 @@ export default function Dashboard({ code }) {
   );
   const totalPages = Math.ceil(playlistTracks.length / tracksPerPage);
 
-  if (isLoading) {
-    return (
-      <div className="flex justify-center mt-12">
-        <Typography variant="h3">Loading...</Typography>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex justify-center mt-12">
-        <Typography variant="h3">Error: {error}</Typography>
-      </div>
-    );
-  }
   return (
     <div className="p-4">
+      <TrackFetcher
+        accessToken={accessToken}
+        playlistId={playlistIds[selectedCategory]}
+        onTracksFetched={setPlaylistTracks}
+      />
       <div className="p-4">
         <div className="fixed top-0 left-0 right-0 flex justify-center w-full">
           <div className="flex flex-col sm:flex-row justify-between items-center mb-4 bg-primaryColor w-full sm:w-11/12 h-auto m-2 p-4 rounded-lg shadow-lg">
