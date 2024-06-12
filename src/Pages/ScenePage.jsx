@@ -8,6 +8,8 @@ import { faExpand } from "@fortawesome/free-solid-svg-icons";
 import { HiOutlineSave } from "react-icons/hi";
 import VisualChangeModal from "../Components/Modals/VisualChange";
 import SaveCombinationModal from "../Components/Modals/SaveCombination";
+import VisualComponentLoader from "../Components/SceneComponents/VisualLoader";
+import FavoriteDisplay from "../Components/SceneComponents/FavoriteDisplay";
 
 const ScenePage = () => {
   const [selectedVisual, setSelectedVisual] = useState(null);
@@ -130,7 +132,6 @@ const ScenePage = () => {
   useEffect(() => {
     const handleScroll = () => {
       if (isFullscreen) {
-      
         const scrollY = window.scrollY;
         if (scrollY > 0) {
           exitFullscreen();
@@ -201,11 +202,13 @@ const ScenePage = () => {
       style={{ overflowX: "hidden" }}
       ref={fullscreenRef}
     >
-      {!isFullscreen && (
-        <div>
-          <NavigationBar onVisualChangeClick={() => setIsModalOpen(true)} />
-        </div>
-      )}
+      <NavigationBar onVisualChangeClick={() => setIsModalOpen(true)} />
+
+      <VisualComponentLoader
+        selectedVisual={selectedVisual}
+        onVisualComponentLoad={setVisualComponent}
+      />
+
       {VisualComponent && (
         <Suspense fallback={<div>Loading...</div>}>
           <VisualComponent />
@@ -258,25 +261,7 @@ const ScenePage = () => {
       />
 
       {lastClickedFavorite && (
-        <div className="fixed bottom-4 right-4 bg-white text-gray-900 p-4 rounded-lg shadow-lg">
-          <h3>Last Clicked Favorite:</h3>
-          <p>Name: {lastClickedFavorite.name}</p>
-          {lastClickedFavorite.favorite &&
-          lastClickedFavorite.favorite.visual &&
-          lastClickedFavorite.favorite.visual.video ? (
-            <div>
-              <video controls width="300">
-                <source
-                  src={lastClickedFavorite.favorite.visual.video}
-                  type="video/mp4"
-                />
-                Your browser does not support the video tag.
-              </video>
-            </div>
-          ) : (
-            <p>No visual video found</p>
-          )}
-        </div>
+        <FavoriteDisplay lastClickedFavorite={lastClickedFavorite} />
       )}
     </div>
   );
