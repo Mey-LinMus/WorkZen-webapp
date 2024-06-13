@@ -202,7 +202,9 @@ const ScenePage = () => {
       style={{ overflowX: "hidden" }}
       ref={fullscreenRef}
     >
-      <NavigationBar onVisualChangeClick={() => setIsModalOpen(true)} />
+      {!isFullscreen && (
+        <NavigationBar onVisualChangeClick={() => setIsModalOpen(true)} />
+      )}
 
       <VisualComponentLoader
         selectedVisual={selectedVisual}
