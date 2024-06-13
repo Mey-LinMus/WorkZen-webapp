@@ -19,7 +19,7 @@ export default function Dashboard({ code }) {
 
   const playlistIds = {
     classic: "37i9dQZF1DWVFeEut75IAL",
-    instrumental: "37i9dQZF1EIgrs7YFJARua",
+    instrumenteel: "37i9dQZF1EIgrs7YFJARua",
   };
 
   const handleCategoryClick = (category) => {
@@ -81,8 +81,8 @@ export default function Dashboard({ code }) {
                 Classic
               </StyledButton>
               <StyledButton
-                selected={selectedCategory === "Instrumenteel"}
-                onClick={() => setSelectedCategory("Instrumenteel")}
+                selected={selectedCategory === "instrumenteel"}
+                onClick={() => setSelectedCategory("instrumenteel")}
                 className="text-xs sm:text-sm"
               >
                 Instrumenteel
