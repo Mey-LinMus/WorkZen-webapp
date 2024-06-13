@@ -87,7 +87,7 @@ const LavaLamp = () => {
       const animate = () => {
         requestAnimationFrame(animate);
 
-        material.uniforms.time.value += 0.01;
+        material.uniforms.time.value += 0.008;
 
         sceneManager.render();
       };
