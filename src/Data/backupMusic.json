@@ -1,0 +1,38 @@
+{
+  "genres": [
+    {
+      "name": "Instrumental",
+      "tracks": [
+        {
+          "title": "Zion",
+          "artist": "SalmonLikeTheFish",
+          "image": "Image URL 1",
+          "uri": "SalmonLikeTheFish - Zion.mp3"
+        },
+        {
+          "title": "Track Title 2",
+          "artist": "Artist Name 2",
+          "image": "Image URL 2",
+          "uri": "URI 2"
+        }
+      ]
+    },
+    {
+      "name": "Another Genre",
+      "tracks": [
+        {
+          "title": "Track Title A",
+          "artist": "Artist Name A",
+          "image": "Image URL A",
+          "uri": "URI A"
+        },
+        {
+          "title": "Track Title B",
+          "artist": "Artist Name B",
+          "image": "Image URL B",
+          "uri": "URI B"
+        }
+      ]
+    }
+  ]
+}
