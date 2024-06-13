@@ -23,7 +23,7 @@ const Header = () => {
       setCurrentVideoIndex((prevIndex) =>
         prevIndex === videoSources.length - 1 ? 0 : prevIndex + 1
       );
-    }, 15000);
+    }, 6000);
 
     return () => clearInterval(interval);
   }, []);
