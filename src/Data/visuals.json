@@ -24,6 +24,14 @@
       "video": "Videos/GradientVisual.mp4",
       "videoLarge": "Videos/GradientScene-horizontal.mp4",
       "linkedPlaylist": "37i9dQZF1EIgrs7YFJARua"
+    },
+    {
+      "id": 4,
+      "title": "Lavalamp",
+      "component": "LavalampVisual",
+      "video": "Videos/LavalampVisual.mp4",
+      "videoLarge": "Videos/Lavalamp-horizontal.mp4",
+      "linkedPlaylist": "37i9dQZF1EIgrs7YFJARua"
     }
   ]
 }
