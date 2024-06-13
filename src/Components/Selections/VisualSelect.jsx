@@ -26,7 +26,7 @@ const VisualSelect = () => {
   const handleNextClick = () => {
     if (selectedVisual) {
       localStorage.setItem("selectedVisual", JSON.stringify(selectedVisual));
-      navigate("/make-choice");
+      navigate("/music-select");
     } else {
       alert("Please select a visual first.");
     }
