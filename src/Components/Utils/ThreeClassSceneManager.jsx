@@ -26,7 +26,8 @@ class ThreeClassSceneManager {
       1,
       100000
     );
-    this.camera.position.z = 3200;
+
+    this.camera.position.z = 300;
     this.scene = new this.THREE.Scene();
     this.renderer = new this.THREE.WebGLRenderer();
     this.renderer.setPixelRatio(window.devicePixelRatio);
@@ -84,11 +85,9 @@ class ThreeClassSceneManager {
         .then((response) => {
           if (response === "granted") {
             this.deviceOrientationPermissionGranted = true;
-            window.addEventListener("devicemotion", (e) => {
-           
-            });
+            window.addEventListener("devicemotion", (e) => {});
           }
-      
+
           this.dispatchEvent(new Event("permissionchange"));
         })
         .catch(console.error);
@@ -102,9 +101,22 @@ class ThreeClassSceneManager {
     const beta = event.beta;
     const gamma = event.gamma;
 
-    this.camera.rotation.x = (beta * Math.PI) / 180;
-    this.camera.rotation.y = (gamma * Math.PI) / 180;
-    this.camera.rotation.z = (alpha * Math.PI) / 180;
+    let betaAdjusted = beta;
+    let gammaAdjusted = gamma;
+
+    if (window.orientation === 90) {
+      betaAdjusted = -gamma;
+      gammaAdjusted = beta;
+    } else if (window.orientation === -90) {
+      betaAdjusted = gamma;
+      gammaAdjusted = -beta;
+    }
+
+    const xRotation = (betaAdjusted * Math.PI) / 180;
+    const yRotation = (gammaAdjusted * Math.PI) / 180;
+    const zRotation = (alpha * Math.PI) / 180;
+
+    this.camera.rotation.set(xRotation, yRotation, zRotation);
   }
 
   enableStereoEffect() {
