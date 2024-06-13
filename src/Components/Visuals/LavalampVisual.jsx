@@ -34,9 +34,9 @@ const LavaLamp = () => {
           vUv = uv;
           vNormal = normal;
           vec3 transformed = position;
-          transformed.z += sin(position.x * 3.0 + time) * 0.5; 
-          transformed.z += sin(position.y * 3.0 + time) * 0.5; 
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(transformed, 5.0);
+          float noise = sin(position.x * 3.0 + time) * cos(position.y * 3.0 + time);
+          transformed.z += noise * 0.5;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(transformed, 1.0);
         }
       `;
 
@@ -48,7 +48,7 @@ const LavaLamp = () => {
           float r = abs(sin(time + vUv.x * 2.0));
           float g = abs(sin(time + vUv.y * 2.0));
           float b = abs(sin(time + vUv.x * 2.0 + vUv.y * 2.0));
-          gl_FragColor = vec4(b * 0.2, r * 0.5, g, 1.0); 
+          gl_FragColor = vec4(r, g, b, 1.0);
         }
       `;
 
@@ -60,10 +60,10 @@ const LavaLamp = () => {
         fragmentShader,
       });
 
-      const numSpheres = 250;
+      const numSpheres = 50;
       const spheres = [];
 
-      const spreadRange = 40;
+      const spreadRange = 50; 
 
       for (let i = 0; i < numSpheres; i++) {
         const geometry = new THREE.SphereGeometry(1, 32, 32);
@@ -75,10 +75,8 @@ const LavaLamp = () => {
           Math.random() * spreadRange - spreadRange / 2
         );
 
-        const scale = Math.random() * 5 + 2;
-        const scaleX = Math.random() * 6 + 3;
-        const scaleY = Math.random() * 5 + 2;
-        sphere.scale.set(scale, scaleX, scaleY);
+        const scale = Math.random() * 3 + 1;
+        sphere.scale.set(scale, scale, scale);
 
         scene.add(sphere);
         spheres.push(sphere);
@@ -87,7 +85,7 @@ const LavaLamp = () => {
       const animate = () => {
         requestAnimationFrame(animate);
 
-        material.uniforms.time.value += 0.008;
+        material.uniforms.time.value += 0.01;
 
         sceneManager.render();
       };
@@ -109,6 +107,8 @@ const LavaLamp = () => {
       sceneManager.effect.setSize(window.innerWidth, window.innerHeight);
     };
 
+    window.addEventListener("resize", onWindowResize);
+
     return () => {
       window.removeEventListener("resize", onWindowResize);
       if (renderer && renderer.domElement && containerRef.current) {
@@ -120,7 +120,6 @@ const LavaLamp = () => {
   return (
     <>
       {sceneManager && <VRButton sceneManager={sceneManager} />}
-
       <div ref={containerRef} />
     </>
   );
