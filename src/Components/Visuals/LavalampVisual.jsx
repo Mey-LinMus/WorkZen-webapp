@@ -109,11 +109,11 @@ const LavaLamp = () => {
       sceneManager.effect.setSize(window.innerWidth, window.innerHeight);
     };
 
-    window.addEventListener("resize", onWindowResize);
-
     return () => {
       window.removeEventListener("resize", onWindowResize);
-      containerRef.current.removeChild(renderer.domElement);
+      if (renderer && renderer.domElement && containerRef.current) {
+        containerRef.current.removeChild(renderer.domElement);
+      }
     };
   }, []);
 
